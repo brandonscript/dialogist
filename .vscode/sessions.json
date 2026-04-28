@@ -1,0 +1,47 @@
+{
+  "$schema": "https://cdn.statically.io/gh/nguyenngoclongdev/cdn/main/schema/v11/terminal-keeper.json",
+  "theme": "tribe",
+  "active": "dialogist",
+  "activateOnStartup": true,
+  "keepExistingTerminals": false,
+  "sessions": {
+    "dialogist": [
+      {
+        "name": "root",
+        "autoExecuteCommands": true,
+        "icon": "folder",
+        "color": "terminal.ansiRed",
+        "cwd": "$HOME/Dev/dialogist",
+        "commands": []
+      },
+      {
+        "name": "src",
+        "autoExecuteCommands": true,
+        "icon": "folder",
+        "color": "terminal.ansiGreen",
+        "cwd": "$HOME/Dev/dialogist/src",
+        "commands": []
+      },
+      [
+        {
+          "name": "demo/nextjs",
+          "autoExecuteCommands": true,
+          "icon": "folder",
+          "color": "terminal.ansiGrey",
+          "cwd": "./demo/nextjs",
+          "commands": []
+        },
+        {
+          "name": "demo/nextjs:dev",
+          "autoExecuteCommands": true,
+          "icon": "folder",
+          "color": "terminal.ansiBlue",
+          "cwd": "./demo/nextjs",
+          "commands": [
+            "npm run dev"
+          ]
+        }
+      ]
+    ]
+  }
+}

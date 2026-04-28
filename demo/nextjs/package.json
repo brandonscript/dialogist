@@ -1,0 +1,44 @@
+{
+  "name": "dialogist-demo-nextjs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbo -p 5607",
+    "dev:wp": "next dev -p 5607",
+    "dev:e2e": "next dev --turbo -p 5608",
+    "build": "next build",
+    "build:pages": "GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/dialogist next build",
+    "start": "next start -p 5607",
+    "lint": "biome check --write src",
+    "lint:fix": "biome check --write --unsafe src",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui-flexy/v7": "^2.0.4-rc.2",
+    "@mui/material": ">=7",
+    "@mui/material-nextjs": "*",
+    "@reduxjs/toolkit": "^2.2.0",
+    "@tanstack/react-query": "^5.56.0",
+    "dialogist": "file:../../",
+    "jotai": "^2.9.0",
+    "next": "^15.0.0",
+    "react": "19.2",
+    "react-dom": "19.2",
+    "react-icons": "^5.0.1",
+    "react-is": "^19.2.0",
+    "react-redux": "^9.1.2",
+    "react-window": "^2.2.0",
+    "shiki": "^3.22.0",
+    "use-debounce": "^10.0.4",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "19.2",
+    "@types/react-is": "^19.2.0",
+    "typescript": "^5.8.3"
+  }
+}

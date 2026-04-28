@@ -1,0 +1,46 @@
+#!/bin/bash
+
+max_cpus=$(sysctl -n hw.ncpu)
+max_cpus=$((max_cpus > 4 ? max_cpus : 4))
+max_cpus=$((max_cpus - 1))
+
+# Exit immediately if any command fails
+set -e
+
+# Run Jest tests (all unit tests)
+echo "Running Jest tests..."
+yarn test --silent --verbose=false --reporters=summary --passWithNoTests
+
+# Run type checking
+echo ""
+echo "Running type checking..."
+yarn run typecheck
+
+# Run linting
+echo ""
+echo "Running linting..."
+yarn run lint
+
+# Build package
+echo ""
+echo "Building package..."
+yarn --silent run build
+
+# Auto-add dist folder to git index immediately after build
+git add dist/ || true
+
+# Refresh git index to ensure all changes are properly detected
+git update-index --refresh || true
+
+echo "Checking for unstaged changes in non-build files..."
+
+# Check for unstaged changes OUTSIDE of build directories (these need manual review)
+# git status --porcelain format: XY filename where Y is workspace status (space = clean, M = modified)
+if git status --porcelain | grep '^.[M]' | grep -v -E "(dist/|demo/dist/)" | grep . > /dev/null; then
+  echo "Changes detected in non-build files. Please review and commit the following files:" >&2
+  git status --porcelain | grep '^.[M]' | grep -v -E "(dist/|demo/dist/)" >&2
+  git update-index --again
+  exit 1
+fi
+
+git update-index --again

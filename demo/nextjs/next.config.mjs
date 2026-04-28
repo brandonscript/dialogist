@@ -1,0 +1,55 @@
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Force Dialogist and the app to share ONE copy of MUI and Emotion by pointing
+// aliases to the app's node_modules directories (not concrete file paths).
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const isGitHubPages = process.env.GITHUB_PAGES === "true";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? (isGitHubPages ? "/dialogist" : "");
+
+/** Webpack + default Turbopack `resolve.alias` / `resolveAlias`: paths relative to `demo/nextjs`. */
+const sharedAliases = {
+  dialogist: "../../src/index.ts",
+  "@mui/material": "./node_modules/@mui/material",
+  "@mui/system": "./node_modules/@mui/system",
+  "@mui/utils": "./node_modules/@mui/utils",
+  "@emotion/react": "./node_modules/@emotion/react",
+  "@emotion/styled": "./node_modules/@emotion/styled",
+  "#dialogist": "../../src",
+};
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  ...(isGitHubPages
+    ? {
+        output: "export",
+        trailingSlash: true,
+        basePath,
+        images: {
+          unoptimized: true,
+        },
+      }
+    : {}),
+  transpilePackages: [
+    "dialogist",
+    // Ensure a single, transpiled copy of MUI/Emotion is used across the app and dialogist
+    "@mui/material",
+    "@mui/material-nextjs",
+    "@mui/system",
+    "@mui/utils",
+    "@emotion/react",
+    "@emotion/styled",
+  ],
+  experimental: { externalDir: true },
+  turbopack: { resolveAlias: sharedAliases },
+  // For Webpack (non-Turbopack) builds, e.g. `next build` without Turbopack
+  webpack: (config) => {
+    config.resolve = config.resolve || {};
+    config.resolve.alias = { ...(config.resolve.alias || {}), ...sharedAliases };
+    return config;
+  },
+};
+
+export default nextConfig;

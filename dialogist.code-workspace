@@ -1,0 +1,61 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "🦑 root"
+    },
+    {
+      "path": "demo/nextjs",
+      "name": "📼 demo/nextjs"
+    }
+  ],
+  "settings": {
+    "colorize.languages": [
+      "javascript",
+      "typescript"
+    ],
+    "workbench.colorCustomizations": {
+      "activityBar.activeBackground": "#92e2ca",
+      "activityBar.background": "#92e2ca",
+      "activityBar.foreground": "#15202b",
+      "activityBar.inactiveForeground": "#15202b99",
+      "activityBarBadge.background": "#b668d7",
+      "activityBarBadge.foreground": "#15202b",
+      "commandCenter.border": "#15202b99",
+      "sash.hoverBorder": "#92e2ca",
+      "statusBar.background": "#6ad7b6",
+      "statusBar.foreground": "#15202b",
+      "statusBar.debuggingBackground": "#d76a8b",
+      "statusBarItem.hoverBackground": "#42cca2",
+      "statusBarItem.remoteBackground": "#6ad7b6",
+      "statusBarItem.remoteForeground": "#15202b",
+      "titleBar.activeBackground": "#6ad7b6",
+      "titleBar.activeForeground": "#15202b",
+      "titleBar.inactiveBackground": "#6ad7b699",
+      "titleBar.inactiveForeground": "#15202b99",
+      "statusBar.debuggingForeground": "#15202b"
+    },
+    "peacock.color": "#6ad7b6",
+    "peacock.affectDebuggingStatusBar": true,
+    "typescript.tsdk": "🗣️ dialogist/node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "files.exclude": {
+      "**/lib": true,
+      "**/build": true,
+      "**/*.tsbuildinfo": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/.yarn": true,
+      "**/lib": true,
+      "**/build": true
+    },
+    "jest.jestCommandLine": "yarn jest",
+    "jest.runMode": "on-demand"
+  }
+}

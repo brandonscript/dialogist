@@ -1,0 +1,134 @@
+{
+  "name": "dialogist",
+  "version": "1.0.0",
+  "description": "A centralized dialog manager system for React applications",
+  "keywords": [
+    "react",
+    "dialog",
+    "modal",
+    "mui",
+    "hooks",
+    "dialog-manager"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./classes": {
+      "types": "./dist/classes.d.ts",
+      "import": "./dist/classes.js"
+    }
+  },
+  "files": [
+    "dist/**/*",
+    "classes.ts",
+    "README.md",
+    "assets/readme/**/*"
+  ],
+  "repository": "https://github.com/brandonscript/dialogist",
+  "author": "github.com/brandonscript",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "npm run clean && rollup -c && npx tsc --project tsconfig.declarations.json && cp dist/src/index.d.ts dist/index.d.ts",
+    "clean": "rm -rf dist && mkdir -p dist",
+    "demo": "cd demo/nextjs && npm run dev",
+    "demo:nextjs": "cd demo/nextjs && npm run dev",
+    "demo:turbo": "cd demo/nextjs && npm run dev:turbo",
+    "lint": "prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown && biome check --write src demo/nextjs/src",
+    "lint:fix": "biome check --write --unsafe src demo/nextjs/src",
+    "precommit": "./.husky/pre-commit",
+    "publish": "npm publish",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "typecheck": "tsc --noEmit",
+    "readme:screenshots": "node scripts/capture-readme-screenshots.mjs"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.27.0",
+    "@emotion/babel-plugin": "^11.13.5",
+    "@emotion/jest": "^11.13.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@biomejs/biome": "latest",
+    "@humanwhocodes/module-importer": "^1.0.1",
+    "@playwright/test": "^1.53.2",
+    "@rollup/plugin-alias": "^5.1.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-replace": "^6.0.2",
+    "@rollup/plugin-swc": "^0.4.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@swc/cli": "^0.6.0",
+    "@swc/core": "^1.11.18",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/babel__core": "^7.20.5",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
+    "@types/rollup-plugin-peer-deps-external": "^2.2.5",
+    "babel-jest": "^29.7.0",
+    "babel-loader": "^9.2.1",
+    "concurrently": "^9.2.0",
+    "html-webpack-plugin": "^5.6.3",
+    "husky": "^9.1.7",
+    "jest": ">=30.0.0-alpha.7",
+    "jest-environment-jsdom": "^29.7.0",
+    "pinst": "^3.0.0",
+    "playwright": "^1.53.2",
+    "prettier": "3.5.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rollup": "^4.39.0",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "serve": "^14.2.3",
+    "stable-hash": ">=0.0.5",
+    "ts-jest": "^29.3.1",
+    "ts-loader": "^9.5.2",
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.3",
+    "webpack": "^5.99.5",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
+  },
+  "peerDependencies": {
+    "@emotion/react": ">=11.0.0",
+    "@emotion/styled": ">=11.0.0",
+    "@mui/material": "^7.3.4",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@emotion/react": {
+      "optional": false
+    },
+    "@emotion/styled": {
+      "optional": false
+    },
+    "@mui/material": {
+      "optional": false
+    }
+  },
+  "dependencies": {
+    "@mui/system": "^7.3.3",
+    "clsx": "^2.1.1",
+    "deepmerge-ts": "^5.1.0"
+  },
+  "imports": {
+    "#dialogist/*": "./dist/*.js"
+  }
+}

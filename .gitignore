@@ -1,0 +1,24 @@
+# Demo Playwright HTML reports
+demo/tests/playwright-report/
+
+# Legacy root-level report (in case a run outputs here)
+playwright-report/
+
+# Playwright test artifacts
+**/test-results/
+demo/tests/test-results/
+
+# Node modules
+node_modules
+
+# Next.js build artifacts
+demo/nextjs/out
+demo/nextjs/node_modules
+demo/nextjs/.next
+
+# Junk
+.DS_Store
+.idea
+.env
+.env.local
+.cursor/**/*.log

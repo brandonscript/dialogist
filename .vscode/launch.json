@@ -1,0 +1,92 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🚀 Next.js Demo (Regular)",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/demo/nextjs",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "demo",
+        "order": 1
+      },
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "⚡ Next.js Demo (Turbopack)",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/demo/nextjs",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:turbo"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "demo",
+        "order": 2
+      },
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "🐞 Next.js Debug (localhost)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5607"
+    },
+    {
+      "name": "🔧 Build Dialogist Package",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "build"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "build",
+        "order": 1
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "🎯 Build & Run Demo (Regular)",
+      "configurations": [
+        "🔧 Build Dialogist Package",
+        "🚀 Next.js Demo (Regular)"
+      ],
+      "presentation": {
+        "group": "compound",
+        "order": 1
+      }
+    },
+    {
+      "name": "⚡ Build & Run Demo (Turbopack)",
+      "configurations": [
+        "🔧 Build Dialogist Package",
+        "⚡ Next.js Demo (Turbopack)"
+      ],
+      "presentation": {
+        "group": "compound",
+        "order": 2
+      }
+    }
+  ]
+}
