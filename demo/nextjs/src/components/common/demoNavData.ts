@@ -103,6 +103,10 @@ export interface DemoSection {
   cards: DemoCard[];
 }
 
+const demoCard = (name: string, component: DemoCardComponent): DemoCard => {
+  return { name, component };
+};
+
 export const DEMO_REGISTRY: DemoSection[] = [
   {
     category: "Getting started",
@@ -110,10 +114,10 @@ export const DEMO_REGISTRY: DemoSection[] = [
     label: "Getting started",
     tabLabel: "getting started",
     cards: [
-      { component: AlertDialogCard },
-      { component: ConfirmationDialogCard },
-      { component: AsyncConfirmationDialogCard },
-      { component: DialogConfigurationCard },
+      demoCard("Alert dialog", AlertDialogCard),
+      demoCard("Confirmation dialog", ConfirmationDialogCard),
+      demoCard("Async dialogs", AsyncConfirmationDialogCard),
+      demoCard("Dialog configuration", DialogConfigurationCard),
     ],
   },
   {
@@ -122,11 +126,11 @@ export const DEMO_REGISTRY: DemoSection[] = [
     label: "Actions & results",
     tabLabel: "actions & results",
     cards: [
-      { component: BuiltinActionsCard },
-      { component: CustomActionsCard },
-      { component: ActionGroupsCard },
-      { component: ActionEventsCard },
-      { component: DialogActionEventPayloadCard },
+      demoCard("Built-in actions", BuiltinActionsCard),
+      demoCard("Custom actions", CustomActionsCard),
+      demoCard("Action groups", ActionGroupsCard),
+      demoCard("Action events", ActionEventsCard),
+      demoCard("DialogActionEvent payload", DialogActionEventPayloadCard),
     ],
   },
   {
@@ -135,9 +139,9 @@ export const DEMO_REGISTRY: DemoSection[] = [
     label: "Closing dialogs",
     tabLabel: "closing dialogs",
     cards: [
-      { component: CloseHandlingCard },
-      { component: DialogCloseEventCard },
-      { component: PreventingDialogsFromClosingCard },
+      demoCard("Ways to close dialogs", CloseHandlingCard),
+      demoCard("DialogCloseEvent payload", DialogCloseEventCard),
+      demoCard("Preventing dialogs from closing", PreventingDialogsFromClosingCard),
     ],
   },
   {
@@ -146,9 +150,9 @@ export const DEMO_REGISTRY: DemoSection[] = [
     label: "Layout & presentation",
     tabLabel: "layout & presentation",
     cards: [
-      { component: AligningContentCard },
-      { component: StatusBarFooterDialogCard },
-      { component: CustomComponentsDialogCard },
+      demoCard("Aligning content", AligningContentCard),
+      demoCard("Status bar & footer", StatusBarFooterDialogCard),
+      demoCard("Using custom components", CustomComponentsDialogCard),
     ],
   },
   {
@@ -157,10 +161,10 @@ export const DEMO_REGISTRY: DemoSection[] = [
     label: "Updating dialog content",
     tabLabel: "updating dialog content",
     cards: [
-      { component: UsingReactiveSlotHooksCard },
-      { component: UsingImperativeSettersCard },
-      { component: UsingReplaceIfOpenCard },
-      { component: UnderstandingDialogSlotsCard },
+      demoCard("Using reactive slot hooks", UsingReactiveSlotHooksCard),
+      demoCard("Using imperative setters", UsingImperativeSettersCard),
+      demoCard("Replacing open dialogs", UsingReplaceIfOpenCard),
+      demoCard("Understanding dialog slots", UnderstandingDialogSlotsCard),
     ],
   },
   {
@@ -169,11 +173,11 @@ export const DEMO_REGISTRY: DemoSection[] = [
     label: "Dialog state & data flow",
     tabLabel: "dialog state & data flow",
     cards: [
-      { component: ExposingDialogStateCard },
-      { component: TwoWayStateSyncCard },
-      { component: HighFrequencyStateSyncCard },
-      { component: TextInputDebounceCard },
-      { component: StreamingDataCard },
+      demoCard("Exposing dialog state imperatively", ExposingDialogStateCard),
+      demoCard("Two-way state sync", TwoWayStateSyncCard),
+      demoCard("High-frequency state sync", HighFrequencyStateSyncCard),
+      demoCard("Debouncing external updates", TextInputDebounceCard),
+      demoCard("Streaming data in dialogs", StreamingDataCard),
     ],
   },
   {
@@ -182,11 +186,11 @@ export const DEMO_REGISTRY: DemoSection[] = [
     label: "Data providers",
     tabLabel: "data providers",
     cards: [
-      { component: ReactContextCard },
-      { component: ReactQueryCard },
-      { component: JotaiCard },
-      { component: RTKCard },
-      { component: ZustandCard },
+      demoCard("Using React context", ReactContextCard),
+      demoCard("Using React Query", ReactQueryCard),
+      demoCard("Using Jotai", JotaiCard),
+      demoCard("Using Redux Toolkit (RTK)", RTKCard),
+      demoCard("Using Zustand", ZustandCard),
     ],
   },
   {
@@ -195,10 +199,10 @@ export const DEMO_REGISTRY: DemoSection[] = [
     label: "Dialog orchestration",
     tabLabel: "dialog orchestration",
     cards: [
-      { component: MultipleDialogsCard },
-      { component: DialogConflictDemoCard },
-      { component: SyncingHandlersAcrossComponentsCard },
-      { component: ListVirtualizationCard },
+      demoCard("Multi-step dialog flows", MultipleDialogsCard),
+      demoCard("Handling open conflicts", DialogConflictDemoCard),
+      demoCard("Syncing handlers across components", SyncingHandlersAcrossComponentsCard),
+      demoCard("List virtualization", ListVirtualizationCard),
     ],
   },
 ];

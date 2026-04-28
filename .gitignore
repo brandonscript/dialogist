@@ -15,6 +15,7 @@ node_modules
 demo/nextjs/out
 demo/nextjs/node_modules
 demo/nextjs/.next
+demo/nextjs/.next-pages
 
 # Junk
 .DS_Store

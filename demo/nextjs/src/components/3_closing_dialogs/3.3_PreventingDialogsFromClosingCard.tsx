@@ -2,7 +2,7 @@
 
 import { Chip, Typography } from "@mui/material";
 import { FlexBox } from "@mui-flexy/v7";
-import { useDialog } from "dialogist";
+import { type DialogistEventMap, useDialog } from "dialogist";
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { PiShieldWarningDuotone } from "react-icons/pi";
 
@@ -18,6 +18,7 @@ import { Code, DemoParagraph, Key } from "../common/typography";
 
 const DIALOG_KEY = ["preventing-dialogs-from-closing", "demo"] as const;
 const CARD_TITLE = "Preventing dialogs from closing";
+type ClosePreventedPayload = DialogistEventMap["closePrevented"];
 
 const CAN_CLOSE_SNIPPET = `
 const [allowClose, setAllowClose] = useState(false);
@@ -48,13 +49,13 @@ export const PreventingDialogsFromClosingCard = Object.assign(
 
     useEffect(() => {
       let isMounted = true;
-      const unsubscribe = dialog.on("closePrevented", (payload) => {
+      const unsubscribe = dialog.on("closePrevented", (payload?: ClosePreventedPayload) => {
         if (!isMounted) return;
         if (!payload || typeof payload !== "object") {
           setPreventedNotice("The dialog cannot be closed.");
           return;
         }
-        const reason = (payload as { reason?: string }).reason;
+        const reason = payload.reason;
         switch (reason) {
           case "backdrop":
             setPreventedNotice(

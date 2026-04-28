@@ -17,6 +17,8 @@ interface ClientProvidersProps {
   children: React.ReactNode;
 }
 
+type DialogProviderChildren = React.ComponentProps<typeof DialogProvider>["children"];
+
 export const ClientProviders = ({ children }: ClientProvidersProps) => {
   return (
     <AppRouterCacheProvider>
@@ -29,7 +31,7 @@ export const ClientProviders = ({ children }: ClientProvidersProps) => {
                 slots={{ Base: DemoDialogBase }}
                 defaultOptions={{ borderRadius: DEMO_DIALOG_BORDER_RADIUS }}
               >
-                {children}
+                {children as DialogProviderChildren}
               </DialogProvider>
             </DemoStateProvider>
           </NoSsr>

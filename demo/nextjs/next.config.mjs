@@ -6,21 +6,20 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "../..");
-const demoNodeModules = path.resolve(__dirname, "node_modules");
 const isGitHubPages = process.env.GITHUB_PAGES === "true";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? (isGitHubPages ? "/dialogist" : "");
 
-/** Force shared packages to resolve from the demo app, even when Next infers the repo as workspace root. */
-const sharedAliases = {
-  "dialogist$": path.resolve(repoRoot, "src/index.ts"),
-  "dialogist/classes$": path.resolve(repoRoot, "src/classes.ts"),
-  "@mui/material": path.resolve(demoNodeModules, "@mui/material"),
-  "@mui/system": path.resolve(demoNodeModules, "@mui/system"),
-  "@mui/utils": path.resolve(demoNodeModules, "@mui/utils"),
-  "@emotion/react": path.resolve(demoNodeModules, "@emotion/react"),
-  "@emotion/styled": path.resolve(demoNodeModules, "@emotion/styled"),
-  "deepmerge-ts": path.resolve(demoNodeModules, "deepmerge-ts"),
-  "#dialogist": path.resolve(repoRoot, "src"),
+/** Turbopack aliases are relative to the demo app root. */
+const turbopackAliases = {
+  dialogist: "../../src/index.ts",
+  "dialogist/classes": "../../src/classes.ts",
+  "@mui/material": "./node_modules/@mui/material",
+  "@mui/system": "./node_modules/@mui/system",
+  "@mui/utils": "./node_modules/@mui/utils",
+  "@emotion/react": "./node_modules/@emotion/react",
+  "@emotion/styled": "./node_modules/@emotion/styled",
+  "deepmerge-ts": "./node_modules/deepmerge-ts",
+  "#dialogist": "../../src",
 };
 
 /** @type {import('next').NextConfig} */
@@ -28,6 +27,7 @@ const nextConfig = {
   reactStrictMode: true,
   ...(isGitHubPages
     ? {
+        distDir: ".next-pages",
         output: "export",
         trailingSlash: true,
         basePath,
@@ -48,13 +48,7 @@ const nextConfig = {
   ],
   outputFileTracingRoot: repoRoot,
   experimental: { externalDir: true },
-  turbopack: { resolveAlias: sharedAliases },
-  // For Webpack (non-Turbopack) builds, e.g. `next build` without Turbopack
-  webpack: (config) => {
-    config.resolve = config.resolve || {};
-    config.resolve.alias = { ...(config.resolve.alias || {}), ...sharedAliases };
-    return config;
-  },
+  turbopack: { resolveAlias: turbopackAliases },
 };
 
 export default nextConfig;

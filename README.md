@@ -6,20 +6,20 @@
 <p align="center"><strong>Centralized, promise-based dialogs for React.</strong></p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/dialogist">npm</a>
+  <a href="https://www.npmjs.com/package/dialogist" target="_blank" rel="noopener noreferrer">npm</a>
   ·
-  <a href="https://brandonscript.github.io/dialogist/">Documentation</a>
+  <a href="https://brandonscript.github.io/dialogist/" target="_blank" rel="noopener noreferrer">Documentation</a>
   ·
-  <a href="https://github.com/brandonscript/dialogist">GitHub</a>
+  <a href="https://github.com/brandonscript/dialogist" target="_blank" rel="noopener noreferrer">GitHub</a>
   ·
-  <a href="https://github.com/brandonscript/dialogist/issues">Issues</a>
+  <a href="https://github.com/brandonscript/dialogist/issues" target="_blank" rel="noopener noreferrer">Issues</a>
   ·
-  <a href="./LICENSE">License</a>
+  <a href="./LICENSE" target="_blank" rel="noopener noreferrer">License</a>
 </p>
 
 ## What is Dialogist?
 
-Dialogist is a **centralized dialog manager** for React apps: one provider, hooks from anywhere, no prop drilling. It's built with a style/component-agnostic core (plus [MUI](https://mui.com/material-ui/)-friendly defaults), and uses slot-based updates so titles, content, actions, and the dialog backplane can refresh independently without re-rendering the entire component tree.
+Dialogist is a **centralized dialog manager** for React apps: one provider, hooks from anywhere, no prop drilling. It's built with a style/component-agnostic core (plus <a href="https://mui.com/material-ui/" target="_blank" rel="noopener noreferrer">MUI</a>-friendly defaults), and uses slot-based updates so titles, content, actions, and the dialog backplane can refresh independently without re-rendering the entire component tree.
 
 ## Screenshots
 
@@ -84,11 +84,11 @@ function MyComponent() {
 
 ## Demo and documentation
 
-**Documentation** and a comprehensive set of examples for Dialogist is at [https://brandonscript.github.io/dialogist/](https://brandonscript.github.io/dialogist/) — it is the best place to explore Dialogist interactively.
+**Documentation** and a comprehensive set of examples for Dialogist is at <a href="https://brandonscript.github.io/dialogist/" target="_blank" rel="noopener noreferrer">https://brandonscript.github.io/dialogist/</a> — it is the best place to explore Dialogist interactively.
 
 ### Run the demo locally
 
-The demo is a Next.js app in [`demo/nextjs`](./demo/nextjs), and can also be run locally. From the repository root:
+The demo is a Next.js app in <a href="./demo/nextjs" target="_blank" rel="noopener noreferrer"><code>demo/nextjs</code></a>, and can also be run locally. From the repository root:
 
 ```bash
 npm install
@@ -96,12 +96,12 @@ cd demo/nextjs && npm install && cd ../..
 npm run demo:nextjs
 ```
 
-Open [http://localhost:5607](http://localhost:5607) in your browser. The `demo:nextjs` script starts the Next.js dev server for `demo/nextjs` on port **5607** by default.
+Open <a href="http://localhost:5607" target="_blank" rel="noopener noreferrer">http://localhost:5607</a> in your browser. The `demo:nextjs` script starts the Next.js dev server for `demo/nextjs` on port **5607** by default.
 
 
 ## Contributing
 
-Human contributors: see [`AGENTS.md`](./AGENTS.md) for project conventions, testing, and layout rules. While primarily written with LLMs in mind, it's good for humans too.
+Human contributors: see <a href="./AGENTS.md" target="_blank" rel="noopener noreferrer"><code>AGENTS.md</code></a> for project conventions, testing, and layout rules. While primarily written with LLMs in mind, it's good for humans too.
 
 Issues and pull requests are welcome. For larger changes, open an issue first so we can align on direction. Please run all tests (add/update tests to ensure coverage of your changes) and update the demo app if applicable. All code accepted to main must be reviewed by you, the human.
 
@@ -109,14 +109,14 @@ If you contribute to this project, you agree to adhere to the
 
 ## Fair AI and LLM usage
 
-AI contributors: see [`AGENTS.md`](./AGENTS.md) for project conventions, testing, and layout rules.
+AI contributors: see <a href="./AGENTS.md" target="_blank" rel="noopener noreferrer"><code>AGENTS.md</code></a> for project conventions, testing, and layout rules.
 
 If you use AI tools with this codebase or its documentation: do not submit generated changes without **reviewing** them yourself by hand for correctness, security, and fit with project conventions.
 
 ## License
 
-[MIT](./LICENSE)
+<a href="./LICENSE" target="_blank" rel="noopener noreferrer">MIT</a>
 
 ## Ethical use
 
-Per the [Hippocratic License 3.0](https://firstdonoharm.dev/), you may not use, copy, modify, or employ this project's source code to cause harm or in any way violate internationally recognized human rights.
+Per the <a href="https://firstdonoharm.dev/" target="_blank" rel="noopener noreferrer">Hippocratic License 3.0</a>, you may not use, copy, modify, or employ this project's source code to cause harm or in any way violate internationally recognized human rights.

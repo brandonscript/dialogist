@@ -1,7 +1,18 @@
 "use client";
 
-import { AppBar, Button, FormControlLabel, Switch, styled, Toolbar, Tooltip, Typography } from "@mui/material";
+import {
+  AppBar,
+  Button,
+  FormControlLabel,
+  IconButton,
+  Switch,
+  styled,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { FlexBox } from "@mui-flexy/v7";
+import { FaGithub } from "react-icons/fa6";
 
 import { useRenderTracking } from "../../contexts/RenderTrackingContext";
 import { emitExternalStateResetAll, useHasDirtyExternalState } from "../7_data_providers/globalReset";
@@ -102,19 +113,30 @@ export const AppTopBar = () => {
               Reset
             </Button>
             {hasDirtyExternalState && (
-              <Button
-                variant="contained"
-                color="primary"
-                size="tiny"
-                onClick={() => emitExternalStateResetAll()}
-              >
+              <Button variant="contained" color="primary" size="tiny" onClick={() => emitExternalStateResetAll()}>
                 Clear state
               </Button>
             )}
           </FlexBox>
         </FlexBox>
         <RenderTracker componentName="HomePage" variant="light" sx={{ position: "static", m: 0 }} />
+        <Tooltip title="Dialogist on GitHub">
+          <IconButton
+            component="a"
+            href="https://github.com/brandonscript/dialogist"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Dialogist on GitHub"
+            sx={{
+              color: "secondary.main",
+              p: 0.75,
+              "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.08)" },
+            }}
+          >
+            <FaGithub size={22} />
+          </IconButton>
+        </Tooltip>
       </Toolbar>
     </AppBar>
   );
-}
+};

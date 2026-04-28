@@ -11,7 +11,7 @@ const withBasePath = (path: string): string => {
 };
 
 export const metadata: Metadata = {
-  title: "Dialogist demo - Next.js",
+  title: "Dialogist demo & docs",
   description: "Demo application showcasing Dialogist dialog management",
   icons: {
     icon: [
