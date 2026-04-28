@@ -30,24 +30,30 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: demo/nextjs/package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            demo/nextjs/package-lock.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Install dependencies
+      - name: Install root dependencies
+        working-directory: .
+        run: npm ci
+
+      - name: Install demo dependencies
         run: npm ci
 
       - name: Build static demo
         run: npm run build:pages
 
       - name: Disable Jekyll
-        run: touch out/.nojekyll
+        run: touch .next-pages/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: demo/nextjs/out
+          path: demo/nextjs/.next-pages
 
   deploy:
     environment:

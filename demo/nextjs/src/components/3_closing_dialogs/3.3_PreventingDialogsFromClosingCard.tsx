@@ -2,7 +2,7 @@
 
 import { Chip, Typography } from "@mui/material";
 import { FlexBox } from "@mui-flexy/v7";
-import { type DialogistEventMap, useDialog } from "dialogist";
+import { type DialogCloseEvent, type DialogistEventMap, useDialog } from "dialogist";
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { PiShieldWarningDuotone } from "react-icons/pi";
 
@@ -134,7 +134,7 @@ export const PreventingDialogsFromClosingCard = Object.assign(
           okLabel: "Confirm close",
           cancelLabel: "Cancel",
         })
-        .then((event) => {
+        .then((event: DialogCloseEvent) => {
           setResult({
             text: event.buttonText,
             color: event.ok ? "success.main" : "error.main",

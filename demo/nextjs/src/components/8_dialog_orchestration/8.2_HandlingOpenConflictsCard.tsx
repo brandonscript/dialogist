@@ -11,7 +11,13 @@ import {
   Typography,
 } from "@mui/material";
 import { FlexBox } from "@mui-flexy/v7";
-import { type DialogConflictPolicy, type DialogConflictResolver, useDialog, useDialogActionsContext } from "dialogist";
+import {
+  type DialogCloseEvent,
+  type DialogConflictPolicy,
+  type DialogConflictResolver,
+  useDialog,
+  useDialogActionsContext,
+} from "dialogist";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import { TbLockX } from "react-icons/tb";
 
@@ -157,7 +163,7 @@ export const DialogConflictDemoCard = Object.assign(
             setResult({ text: "Primary closed", color: "info.main" });
           },
         })
-        .then((ev) => {
+        .then((ev: DialogCloseEvent) => {
           if (ev.blocked) {
             setConflictNote({
               text: `Second open was blocked. Demo policy returned from onConflict: "${conflictPolicy}". Check the console for the last payload — fields include decision and activePolicy (baseline before your return).`,
@@ -190,7 +196,7 @@ export const DialogConflictDemoCard = Object.assign(
             setResult({ text: "Same-root dialog closed", color: "success.main" });
           },
         })
-        .then((ev) => {
+        .then((ev: DialogCloseEvent) => {
           if (ev.blocked) {
             setConflictNote({
               text: `Blocked (different dialog is active). Active dialog conflict policy: "${conflictPolicy}".`,
@@ -223,7 +229,7 @@ export const DialogConflictDemoCard = Object.assign(
             setResult({ text: "Different dialog closed", color: "success.main" });
           },
         })
-        .then((ev) => {
+        .then((ev: DialogCloseEvent) => {
           if (ev.blocked) {
             setConflictNote({
               text: `Blocked (different dialog is active). Active dialog conflict policy: "${conflictPolicy}".`,

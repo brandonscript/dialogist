@@ -16,6 +16,11 @@ echo ""
 echo "Running type checking..."
 npm run typecheck
 
+# Run demo type checking
+echo ""
+echo "Running demo type checking..."
+(cd demo/nextjs && npm run typecheck)
+
 # Run linting
 echo ""
 echo "Running linting..."

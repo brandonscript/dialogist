@@ -18,6 +18,10 @@ const turbopackAliases = {
   "@mui/utils": "./node_modules/@mui/utils",
   "@emotion/react": "./node_modules/@emotion/react",
   "@emotion/styled": "./node_modules/@emotion/styled",
+  react: "./node_modules/react",
+  "react-dom": "./node_modules/react-dom",
+  "react/jsx-runtime": "./node_modules/react/jsx-runtime.js",
+  "react/jsx-dev-runtime": "./node_modules/react/jsx-dev-runtime.js",
   "deepmerge-ts": "./node_modules/deepmerge-ts",
   "#dialogist": "../../src",
 };
@@ -40,7 +44,6 @@ const nextConfig = {
     "dialogist",
     // Ensure a single, transpiled copy of MUI/Emotion is used across the app and dialogist
     "@mui/material",
-    "@mui/material-nextjs",
     "@mui/system",
     "@mui/utils",
     "@emotion/react",

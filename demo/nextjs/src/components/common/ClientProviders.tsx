@@ -3,7 +3,6 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import NoSsr from "@mui/material/NoSsr";
 import { ThemeProvider } from "@mui/material/styles";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { DialogProvider } from "dialogist";
 
 import { DEMO_DIALOG_BORDER_RADIUS } from "@/constants/dialogDefaults";
@@ -21,22 +20,20 @@ type DialogProviderChildren = React.ComponentProps<typeof DialogProvider>["child
 
 export const ClientProviders = ({ children }: ClientProvidersProps) => {
   return (
-    <AppRouterCacheProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <RenderTrackingProvider>
-          <NoSsr>
-            <DemoStateProvider>
-              <DialogProvider
-                slots={{ Base: DemoDialogBase }}
-                defaultOptions={{ borderRadius: DEMO_DIALOG_BORDER_RADIUS }}
-              >
-                {children as DialogProviderChildren}
-              </DialogProvider>
-            </DemoStateProvider>
-          </NoSsr>
-        </RenderTrackingProvider>
-      </ThemeProvider>
-    </AppRouterCacheProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <RenderTrackingProvider>
+        <NoSsr>
+          <DemoStateProvider>
+            <DialogProvider
+              slots={{ Base: DemoDialogBase }}
+              defaultOptions={{ borderRadius: DEMO_DIALOG_BORDER_RADIUS }}
+            >
+              {children as DialogProviderChildren}
+            </DialogProvider>
+          </DemoStateProvider>
+        </NoSsr>
+      </RenderTrackingProvider>
+    </ThemeProvider>
   );
 };

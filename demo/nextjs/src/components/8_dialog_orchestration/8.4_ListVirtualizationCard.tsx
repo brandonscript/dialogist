@@ -312,7 +312,7 @@ export const ListVirtualizationCard = Object.assign(
               setResult({ text: `Closed row ${row.id}`, color: "info.main" });
             },
           })
-          .catch((err) => {
+          .catch((err: unknown) => {
             const message = err instanceof Error ? err.message : String(err);
             setError(message);
           });

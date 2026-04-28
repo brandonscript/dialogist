@@ -47,7 +47,7 @@
     "publish": "npm publish",
     "test": "jest",
     "test:watch": "jest --watch",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --incremental false",
     "readme:screenshots": "node scripts/capture-readme-screenshots.mjs"
   },
   "devDependencies": {

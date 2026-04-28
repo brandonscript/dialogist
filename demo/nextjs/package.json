@@ -10,14 +10,13 @@
     "start": "next start -p 5607",
     "lint": "biome check --write src",
     "lint:fix": "biome check --write --unsafe src",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit --incremental false"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui-flexy/v7": "^2.0.4-rc.2",
     "@mui/material": ">=7",
-    "@mui/material-nextjs": "*",
     "@reduxjs/toolkit": "^2.2.0",
     "@tanstack/react-query": "^5.56.0",
     "deepmerge-ts": "^7.1.5",
