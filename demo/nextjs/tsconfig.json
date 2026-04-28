@@ -41,8 +41,38 @@
       "react-dom": [
         "./node_modules/@types/react-dom"
       ],
+      "@emotion/react": [
+        "./node_modules/@emotion/react"
+      ],
+      "@emotion/styled": [
+        "./node_modules/@emotion/styled"
+      ],
+      "@mui/material": [
+        "./node_modules/@mui/material"
+      ],
+      "@mui/material/*": [
+        "./node_modules/@mui/material/*"
+      ],
+      "@mui/system": [
+        "./node_modules/@mui/system"
+      ],
+      "@mui/system/*": [
+        "./node_modules/@mui/system/*"
+      ],
+      "@mui/utils": [
+        "./node_modules/@mui/utils"
+      ],
+      "@mui/utils/*": [
+        "./node_modules/@mui/utils/*"
+      ],
+      "deepmerge-ts": [
+        "./node_modules/deepmerge-ts"
+      ],
       "#dialogist/*": [
         "../../src/*"
+      ],
+      "dialogist/classes": [
+        "../../src/classes.ts"
       ],
       "dialogist": [
         "../../src/index.ts"

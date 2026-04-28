@@ -12,23 +12,22 @@ type ActionSquaresIconProps = {
 };
 
 export const ActionSquaresIcon = ({ count = 1, gap = 0.25, twoTone = true, sx }: ActionSquaresIconProps) => {
+  const baseSx = {
+    color: "text.primary",
+    "& svg": {
+      width: 14,
+      height: 16,
+      flexShrink: 0,
+      strokeWidth: 3,
+      ...(twoTone ? { fill: "color-mix(in srgb, currentColor 18%, transparent)" } : null),
+    },
+  };
+
   return (
     <FlexBox
       row
       gap={gap}
-      sx={[
-        {
-          color: "text.primary",
-          "& svg": {
-            width: 14,
-            height: 16,
-            flexShrink: 0,
-            strokeWidth: 3,
-            ...(twoTone ? { fill: "color-mix(in srgb, currentColor 18%, transparent)" } : null),
-          },
-        },
-        sx,
-      ]}
+      sx={sx === undefined ? baseSx : [baseSx, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       {Array.from({ length: count }).map((_, index) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: decorative fixed-length array, no meaningful identifier

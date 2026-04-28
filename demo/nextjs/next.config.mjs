@@ -5,18 +5,22 @@ import { fileURLToPath } from "url";
 // aliases to the app's node_modules directories (not concrete file paths).
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const repoRoot = path.resolve(__dirname, "../..");
+const demoNodeModules = path.resolve(__dirname, "node_modules");
 const isGitHubPages = process.env.GITHUB_PAGES === "true";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? (isGitHubPages ? "/dialogist" : "");
 
-/** Webpack + default Turbopack `resolve.alias` / `resolveAlias`: paths relative to `demo/nextjs`. */
+/** Force shared packages to resolve from the demo app, even when Next infers the repo as workspace root. */
 const sharedAliases = {
-  dialogist: "../../src/index.ts",
-  "@mui/material": "./node_modules/@mui/material",
-  "@mui/system": "./node_modules/@mui/system",
-  "@mui/utils": "./node_modules/@mui/utils",
-  "@emotion/react": "./node_modules/@emotion/react",
-  "@emotion/styled": "./node_modules/@emotion/styled",
-  "#dialogist": "../../src",
+  "dialogist$": path.resolve(repoRoot, "src/index.ts"),
+  "dialogist/classes$": path.resolve(repoRoot, "src/classes.ts"),
+  "@mui/material": path.resolve(demoNodeModules, "@mui/material"),
+  "@mui/system": path.resolve(demoNodeModules, "@mui/system"),
+  "@mui/utils": path.resolve(demoNodeModules, "@mui/utils"),
+  "@emotion/react": path.resolve(demoNodeModules, "@emotion/react"),
+  "@emotion/styled": path.resolve(demoNodeModules, "@emotion/styled"),
+  "deepmerge-ts": path.resolve(demoNodeModules, "deepmerge-ts"),
+  "#dialogist": path.resolve(repoRoot, "src"),
 };
 
 /** @type {import('next').NextConfig} */
@@ -42,6 +46,7 @@ const nextConfig = {
     "@emotion/react",
     "@emotion/styled",
   ],
+  outputFileTracingRoot: repoRoot,
   experimental: { externalDir: true },
   turbopack: { resolveAlias: sharedAliases },
   // For Webpack (non-Turbopack) builds, e.g. `next build` without Turbopack
