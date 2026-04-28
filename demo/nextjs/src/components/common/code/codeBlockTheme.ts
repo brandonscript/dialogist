@@ -93,9 +93,7 @@ const buildDialogistCodeTheme = () => {
 
   // TSX/JSX: `<` `>` `/>` plain; prop names purple
   spliceRule(
-    (s) =>
-      s.includes("punctuation.definition.tag.directive.tsx") &&
-      s.includes("entity.other.attribute-name.tsx"),
+    (s) => s.includes("punctuation.definition.tag.directive.tsx") && s.includes("entity.other.attribute-name.tsx"),
     [
       {
         scope:
@@ -146,6 +144,6 @@ const buildDialogistCodeTheme = () => {
   });
 
   return theme;
-}
+};
 
 export const DIALOGIST_CODE_THEME = buildDialogistCodeTheme() as ThemeRegistrationAny;

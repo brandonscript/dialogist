@@ -69,17 +69,17 @@ export interface DemoCard {
 /** Returns the display name for a card, preferring the explicit `name` then `component.cardTitle`. */
 export const getCardName = (card: DemoCard): string => {
   return card.name ?? card.component.cardTitle ?? "";
-}
+};
 
 /** URL segment for the card within its section. */
 export const getCardSlug = (card: DemoCard): string => {
   return card.slug ?? toSlug(getCardName(card));
-}
+};
 
 /** URL fragment segment for a subsection. */
 export const getSubHeadingSlug = (sub: DemoSubHeading): string => {
   return sub.slug ?? toSlug(sub.name);
-}
+};
 
 /** Label matched by DemoSectionHeading subtitle; kept out of the side sub-nav only. */
 export const SUB_HEADING_HIDDEN_FROM_NAV = "Try it out";
@@ -87,12 +87,12 @@ export const SUB_HEADING_HIDDEN_FROM_NAV = "Try it out";
 /** Returns subsections for a card, preferring explicit `subHeadings` then `component.cardSubHeadings`. */
 export const getSubHeadings = (card: DemoCard): DemoSubHeading[] => {
   return card.subHeadings ?? card.component.cardSubHeadings ?? [];
-}
+};
 
 /** Sub-nav list: same as {@link getSubHeadings} but omits {@link SUB_HEADING_HIDDEN_FROM_NAV}. */
 export const getSubHeadingsForNav = (card: DemoCard): DemoSubHeading[] => {
   return getSubHeadings(card).filter((sub) => sub.name !== SUB_HEADING_HIDDEN_FROM_NAV);
-}
+};
 
 export interface DemoSection {
   category: string;
@@ -223,7 +223,7 @@ const validateDemoRegistry = (): void => {
       composite.add(key);
     }
   }
-}
+};
 
 if (process.env.NODE_ENV !== "production") {
   validateDemoRegistry();
@@ -231,7 +231,7 @@ if (process.env.NODE_ENV !== "production") {
 
 export const findSectionBySlug = (sectionSlug: string): DemoSection | undefined => {
   return DEMO_REGISTRY.find((s) => s.sectionSlug === sectionSlug);
-}
+};
 
 export const findCardBySlugs = (
   sectionSlug: string,
@@ -242,11 +242,11 @@ export const findCardBySlugs = (
   const card = section.cards.find((c) => getCardSlug(c) === cardSlug);
   if (!card) return undefined;
   return { section, card };
-}
+};
 
 /** In sidebar order: every card's route for scroll-spy and routing. */
 export const getAllCardRoutes = (): { sectionSlug: string; cardSlug: string }[] => {
   return DEMO_REGISTRY.flatMap((section) =>
     section.cards.map((card) => ({ sectionSlug: section.sectionSlug, cardSlug: getCardSlug(card) })),
   );
-}
+};

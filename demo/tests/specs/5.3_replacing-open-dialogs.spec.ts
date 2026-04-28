@@ -6,6 +6,9 @@ test("updating-dialog-content/replacing-open-dialogs", async ({ demoPage: d }) =
   await d.expectWindowed();
   await d.expectCardVisible("Replacing open dialogs");
   await expect(
-    d.cardRoot("updating-dialog-content", "replacing-open-dialogs").getByText(/replaceIfOpen|onConflict/).first(),
+    d
+      .cardRoot("updating-dialog-content", "replacing-open-dialogs")
+      .getByText(/replaceIfOpen|onConflict/)
+      .first(),
   ).toBeVisible();
 });

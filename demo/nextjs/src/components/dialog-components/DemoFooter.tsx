@@ -45,4 +45,4 @@ export const DemoFooter = ({ content, dialogKey }: DemoFooterProps) => {
       </RenderTrackerWrapper>
     </FooterContainer>
   );
-}
+};

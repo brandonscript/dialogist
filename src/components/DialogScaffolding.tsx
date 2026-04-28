@@ -11,6 +11,7 @@ import { useMemoizedDialogParts } from "../hooks/useMemoizedDialogParts";
 import type {
   BaseDialogProps,
   CustomDialogConfig,
+  DialogActionProps,
   DialogActionsAlign,
   DialogCloseOptions,
   DialogCloseReason,
@@ -41,6 +42,9 @@ const resolveActionsGap = (
   return typeof v === "number" ? theme.spacing(v) : v;
 };
 
+const getActionKeyPart = (action: DialogActionProps): string =>
+  action.id ?? action.title ?? (typeof action.children === "string" ? action.children : "anonymous");
+
 // Default Actions: one inner row when multiple groups so DialogActions has a single child — theme
 // `gap` on `.Dialogist-actionsContainer` then does not space every button. Row `gap` = between
 // groups; each cluster uses `intraGroupGap` (see {@link import("../types").ActionsStyle}).
@@ -68,9 +72,9 @@ const DefaultActions = ({
       : 1
     : (actionsStyle?.gap ?? 1);
 
-  const groupBoxes = actionGroups.map((group, gi) => (
-    // biome-ignore lint/suspicious/noArrayIndexKey: action groups have no stable id; order is fixed per config
-    <div key={`${dialogKey}-group-${gi}`}
+  const groupBoxes = actionGroups.map((group) => (
+    <div
+      key={`${dialogKey}-group-${group.map(getActionKeyPart).join("-")}`}
       className={dialogistClasses.actionsGroup}
       data-dialogist-layout={hasSingleGroup ? "single" : undefined}
       style={
@@ -80,9 +84,8 @@ const DefaultActions = ({
         } as CSSProperties
       }
     >
-      {group.map((action, ai) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: action items have no stable id; order is fixed per config
-        <Button {...action.props} key={`${dialogKey}-action-${gi}-${ai}`}>
+      {group.map((action) => (
+        <Button {...action.props} key={`${dialogKey}-action-${getActionKeyPart(action)}`}>
           {action.children || action.title}
         </Button>
       ))}

@@ -7,14 +7,13 @@ import { memo, useEffect, useRef, useState } from "react";
 import { MdClear } from "react-icons/md";
 import { PiHandCoinsDuotone } from "react-icons/pi";
 import { useDebounce } from "use-debounce";
-
+import { Admonition } from "../common";
 import { BaseDemoCard } from "../common/BaseDemoCard";
 import { CodeBlock } from "../common/code";
 import type { DialogResult } from "../common/DialogResultDisplay";
 import { withPiDuotoneIcon } from "../common/demoCardIconWrappers";
 import { DocLink } from "../common/links";
 import { Code, DemoParagraph } from "../common/typography";
-import { Admonition } from "../common";
 
 const DIALOG_KEY = "textfield-validation-demo";
 const MIN_CHARS = 7;

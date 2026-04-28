@@ -16,4 +16,4 @@ export const TextWithCode = ({ text, code }: { text: string; code: string }) => 
       {after ?? ""}
     </>
   );
-}
+};

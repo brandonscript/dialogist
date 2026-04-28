@@ -288,7 +288,9 @@ describe("DialogProvider conflict handling", () => {
     await act(async () => {
       conflictResult = await result.current.open({ type: "alert", message: "Primary instance" });
     });
-    expect(conflictResult).toEqual(expect.objectContaining({ ok: false, cancelled: false, blocked: true, resolveValue: false }));
+    expect(conflictResult).toEqual(
+      expect.objectContaining({ ok: false, cancelled: false, blocked: true, resolveValue: false }),
+    );
     expect(consoleSpy).not.toHaveBeenCalled();
     consoleSpy.mockRestore();
   });

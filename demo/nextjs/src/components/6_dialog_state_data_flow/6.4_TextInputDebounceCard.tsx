@@ -186,7 +186,7 @@ const TextFieldBody = ({ value: initial, onChange, debounceMs, maxWait, leading,
       </FlexBox>
     </FlexBox>
   );
-}
+};
 
 export const TextInputDebounceCard = Object.assign(
   memo(function TextInputDebounceCard() {

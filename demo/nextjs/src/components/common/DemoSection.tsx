@@ -38,4 +38,4 @@ export const DemoSection = ({ title, children, layout = "auto" }: DemoSectionPro
       </Box>
     </Box>
   );
-}
+};

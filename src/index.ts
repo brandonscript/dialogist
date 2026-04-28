@@ -1,6 +1,5 @@
 // Dialogist - A centralized dialog manager for React applications
 
-export { DIALOGIST_VERSION } from "./version";
 export { type DialogistClasses, dialogistClasses } from "./classes";
 export * from "./context/DialogActionsContext";
 export * from "./context/DialogCallbacksContext";
@@ -30,3 +29,4 @@ export * from "./utils/chainEventHandlers";
 export * from "./utils/classNames";
 export { deepEqual, deepEqualDeps } from "./utils/deepCompare";
 export { resolveDialogPartContent } from "./utils/resolveDialogPartContent";
+export { DIALOGIST_VERSION } from "./version";

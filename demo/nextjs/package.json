@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbo -p 5607",
-    "dev:wp": "next dev -p 5607",
     "dev:e2e": "next dev --turbo -p 5608",
     "build": "next build --turbopack",
     "build:pages": "GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/dialogist next build --turbopack",

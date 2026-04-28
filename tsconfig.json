@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
@@ -22,18 +18,11 @@
     "inlineSourceMap": false,
     "verbatimModuleSyntax": true,
     "paths": {
-      "#dialogist/*": [
-        "./src/*"
-      ]
+      "#dialogist/*": ["./src/*"]
     },
-    "types": [
-      "jest"
-    ]
+    "types": ["jest"]
   },
-  "include": [
-    "src/**/*",
-    "demo/**/*"
-  ],
+  "include": ["src/**/*", "demo/**/*"],
   "exclude": [
     "dist",
     "node_modules",
@@ -43,7 +32,6 @@
     "demo/**/*",
     "**eslint**",
     "jest.config.**",
-    "webpack.config.js",
     "rollup.config.base.mjs",
     "coverage",
     ".eslintrc.js",

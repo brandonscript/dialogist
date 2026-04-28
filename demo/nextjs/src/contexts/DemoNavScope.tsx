@@ -14,11 +14,9 @@ export const DemoNavScopeProvider = ({
   cardSlug,
   children,
 }: DemoNavScopeValue & { children: ReactNode }) => {
-  return (
-    <DemoNavScopeContext.Provider value={{ sectionSlug, cardSlug }}>{children}</DemoNavScopeContext.Provider>
-  );
-}
+  return <DemoNavScopeContext.Provider value={{ sectionSlug, cardSlug }}>{children}</DemoNavScopeContext.Provider>;
+};
 
 export const useDemoNavScope = (): DemoNavScopeValue | null => {
   return useContext(DemoNavScopeContext);
-}
+};

@@ -12,4 +12,4 @@ export const useDialogActionsContext = (): Actions => {
   const ctx = useContext(DialogActionsContext);
   if (!ctx) throw new Error("useDialogActionsContext must be used within a DialogProvider");
   return ctx;
-}
+};

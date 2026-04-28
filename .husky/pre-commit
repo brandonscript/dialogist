@@ -9,22 +9,27 @@ set -e
 
 # Run Jest tests (all unit tests)
 echo "Running Jest tests..."
-yarn test --silent --verbose=false --reporters=summary --passWithNoTests
+npm test -- --silent --verbose=false --reporters=summary --passWithNoTests
 
 # Run type checking
 echo ""
 echo "Running type checking..."
-yarn run typecheck
+npm run typecheck
 
 # Run linting
 echo ""
 echo "Running linting..."
-yarn run lint
+npm run lint
 
 # Build package
 echo ""
 echo "Building package..."
-yarn --silent run build
+npm run build
+
+# Build GitHub Pages demo
+echo ""
+echo "Building GitHub Pages demo..."
+(cd demo/nextjs && npm run build:pages)
 
 # Auto-add dist folder to git index immediately after build
 git add dist/ || true

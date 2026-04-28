@@ -31,4 +31,4 @@ export const DialogResultDisplay = ({ result, label = "You clicked" }: DialogRes
       )}
     </FlexBox>
   );
-}
+};

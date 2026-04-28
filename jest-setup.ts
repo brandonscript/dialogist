@@ -12,5 +12,3 @@ expect.addSnapshotSerializer(createSerializer());
 afterEach(() => {
   spy.mockClear();
 });
-
-

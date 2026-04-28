@@ -54,7 +54,7 @@ export const RenderTrackingProvider = ({ children }: { children: ReactNode }) =>
   };
 
   return <RenderTrackingContext.Provider value={contextValue}>{children}</RenderTrackingContext.Provider>;
-}
+};
 
 export const useRenderTracking = () => {
   const context = useContext(RenderTrackingContext);
@@ -62,4 +62,4 @@ export const useRenderTracking = () => {
     throw new Error("useRenderTracking must be used within a RenderTrackingProvider");
   }
   return context;
-}
+};

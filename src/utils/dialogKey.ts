@@ -31,7 +31,7 @@ const canonicalizeDialogKeyParts = (parts: DialogKeyArray): DialogKeyArray => {
     }
   }
   return canonical as DialogKeyArray;
-}
+};
 
 export const ensureDialogKeyArray = (key?: DialogKey): DialogKeyArray | undefined => {
   if (key === undefined) return undefined;

@@ -27,4 +27,4 @@ export const resolveDialogPartContent = (
     }
   }
   return value as ReactNode;
-}
+};

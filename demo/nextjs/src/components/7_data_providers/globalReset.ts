@@ -13,7 +13,7 @@ interface ChangeDetail {
 export const emitExternalStateResetAll = () => {
   if (typeof window === "undefined") return;
   window.dispatchEvent(new CustomEvent<ResetDetail>(RESET_EVENT));
-}
+};
 
 export const useExternalStateResetAll = (handler: () => void) => {
   useEffect(() => {
@@ -24,12 +24,12 @@ export const useExternalStateResetAll = (handler: () => void) => {
       window.removeEventListener(RESET_EVENT, listener);
     };
   }, [handler]);
-}
+};
 
 export const emitExternalStateChange = (dialogId: string, hasChanges: boolean) => {
   if (typeof window === "undefined") return;
   window.dispatchEvent(new CustomEvent<ChangeDetail>(CHANGE_EVENT, { detail: { dialogId, hasChanges } }));
-}
+};
 
 export const useHasDirtyExternalState = (): boolean => {
   const [dirtyMap, setDirtyMap] = useState<Record<string, boolean>>({});
@@ -51,4 +51,4 @@ export const useHasDirtyExternalState = (): boolean => {
   }, []);
 
   return useMemo(() => Object.values(dirtyMap).some(Boolean), [dirtyMap]);
-}
+};

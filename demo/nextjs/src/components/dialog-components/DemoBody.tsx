@@ -24,4 +24,4 @@ export const DemoBody = ({ children }: React.PropsWithChildren) => {
       </RenderTrackerWrapper>
     </BodyContainer>
   );
-}
+};

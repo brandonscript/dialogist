@@ -17,9 +17,9 @@ dialog.open({ type: "alert" });`;
 export const ExternalStateSlotsExplainerBody = () => {
   return (
     <DemoParagraph>
-      You register the dialog's content as slots and provide the external state values as dependencies. Whenever
-      those values change, the affected slot re-renders automatically — the dialog stays open and always reflects the
-      latest state.
+      You register the dialog's content as slots and provide the external state values as dependencies. Whenever those
+      values change, the affected slot re-renders automatically — the dialog stays open and always reflects the latest
+      state.
     </DemoParagraph>
   );
-}
+};

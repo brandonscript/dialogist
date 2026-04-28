@@ -127,7 +127,7 @@ const resolveConflictThrow = (options: {
 // Generate a short unique ID (4-6 chars) for React reconciliation
 const generateInternalId = (): string => {
   return Math.random().toString(36).slice(2, 8);
-}
+};
 
 const dialogProviderInstrumentationEnabled =
   typeof globalThis !== "undefined" &&
@@ -149,7 +149,7 @@ const useRenderInstrumentation = (label: string) => {
     const duration = performance.now() - startRef.current;
     console.log(`[Dialogist][${label}] render:end`, { duration });
   });
-}
+};
 
 // Children are outside DialogStateContext so they won't re-render from dialog state changes
 
@@ -398,7 +398,9 @@ const DialogProviderCore = ({
           const onlyHoldsRemain = nextDialogs.length > 0 && nextDialogs.every((d) => d.config._backdropHold);
           if (onlyHoldsRemain) {
             dialogStateStore.replaceDialogsSnapshotWithoutNotify([]);
-            nextDialogs.forEach((held) => { clearDialogHandlersRow(held.key, held.internalId); });
+            nextDialogs.forEach((held) => {
+              clearDialogHandlersRow(held.key, held.internalId);
+            });
             return [];
           }
           dialogStateStore.replaceDialogsSnapshotWithoutNotify(nextDialogs);
@@ -861,7 +863,7 @@ const DialogProviderCore = ({
       </DialogCallbacksContext.Provider>
     </DialogActionsContext.Provider>
   );
-}
+};
 
 const dialogRowConfigForState = (
   enhanced: DialogOpenConfig | DialogStoredConfig,
@@ -871,7 +873,7 @@ const dialogRowConfigForState = (
     ...enhanced,
     dialogKey: dialogKeySegments,
   } as DialogOpenConfig);
-}
+};
 
 const applySameKeyDialogStateUpdate = (params: {
   prev: DialogState[];
@@ -900,7 +902,7 @@ const applySameKeyDialogStateUpdate = (params: {
     extractReactiveHandlersFromConfig(enhancedConfig as BaseDialogConfig),
   );
   return newDialogs;
-}
+};
 
 // Main provider that wraps everything with slot registry
 export const DialogProvider = ({
@@ -924,4 +926,4 @@ export const DialogProvider = ({
       </DialogProviderCore>
     </DialogSlotRegistryProvider>
   );
-}
+};

@@ -20,11 +20,7 @@ export default {
   },
   testMatch: ["<rootDir>/src/**/*.test.{ts,tsx}"],
   testPathIgnorePatterns: ["/node_modules/", "/dist/", "/demo/"],
-  collectCoverageFrom: [
-    "src/**/*.{ts,tsx}",
-    "!src/**/*.test.{ts,tsx}",
-    "!src/**/*.d.ts",
-  ],
+  collectCoverageFrom: ["src/**/*.{ts,tsx}", "!src/**/*.test.{ts,tsx}", "!src/**/*.d.ts"],
   moduleNameMapper: {
     "#dialogist/(.*)": "<rootDir>/src/$1",
   },

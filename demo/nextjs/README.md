@@ -14,13 +14,13 @@ This is a Next.js demo application showcasing the Dialogist dialog management sy
 1. **Install dependencies:**
 
    ```bash
-   yarn install
+   npm install
    ```
 
 2. **Start the development server:**
 
    ```bash
-   yarn dev
+   npm run dev
    ```
 
 3. **Open your browser:**
@@ -74,5 +74,5 @@ To build the main library:
 
 ```bash
 cd ../..
-yarn build
+npm run build
 ```

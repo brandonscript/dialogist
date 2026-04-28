@@ -4,7 +4,5 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.suggest.autoImports": true,
   "typescript.preferences.importModuleSpecifier": "shortest",
-  "typescript.preferences.autoImportFileExcludePatterns": [
-    "dist/**"
-  ]
+  "typescript.preferences.autoImportFileExcludePatterns": ["dist/**"]
 }

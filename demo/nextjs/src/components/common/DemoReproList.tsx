@@ -75,4 +75,4 @@ export const DemoReproList = ({ title = "Try it out", requiresWindowedMode, step
       </Collapse>
     </DemoCardPaper>
   );
-}
+};

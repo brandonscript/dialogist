@@ -23,7 +23,10 @@ describe("DialogProvider slot live updates while open", () => {
           title: ["Align demo", []],
           content: [() => `Flex line: ${align}`, [align]],
           actions: [
-            () => [{ id: "cancel", title: "Cancel" }, { id: "ok", title: "OK" }],
+            () => [
+              { id: "cancel", title: "Cancel" },
+              { id: "ok", title: "OK" },
+            ],
             [],
           ],
           props: [
@@ -50,9 +53,9 @@ describe("DialogProvider slot live updates while open", () => {
     await waitFor(() => {
       expect(result.current.state?.dialogs).toHaveLength(1);
       expect(String(result.current.state?.dialogs[0].config.message)).toContain("start");
-      expect((result.current.state?.dialogs[0].config as { contentStyle?: { align?: string } }).contentStyle?.align).toBe(
-        "start",
-      );
+      expect(
+        (result.current.state?.dialogs[0].config as { contentStyle?: { align?: string } }).contentStyle?.align,
+      ).toBe("start");
     });
 
     await act(async () => {
@@ -62,9 +65,9 @@ describe("DialogProvider slot live updates while open", () => {
     await waitFor(
       () => {
         expect(String(result.current.state?.dialogs[0].config.message)).toContain("end");
-        expect((result.current.state?.dialogs[0].config as { contentStyle?: { align?: string } }).contentStyle?.align).toBe(
-          "end",
-        );
+        expect(
+          (result.current.state?.dialogs[0].config as { contentStyle?: { align?: string } }).contentStyle?.align,
+        ).toBe("end");
       },
       { timeout: 3000 },
     );

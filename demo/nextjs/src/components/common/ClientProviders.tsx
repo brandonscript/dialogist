@@ -39,4 +39,4 @@ export const ClientProviders = ({ children }: ClientProvidersProps) => {
       </ThemeProvider>
     </AppRouterCacheProvider>
   );
-}
+};

@@ -12,7 +12,7 @@ import { TabBar } from "./TabBar";
 const DemoRouteScroll = () => {
   useDemoRouteScroll();
   return null;
-}
+};
 
 /**
  * Lives in the root layout as a sibling of the route `children` slot (not inside `[[...slug]]/page`).
@@ -66,4 +66,4 @@ export const DemoAppShell = () => {
       </Box>
     </>
   );
-}
+};

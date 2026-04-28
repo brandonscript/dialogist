@@ -138,4 +138,4 @@ export const ExternalStateLogPortal = ({ dialogId, title, index = 0, badgeCount 
     </Box>,
     container,
   );
-}
+};

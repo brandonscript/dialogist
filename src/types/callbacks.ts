@@ -108,7 +108,8 @@ export interface DialogistEventMap {
 /**
  * Built-in {@link DialogistEventMap} merged with extra keys (e.g. `DialogistEventMapWith<{ x: number }>`).
  */
-export type DialogistEventMapWith<TExtra extends Record<string, unknown> = Record<string, never>> = DialogistEventMap & TExtra;
+export type DialogistEventMapWith<TExtra extends Record<string, unknown> = Record<string, never>> = DialogistEventMap &
+  TExtra;
 
 /** `dialog.on` for a `useDialog` instance — keys and payloads come only from {@link DialogistEventMap} (including app augmentations). */
 export type UseDialogOn = <K extends keyof DialogistEventMap>(

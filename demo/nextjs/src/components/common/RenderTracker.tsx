@@ -303,4 +303,4 @@ export const RenderTracker = ({
       )}
     </Box>
   );
-}
+};

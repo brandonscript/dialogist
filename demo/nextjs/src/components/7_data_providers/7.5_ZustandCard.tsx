@@ -208,7 +208,7 @@ const ZustandCardInner = () => {
       logPortalIndex={4}
     />
   );
-}
+};
 
 export const ZustandCard = Object.assign(
   memo(function ZustandCard() {

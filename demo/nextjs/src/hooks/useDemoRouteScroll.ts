@@ -19,7 +19,7 @@ const scrollSidebarToElement = (element: HTMLElement | null, behavior: ScrollBeh
   if (!scrollContainer || !element) return;
   const top = getElementScrollTop(element, scrollContainer) - SCROLL_OFFSET;
   scrollContainer.scrollTo({ top: Math.max(0, top), behavior });
-}
+};
 
 export type ScrollDemoSidebarOptions = {
   behavior?: ScrollBehavior;
@@ -78,7 +78,7 @@ export const scrollDemoSidebarToSlugAndHash = (
   };
 
   return requestAnimationFrame(run);
-}
+};
 
 /**
  * Scrolls the demo sidebar to match the current path (`[[...slug]]`) and optional hash (subsection).
@@ -107,16 +107,16 @@ export const useDemoRouteScroll = (): void => {
     const frame = scrollDemoSidebarToSlugAndHash(slugSegments, hash);
     return () => cancelAnimationFrame(frame);
   }, [hash, slugSegments]);
-}
+};
 
 /** Absolute URL string for clipboard (client only). */
 export const getDemoAbsoluteUrl = (pathWithOptionalHash: string): string => {
   if (typeof window === "undefined") return pathWithOptionalHash;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   return new URL(`${basePath}${pathWithOptionalHash}`, window.location.origin).href;
-}
+};
 
 export const demoPathFromSegments = (segments: string[]): string => {
   if (segments.length === 0) return "/";
   return buildDemoPath(segments[0], segments[1]);
-}
+};

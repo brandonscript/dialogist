@@ -19,7 +19,7 @@ const createDialogConfig = (
   }
 
   return base as DialogStoredConfig;
-}
+};
 
 // Test helper to create dialog states
 const createDialogState = (id: string, overrides: Partial<BaseDialogConfig | DialogConfig> = {}): DialogState => {
@@ -32,7 +32,7 @@ const createDialogState = (id: string, overrides: Partial<BaseDialogConfig | Dia
     reject: () => {},
     internalId: "utils-test-internal",
   };
-}
+};
 
 describe("shouldDialogUpdate", () => {
   describe("no dependency arrays specified", () => {

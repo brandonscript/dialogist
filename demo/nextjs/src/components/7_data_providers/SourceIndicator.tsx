@@ -35,5 +35,4 @@ export const SourceIndicator = ({ source, label }: { source: "dialog" | "externa
       }}
     />
   );
-}
-
+};

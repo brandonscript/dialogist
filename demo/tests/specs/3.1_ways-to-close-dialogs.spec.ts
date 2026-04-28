@@ -6,6 +6,9 @@ test("closing-dialogs/ways-to-close-dialogs", async ({ demoPage: d }) => {
   await d.expectWindowed();
   await d.expectCardVisible("Ways to close dialogs");
   await expect(
-    d.cardRoot("closing-dialogs", "ways-to-close-dialogs").getByText(/dialog\.close/).first(),
+    d
+      .cardRoot("closing-dialogs", "ways-to-close-dialogs")
+      .getByText(/dialog\.close/)
+      .first(),
   ).toBeVisible();
 });

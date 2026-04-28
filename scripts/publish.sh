@@ -71,9 +71,12 @@ get_package_info() {
   local package_json="$package_dir/package.json"
 
   if [[ -f "$package_json" ]]; then
-    local name=$(jq -r '.name' "$package_json")
-    local version=$(jq -r '.version' "$package_json")
-    local private=$(jq -r '.private // false' "$package_json")
+    local name
+    local version
+    local private
+    name=$(jq -r '.name' "$package_json")
+    version=$(jq -r '.version' "$package_json")
+    private=$(jq -r '.private // false' "$package_json")
     echo "$name|$version|$private"
   fi
 }
@@ -101,8 +104,6 @@ update_workspace_dependencies() {
     local package_json="$package_dir/package.json"
     
     if [[ -f "$package_json" ]]; then
-      local updated=false
-      
       # Check each workspace package to see if it's a dependency
       for workspace_pkg in "${workspace_packages[@]}"; do
         # Check if this package has the workspace dependency
@@ -111,11 +112,10 @@ update_workspace_dependencies() {
           jq --arg pkg "$workspace_pkg" --arg version "^$new_version" \
             '.dependencies[$pkg] = $version' "$package_json" > "$package_json.tmp" && \
             mv "$package_json.tmp" "$package_json" && \
-            yarn exec prettier --write "$package_json" || {
+            npx prettier --write "$package_json" || {
             echo -e "${RED}Error: Failed to update $workspace_pkg dependency in $package_json${NC}"
             exit 1
           }
-          updated=true
         fi
       done
     fi
@@ -147,7 +147,7 @@ revert_workspace_dependencies() {
         echo "  Resetting @dialogist/core dependency to workspace:* in $package_json"
         jq '.dependencies."@dialogist/core" = "workspace:*"' "$package_json" > "$package_json.tmp" && \
           mv "$package_json.tmp" "$package_json" && \
-          yarn exec prettier --write "$package_json" || {
+          npx prettier --write "$package_json" || {
           echo -e "${RED}Warning: Failed to revert @dialogist/core dependency in $package_json${NC}"
           # Don't exit - continue with other packages
         }
@@ -155,16 +155,16 @@ revert_workspace_dependencies() {
     fi
   done
   
-  # Restore yarn.lock to original state
-  if [[ -f yarn.lock.backup ]]; then
-    echo "  Restoring yarn.lock from backup"
-    mv yarn.lock.backup yarn.lock
+  # Restore package-lock.json to original state
+  if [[ -f package-lock.json.backup ]]; then
+    echo "  Restoring package-lock.json from backup"
+    mv package-lock.json.backup package-lock.json
   fi
 }
 
 build_all() {
   echo -e "${YELLOW}Building all packages...${NC}"
-  yarn build:all || {
+  npm run build || {
     echo -e "${RED}Error: Build failed.${NC}"
     exit 1
   }
@@ -186,19 +186,19 @@ publish_package() {
   # Check if package already exists at this version
   if npm view "$package_name@$package_version" version &>/dev/null; then
     echo -e "${YELLOW}⚠ Package $package_name@$package_version already exists, skipping${NC}"
-    cd "$git_root"
+    cd "$git_root" || return 1
     return 0
   fi
 
   # Publish the package
   npm publish --access public || {
     echo -e "${RED}Error: Failed to publish $package_name${NC}"
-    cd "$git_root"
+    cd "$git_root" || return 1
     return 1
   }
 
   echo -e "${GREEN}✓ Successfully published $package_name@$package_version${NC}"
-  cd "$git_root"
+  cd "$git_root" || return 1
   return 0
 }
 
@@ -219,8 +219,8 @@ main() {
   # Get current version and convert workspace dependencies
   current_version=$(jq -r '.version' package.json)
   
-  # Backup yarn.lock before making changes
-  cp yarn.lock yarn.lock.backup
+  # Backup package-lock.json before making changes
+  cp package-lock.json package-lock.json.backup
   
   update_workspace_dependencies "$current_version"
   
@@ -305,7 +305,7 @@ main() {
     trap - ERR INT TERM
     revert_workspace_dependencies
     cleanup_readme_files
-    yarn > /dev/null 2>&1
+    npm install > /dev/null 2>&1
     exit 0
   else
     if [[ $failed_count -gt 0 ]]; then
@@ -315,7 +315,7 @@ main() {
       trap - ERR INT TERM
       revert_workspace_dependencies
       cleanup_readme_files
-      yarn > /dev/null 2>&1
+      npm install > /dev/null 2>&1
       exit 1
     else
       echo -e "${GREEN}✓ Successfully published: $published_count${NC}"
@@ -329,7 +329,7 @@ main() {
   
   revert_workspace_dependencies
   cleanup_readme_files
-  yarn > /dev/null 2>&1
+  npm install > /dev/null 2>&1
 }
 
 # Run main function

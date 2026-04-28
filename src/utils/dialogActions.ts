@@ -86,7 +86,7 @@ const hasCustomActionIds = (rawGroups: DialogActionProps[][]): boolean => {
     }
   }
   return false;
-}
+};
 
 /**
  * Filters actions for alert/confirm dialogs when all action ids are ok/cancel.
@@ -125,7 +125,7 @@ const restrictActionsForType = (
   if (cancelAction) actions.push(cancelAction);
   if (okAction) actions.push(okAction);
   return actions.length > 0 ? [actions] : null;
-}
+};
 
 /**
  * Derives the effective action groups for a dialog.
@@ -302,8 +302,8 @@ const hydrateAction = (
       onClick,
     },
   };
-}
+};
 
 const actionIdToEventAction = (id: string): `${string}Clicked` => {
   return `${id}Clicked`;
-}
+};

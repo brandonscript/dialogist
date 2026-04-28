@@ -26,7 +26,7 @@ const COPY_LINK_ICON_OPACITY: Record<DemoCopyLinkVariant, number> = {
 
 export const copyLinkIconPx = (variant: DemoCopyLinkVariant): number => {
   return COPY_LINK_ICON_PX[variant];
-}
+};
 
 const CopyLinkButton = ({ copied, variant }: { copied: boolean; variant: DemoCopyLinkVariant }) => {
   const onOpacity = COPY_LINK_ICON_OPACITY[variant];
@@ -97,7 +97,7 @@ const CopyLinkButton = ({ copied, variant }: { copied: boolean; variant: DemoCop
       </Box>
     </Tooltip>
   );
-}
+};
 
 export type DemoCopyLinkRowProps = {
   /** Relative path (and optional hash), e.g. `/getting-started` or `/a/b#subsection`. */
@@ -192,4 +192,4 @@ export const DemoCopyLink = ({
       <CopyLinkButton copied={copied} variant={variant} />
     </Box>
   );
-}
+};

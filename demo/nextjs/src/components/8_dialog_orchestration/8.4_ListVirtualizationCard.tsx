@@ -111,7 +111,7 @@ const createRows = (): RowData[] => {
     id: index + 1,
     food: getRandomFood(),
   }));
-}
+};
 
 type VirtualizedRowProps = {
   rows: RowData[];

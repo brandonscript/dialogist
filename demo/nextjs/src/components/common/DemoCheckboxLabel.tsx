@@ -20,9 +20,7 @@ export const DemoCheckboxLabel = memo(function DemoCheckboxLabel({
 }: DemoCheckboxLabelProps) {
   return (
     <FormControlLabel
-      control={
-        <Checkbox size="small" checked={checked} onChange={(e) => onChange(e.target.checked)} />
-      }
+      control={<Checkbox size="small" checked={checked} onChange={(e) => onChange(e.target.checked)} />}
       sx={[{ mr: 0 }, ...(Array.isArray(sx) ? sx : sx ? [sx] : [])]}
       label={label}
       slotProps={{

@@ -6,11 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import {
-  DEMO_REGISTRY,
-  getCategoryElementId,
-  getElementScrollTop,
-} from "./demoNavData";
+import { DEMO_REGISTRY, getCategoryElementId, getElementScrollTop } from "./demoNavData";
 
 const SECTIONS = DEMO_REGISTRY.map((s) => ({
   sectionSlug: s.sectionSlug,
@@ -151,4 +147,4 @@ export const TabBar = () => {
       </FlexBox>
     </Box>
   );
-}
+};

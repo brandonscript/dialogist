@@ -24,4 +24,4 @@ export const DemoActionsContainer = ({ children }: React.PropsWithChildren) => {
       </RenderTrackerWrapper>
     </StyledActionsContainer>
   );
-}
+};

@@ -16,26 +16,18 @@ import ts from "typescript";
 const SINGLE_SMART = /[\u2018\u2019\u201B]/g;
 const DOUBLE_SMART = /[\u201C\u201D\u201F]/g;
 
-const straightenFree = (text) =>
-  text.replace(SINGLE_SMART, "'").replace(DOUBLE_SMART, '"');
+const straightenFree = (text) => text.replace(SINGLE_SMART, "'").replace(DOUBLE_SMART, '"');
 
-const straightenSingleQuotedInner = (text) =>
-  text
-    .replace(SINGLE_SMART, () => "\\'")
-    .replace(DOUBLE_SMART, '"');
+const straightenSingleQuotedInner = (text) => text.replace(SINGLE_SMART, () => "\\'").replace(DOUBLE_SMART, '"');
 
-const straightenDoubleQuotedInner = (text) =>
-  text
-    .replace(SINGLE_SMART, "'")
-    .replace(DOUBLE_SMART, () => '\\"');
+const straightenDoubleQuotedInner = (text) => text.replace(SINGLE_SMART, "'").replace(DOUBLE_SMART, () => '\\"');
 
 /** @typedef {{ start: number, end: number, mode: "single" | "double" | "free" }} Range */
 
 const scriptKindForPath = (filePath) => {
   if (filePath.endsWith(".tsx")) return ts.ScriptKind.TSX;
   if (filePath.endsWith(".jsx")) return ts.ScriptKind.JSX;
-  if (filePath.endsWith(".ts") || filePath.endsWith(".mts") || filePath.endsWith(".cts"))
-    return ts.ScriptKind.TS;
+  if (filePath.endsWith(".ts") || filePath.endsWith(".mts") || filePath.endsWith(".cts")) return ts.ScriptKind.TS;
   return ts.ScriptKind.JS;
 };
 

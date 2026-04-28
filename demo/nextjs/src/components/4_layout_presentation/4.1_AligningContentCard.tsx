@@ -427,8 +427,8 @@ const AligningContentInteractive = memo(function AligningContentInteractive({
     <FlexBox column gap={1.5}>
       <DemoSectionHeading subtitle="Try it out" />
       <DemoParagraph>
-        Open the dialog, then change the controls: <Code>useDialogSlots</Code> pushes updates into the open dialog
-        when slot dependencies change.
+        Open the dialog, then change the controls: <Code>useDialogSlots</Code> pushes updates into the open dialog when
+        slot dependencies change.
       </DemoParagraph>
       <FlexBox column gap={1.5} width="100%">
         <Box

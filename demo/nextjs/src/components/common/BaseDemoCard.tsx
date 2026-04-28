@@ -89,7 +89,7 @@ const renderDemoCardIcon = (icon: ReactNode | DemoCardIconComponent, iconSize: n
     size: iconSize,
     "aria-hidden": true,
   });
-}
+};
 
 export const BaseDemoCard = ({
   icon,
@@ -292,7 +292,7 @@ export const BaseDemoCard = ({
       )}
     </Card>
   );
-}
+};
 
 interface StyledPaperProps extends PaperProps {
   maxWidth?: ResponsiveStyleValue<CSSProperties["maxWidth"]>;

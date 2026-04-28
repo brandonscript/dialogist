@@ -6,6 +6,9 @@ test("updating-dialog-content/using-reactive-slot-hooks", async ({ demoPage: d }
   await d.expectWindowed();
   await d.expectCardVisible("Using reactive slot hooks");
   await expect(
-    d.cardRoot("updating-dialog-content", "using-reactive-slot-hooks").getByText(/useDialogContent|useDialogTitle/).first(),
+    d
+      .cardRoot("updating-dialog-content", "using-reactive-slot-hooks")
+      .getByText(/useDialogContent|useDialogTitle/)
+      .first(),
   ).toBeVisible();
 });

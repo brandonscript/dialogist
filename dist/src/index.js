@@ -1,4 +1,3 @@
-export { DIALOGIST_VERSION } from './version.js';
 export { dialogistClasses } from './classes.js';
 export { DialogActionsContext, useDialogActionsContext } from './context/DialogActionsContext.js';
 export { DialogCallbacksContext } from './context/DialogCallbacksContext.js';
@@ -26,4 +25,5 @@ export { chainEventHandlers } from './utils/chainEventHandlers.js';
 export { classNames } from './utils/classNames.js';
 export { deepEqual, deepEqualDeps } from './utils/deepCompare.js';
 export { resolveDialogPartContent } from './utils/resolveDialogPartContent.js';
+export { DIALOGIST_VERSION } from './version.js';
 //# sourceMappingURL=index.js.map

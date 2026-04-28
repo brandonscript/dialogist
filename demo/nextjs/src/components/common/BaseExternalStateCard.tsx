@@ -301,7 +301,7 @@ export const useExternalStateCard = ({
   const source = syncDirection === "dialog-to-external" ? "dialog" : "external";
 
   return { source, handleOpenDialog, handleReset };
-}
+};
 
 export const BaseExternalStateCard = ({
   title,
@@ -496,7 +496,7 @@ export const BaseExternalStateCard = ({
       </BaseDemoCard>
     </>
   );
-}
+};
 
 export {
   EXTERNAL_STATE_SLOTS_SNIPPET,

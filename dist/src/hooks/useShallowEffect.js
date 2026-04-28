@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useEffect, useRef } from 'react';
 import { shallowEqual } from '../utils/shallowCompare.js';
 
 var shallowCompare = function shallowCompare(prevValue, currValue) {

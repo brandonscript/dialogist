@@ -8,7 +8,7 @@ const flushImperativeNotifications = async () => {
   await act(async () => {
     await Promise.resolve();
   });
-}
+};
 
 describe("useDialogImperativeValue", () => {
   const dialogKey = "imperative-subscribe-test";

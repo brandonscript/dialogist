@@ -59,7 +59,7 @@ export const useDeepEffect = (effect: EffectCallback, deps: DependencyList): voi
         cleanupRef.current = undefined;
       }
     };
-  // biome-ignore lint/correctness/useExhaustiveDependencies: deps is intentionally forwarded as-is — same pattern as useEffect(fn, deps)
+    // biome-ignore lint/correctness/useExhaustiveDependencies: deps is intentionally forwarded as-is — same pattern as useEffect(fn, deps)
   }, deps);
 };
 

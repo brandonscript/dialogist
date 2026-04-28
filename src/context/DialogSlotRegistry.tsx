@@ -61,7 +61,9 @@ export const DialogSlotRegistryProvider = ({ children }: { children: ReactNode }
       // Notify synchronously from within useLayoutEffect so React batches the resulting setState
       // calls with the current commit, rendering StableDialogRenderer before the browser paints.
       // React 18 automatic batching merges all setState calls from multiple slots into one render.
-      changeListeners.forEach((callback) => { callback(slot.key, slot.slotType); });
+      changeListeners.forEach((callback) => {
+        callback(slot.key, slot.slotType);
+      });
     },
     [slotRegistry, changeListeners],
   );
@@ -77,7 +79,9 @@ export const DialogSlotRegistryProvider = ({ children }: { children: ReactNode }
         slotRegistry.delete(rKey.str);
       }
 
-      changeListeners.forEach((callback) => { callback(rKey.str, slotType); });
+      changeListeners.forEach((callback) => {
+        callback(rKey.str, slotType);
+      });
     },
     [slotRegistry, changeListeners],
   );
@@ -111,7 +115,9 @@ export const DialogSlotRegistryProvider = ({ children }: { children: ReactNode }
       }
 
       slotTypes.forEach((slotType) => {
-        changeListeners.forEach((callback) => { callback(rKey.str, slotType); });
+        changeListeners.forEach((callback) => {
+          callback(rKey.str, slotType);
+        });
       });
     },
     [slotRegistry, changeListeners],
@@ -139,7 +145,7 @@ export const DialogSlotRegistryProvider = ({ children }: { children: ReactNode }
   );
 
   return <DialogSlotRegistryContext.Provider value={contextValue}>{children}</DialogSlotRegistryContext.Provider>;
-}
+};
 
 export const useDialogSlotRegistry = () => {
   const context = useContext(DialogSlotRegistryContext);
@@ -147,4 +153,4 @@ export const useDialogSlotRegistry = () => {
     throw new Error("useDialogSlotRegistry must be used within DialogSlotRegistryProvider");
   }
   return context;
-}
+};

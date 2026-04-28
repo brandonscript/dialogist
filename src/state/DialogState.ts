@@ -24,7 +24,10 @@ class DialogState {
 
   private emit(key: string): void {
     const listeners = this.listeners.get(key);
-    if (listeners) listeners.forEach((l) => { l(); });
+    if (listeners)
+      listeners.forEach((l) => {
+        l();
+      });
   }
 
   getEntry<T>(key: string): DialogStateEntry<T> | undefined {
@@ -105,7 +108,7 @@ const dialogState = new DialogState();
 
 const makeKey = (dialogKey: string, key: string): string => {
   return `${dialogKey}::${key}`;
-}
+};
 
 /**
  * Subscribe to a realtime dialog value from the dialog state system.
@@ -179,7 +182,7 @@ export const useDialogStateValue = <T>(
   );
 
   return [value, setValue] as const;
-}
+};
 
 /**
  * Subscribe to the source metadata for a dialog state value.
@@ -222,7 +225,7 @@ export const useDialogStateSource = (dialogKey: string, key: string, initial: Di
   const value = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
   const setValue = useCallback((next: DialogStateSource) => dialogState.setSource(storeKey, next), [storeKey]);
   return [value, setValue] as const;
-}
+};
 
 /**
  * Imperatively set a dialog state value and optionally mark its source.
@@ -234,7 +237,7 @@ export const useDialogStateSource = (dialogKey: string, key: string, initial: Di
  */
 export const setDialogStateValue = <T>(dialogKey: string, key: string, value: T, source?: DialogStateSource) => {
   dialogState.set<T>(makeKey(dialogKey, key), value, source);
-}
+};
 
 /**
  * Convenience function to set a dialog state value from within a dialog.
@@ -242,7 +245,7 @@ export const setDialogStateValue = <T>(dialogKey: string, key: string, value: T,
  */
 export const setDialogStateValueFromDialog = <T>(dialogKey: string, key: string, value: T) => {
   setDialogStateValue(dialogKey, key, value, "dialog");
-}
+};
 
 /**
  * Convenience function to set a dialog state value from external state.
@@ -250,17 +253,17 @@ export const setDialogStateValueFromDialog = <T>(dialogKey: string, key: string,
  */
 export const setDialogStateValueFromExternal = <T>(dialogKey: string, key: string, value: T) => {
   setDialogStateValue(dialogKey, key, value, "external");
-}
+};
 
 export const clearDialogStateValue = (dialogKey: string, key: string) => {
   dialogState.clear(makeKey(dialogKey, key));
-}
+};
 
 /**
  * Read a dialog state value without subscribing.
  */
 export const getDialogStateValue = <T>(dialogKey: string, key: string): T | undefined => {
   return dialogState.getValue<T>(makeKey(dialogKey, key));
-}
+};
 
 export type { DialogStateEntry, DialogStateSource };

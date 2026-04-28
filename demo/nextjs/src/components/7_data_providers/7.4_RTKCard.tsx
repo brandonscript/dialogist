@@ -224,7 +224,7 @@ const RTKCardInner = () => {
       logPortalIndex={3}
     />
   );
-}
+};
 
 // Wrapper component that provides Redux Provider
 export const RTKCard = Object.assign(

@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 
 /**
  * Hook that syncs state with localStorage, similar to useState API
- * 
+ *
  * @param key - The localStorage key to use
  * @param initialValue - The initial value if no stored value exists
  * @returns A tuple [value, setValue] just like useState
- * 
+ *
  * @example
  * const [isFullscreen, setIsFullscreen] = useLocalStorage('fullscreen', true);
  */
@@ -56,5 +56,4 @@ export const useLocalStorage = <T>(key: string, initialValue: T): [T, (value: T 
   };
 
   return [storedValue, setValue];
-}
-
+};

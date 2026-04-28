@@ -34,7 +34,7 @@ export const DemoStateProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </DemoStateContext.Provider>
   );
-}
+};
 
 export const useDemoState = () => {
   const context = useContext(DemoStateContext);
@@ -42,4 +42,4 @@ export const useDemoState = () => {
     throw new Error("useDemoState must be used within a DemoStateProvider");
   }
   return context;
-}
+};

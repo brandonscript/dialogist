@@ -28,17 +28,21 @@ var resolveActionsGap = function resolveActionsGap(theme, value, fallback) {
   var v = value === undefined ? fallback : value;
   return typeof v === "number" ? theme.spacing(v) : v;
 };
+var getActionKeyPart = function getActionKeyPart(action) {
+  var _ref, _action$id;
+  return (_ref = (_action$id = action.id) !== null && _action$id !== void 0 ? _action$id : action.title) !== null && _ref !== void 0 ? _ref : typeof action.children === "string" ? action.children : "anonymous";
+};
 
 // Default Actions: one inner row when multiple groups so DialogActions has a single child — theme
 // `gap` on `.Dialogist-actionsContainer` then does not space every button. Row `gap` = between
 // groups; each cluster uses `intraGroupGap` (see {@link import("../types").ActionsStyle}).
 // Layout tokens use CSS variables consumed by `.Dialogist-actionsRow` / `.Dialogist-actionsGroup`
 // in `dialogistStyles` (no MUI `sx` on these wrappers).
-var DefaultActions = function DefaultActions(_ref) {
+var DefaultActions = function DefaultActions(_ref2) {
   var _actionsStyle$gap;
-  var actionGroups = _ref.actionGroups,
-    dialogKey = _ref.dialogKey,
-    actionsStyle = _ref.actionsStyle;
+  var actionGroups = _ref2.actionGroups,
+    dialogKey = _ref2.dialogKey,
+    actionsStyle = _ref2.actionsStyle;
   var theme = useTheme();
   var hasMultipleGroups = actionGroups.length > 1;
   var justifyFromAlign = actionsStyle !== null && actionsStyle !== void 0 && actionsStyle.align ? ACTIONS_ALIGN_TO_CSS[actionsStyle.align] : undefined;
@@ -46,28 +50,20 @@ var DefaultActions = function DefaultActions(_ref) {
   /** Matches `--dialogist-actionsContainer-justify` default when `align` is omitted. */
   var justifyContent = justifyFromAlign !== null && justifyFromAlign !== void 0 ? justifyFromAlign : "center";
   var innerGapRaw = hasMultipleGroups ? (actionsStyle === null || actionsStyle === void 0 ? void 0 : actionsStyle.intraGroupGap) !== undefined ? actionsStyle.intraGroupGap : 1 : (_actionsStyle$gap = actionsStyle === null || actionsStyle === void 0 ? void 0 : actionsStyle.gap) !== null && _actionsStyle$gap !== void 0 ? _actionsStyle$gap : 1;
-  var groupBoxes = actionGroups.map(function (group, gi) {
-    return (
-      /*#__PURE__*/
-      // biome-ignore lint/suspicious/noArrayIndexKey: action groups have no stable id; order is fixed per config
-      jsx("div", {
-        className: dialogistClasses.actionsGroup,
-        "data-dialogist-layout": hasSingleGroup ? "single" : undefined,
-        style: {
-          "--dialogist-actionsGroup-gap": resolveActionsGap(theme, innerGapRaw, 1),
-          "--dialogist-actionsGroup-justify": hasMultipleGroups ? "flex-start" : justifyContent
-        },
-        children: group.map(function (action, ai) {
-          return (
-            /*#__PURE__*/
-            // biome-ignore lint/suspicious/noArrayIndexKey: action items have no stable id; order is fixed per config
-            createElement(Button, _objectSpread2(_objectSpread2({}, action.props), {}, {
-              key: "".concat(dialogKey, "-action-").concat(gi, "-").concat(ai)
-            }), action.children || action.title)
-          );
-        })
-      }, "".concat(dialogKey, "-group-").concat(gi))
-    );
+  var groupBoxes = actionGroups.map(function (group) {
+    return /*#__PURE__*/jsx("div", {
+      className: dialogistClasses.actionsGroup,
+      "data-dialogist-layout": hasSingleGroup ? "single" : undefined,
+      style: {
+        "--dialogist-actionsGroup-gap": resolveActionsGap(theme, innerGapRaw, 1),
+        "--dialogist-actionsGroup-justify": hasMultipleGroups ? "flex-start" : justifyContent
+      },
+      children: group.map(function (action) {
+        return /*#__PURE__*/createElement(Button, _objectSpread2(_objectSpread2({}, action.props), {}, {
+          key: "".concat(dialogKey, "-action-").concat(getActionKeyPart(action))
+        }), action.children || action.title);
+      })
+    }, "".concat(dialogKey, "-group-").concat(group.map(getActionKeyPart).join("-")));
   });
   if (hasMultipleGroups) {
     return /*#__PURE__*/jsx("div", {
@@ -83,12 +79,12 @@ var DefaultActions = function DefaultActions(_ref) {
     children: groupBoxes
   });
 };
-var DefaultStyledDialog = styled(function (_ref2) {
-  var className = _ref2.className,
-    slotProps = _ref2.slotProps,
-    hideBackdrop = _ref2.hideBackdrop,
-    container = _ref2.container,
-    props = _objectWithoutProperties(_ref2, _excluded);
+var DefaultStyledDialog = styled(function (_ref3) {
+  var className = _ref3.className,
+    slotProps = _ref3.slotProps,
+    hideBackdrop = _ref3.hideBackdrop,
+    container = _ref3.container,
+    props = _objectWithoutProperties(_ref3, _excluded);
   return /*#__PURE__*/jsx(Dialog, _objectSpread2(_objectSpread2({
     className: "".concat(dialogistClasses.base, " ").concat(className || "").trim()
   }, props), {}, {
@@ -113,23 +109,23 @@ var DefaultStyledDialog = styled(function (_ref2) {
   shouldForwardProp: function shouldForwardProp(prop) {
     return prop !== "overflow" && prop !== "borderRadius";
   }
-})(function (_ref3) {
-  var overflow = _ref3.overflow;
+})(function (_ref4) {
+  var overflow = _ref4.overflow;
   return {
     overflow: overflow || "hidden"
   };
 });
 
 // Stable dialog renderer that only updates when dialog content changes
-var StableDialogRenderer = /*#__PURE__*/memo(function (_ref4) {
-  var _ref4$DialogComponent = _ref4.DialogComponent,
-    DialogComponent = _ref4$DialogComponent === void 0 ? DefaultStyledDialog : _ref4$DialogComponent,
-    dialog = _ref4.dialog,
-    onClose = _ref4.onClose,
-    overflow = _ref4.overflow,
-    slots = _ref4.slots,
-    slotProps = _ref4.slotProps,
-    suppressBackdrop = _ref4.suppressBackdrop;
+var StableDialogRenderer = /*#__PURE__*/memo(function (_ref5) {
+  var _ref5$DialogComponent = _ref5.DialogComponent,
+    DialogComponent = _ref5$DialogComponent === void 0 ? DefaultStyledDialog : _ref5$DialogComponent,
+    dialog = _ref5.dialog,
+    onClose = _ref5.onClose,
+    overflow = _ref5.overflow,
+    slots = _ref5.slots,
+    slotProps = _ref5.slotProps,
+    suppressBackdrop = _ref5.suppressBackdrop;
   var dialogKey = dialog.key,
     type = dialog.type,
     config = dialog.config;
@@ -220,11 +216,11 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref4) {
   }, [slots === null || slots === void 0 ? void 0 : slots.Base, DialogComponent]);
   var Title = useMemo(function () {
     if (slots !== null && slots !== void 0 && slots.Title) return slots.Title;
-    return function (_ref5) {
+    return function (_ref6) {
       var _slotProps$title;
-      var className = _ref5.className,
-        id = _ref5.id,
-        props = _objectWithoutProperties(_ref5, _excluded2);
+      var className = _ref6.className,
+        id = _ref6.id,
+        props = _objectWithoutProperties(_ref6, _excluded2);
       var mergedProps = _objectSpread2(_objectSpread2(_objectSpread2({}, props), slotProps === null || slotProps === void 0 ? void 0 : slotProps.title), {}, {
         className: classNames(dialogistClasses.title, className, slotProps === null || slotProps === void 0 || (_slotProps$title = slotProps.title) === null || _slotProps$title === void 0 ? void 0 : _slotProps$title.className),
         id: id
@@ -234,11 +230,11 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref4) {
   }, [slots === null || slots === void 0 ? void 0 : slots.Title, slotProps === null || slotProps === void 0 ? void 0 : slotProps.title]);
   var Content = useMemo(function () {
     if (slots !== null && slots !== void 0 && slots.Content) return slots.Content;
-    return function (_ref6) {
+    return function (_ref7) {
       var _contentSlotProps$sx, _contentSlotProps$sty;
-      var className = _ref6.className,
-        id = _ref6.id,
-        props = _objectWithoutProperties(_ref6, _excluded3);
+      var className = _ref7.className,
+        id = _ref7.id,
+        props = _objectWithoutProperties(_ref7, _excluded3);
       var contentSlotProps = slotProps === null || slotProps === void 0 ? void 0 : slotProps.content;
       var mergedProps = _objectSpread2(_objectSpread2(_objectSpread2({}, props), contentSlotProps), {}, {
         sx: _objectSpread2(_objectSpread2({}, props.sx), (_contentSlotProps$sx = contentSlotProps === null || contentSlotProps === void 0 ? void 0 : contentSlotProps.sx) !== null && _contentSlotProps$sx !== void 0 ? _contentSlotProps$sx : {}),
@@ -251,10 +247,10 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref4) {
   }, [slots === null || slots === void 0 ? void 0 : slots.Content, slotProps === null || slotProps === void 0 ? void 0 : slotProps.content]);
   var ActionsContainer = useMemo(function () {
     if (slots !== null && slots !== void 0 && slots.ActionsContainer) return slots.ActionsContainer;
-    return function (_ref7) {
+    return function (_ref8) {
       var _slotProps$actionsCon;
-      var className = _ref7.className,
-        props = _objectWithoutProperties(_ref7, _excluded4);
+      var className = _ref8.className,
+        props = _objectWithoutProperties(_ref8, _excluded4);
       var mergedProps = _objectSpread2(_objectSpread2(_objectSpread2({}, props), slotProps === null || slotProps === void 0 ? void 0 : slotProps.actionsContainer), {}, {
         // @ts-expect-error: className might not exist on generic props
         className: classNames(dialogistClasses.actionsContainer, className, slotProps === null || slotProps === void 0 || (_slotProps$actionsCon = slotProps.actionsContainer) === null || _slotProps$actionsCon === void 0 ? void 0 : _slotProps$actionsCon.className)
@@ -466,13 +462,13 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref4) {
 StableDialogRenderer.displayName = "StableDialogRenderer";
 
 // Stable scaffolding component that uses portals
-var DialogScaffolding = /*#__PURE__*/memo(function (_ref8) {
-  var dialogs = _ref8.dialogs,
-    onClose = _ref8.onClose,
-    DialogComponent = _ref8.DialogComponent,
-    overflow = _ref8.overflow,
-    slots = _ref8.slots,
-    slotProps = _ref8.slotProps;
+var DialogScaffolding = /*#__PURE__*/memo(function (_ref9) {
+  var dialogs = _ref9.dialogs,
+    onClose = _ref9.onClose,
+    DialogComponent = _ref9.DialogComponent,
+    overflow = _ref9.overflow,
+    slots = _ref9.slots,
+    slotProps = _ref9.slotProps;
   // Only render if we have dialogs and document is available
   if (typeof document === "undefined" || dialogs.length === 0) {
     return null;

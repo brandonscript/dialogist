@@ -39,10 +39,8 @@ interface StyledSxFn {
   ): (styles: (props: { theme: Theme }) => SxProps<Theme>) => TComponent;
 }
 
-export const styledSx: StyledSxFn = <TComponent extends React.ComponentType<any>>(
-  component: TComponent,
-  options?: MuiStyledOptions,
-) =>
+export const styledSx: StyledSxFn =
+  <TComponent extends React.ComponentType<any>>(component: TComponent, options?: MuiStyledOptions) =>
   (styles: SxProps<Theme> | ((props: { theme: Theme }) => SxProps<Theme>)) =>
     styled(
       component,

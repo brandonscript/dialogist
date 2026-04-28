@@ -79,7 +79,7 @@ const shuffleArray = <T>(arr: T[]): T[] => {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
-}
+};
 
 // Bags to cycle through animals and adjectives without repetition until exhausted
 const animalBagMutable: Animal[] = shuffleArray([...animals]);
@@ -98,7 +98,7 @@ const takeFromBag = <T>(bagRef: T[], seed: () => T[]): T => {
     return bagRef.pop() as T;
   }
   return value;
-}
+};
 
 // Recent visible sets to reduce duplicates in current viewport
 const recentAnimals = new Set<Animal>();
@@ -127,7 +127,7 @@ const pickUnique = <T extends string>(current: Set<T>, limit: number, bagRef: T[
     current.delete(first);
   }
   return fallback;
-}
+};
 
 const generateHumanReadableId = (): string => {
   const animal = pickUnique<Animal>(recentAnimals, RECENT_LIMIT, animalBagMutable, () => shuffleArray([...animals]));
@@ -136,7 +136,7 @@ const generateHumanReadableId = (): string => {
   );
   const emoji = animalEmoji[animal] ?? "🐾";
   return `${emoji} ${adjective}-${animal}`;
-}
+};
 
 export interface RenderInfo {
   renderId: string;
@@ -270,4 +270,4 @@ export const useRenderTracker = (
     lastRenderTime: lastRenderTimeRef.current, // ← Fixed timestamp for tooltip calculation
     currentRenderTime: Date.now(), // ← Current time for display
   };
-}
+};

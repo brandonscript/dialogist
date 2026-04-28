@@ -27,7 +27,7 @@ const notify = () => {
   listeners.forEach((listener) => {
     listener();
   });
-}
+};
 
 export const appendExternalStateLog = (dialogId: string, entry: Omit<ExternalStateLogEntry, "id" | "dialogId">) => {
   schedule(() => {
@@ -41,25 +41,25 @@ export const appendExternalStateLog = (dialogId: string, entry: Omit<ExternalSta
     logMap.set(dialogId, updated);
     notify();
   });
-}
+};
 
 export const clearExternalStateLogs = (dialogId: string) => {
   schedule(() => {
     logMap.delete(dialogId);
     notify();
   });
-}
+};
 
 const subscribe = (listener: Listener) => {
   listeners.add(listener);
   return () => {
     listeners.delete(listener);
   };
-}
+};
 
 const getSnapshot = (dialogId: string): ExternalStateLogEntry[] => {
   return logMap.get(dialogId) ?? EMPTY_ENTRIES;
-}
+};
 
 export const useExternalStateLogs = (dialogId: string): ExternalStateLogEntry[] => {
   const serverSnapshotRef = useRef<ExternalStateLogEntry[] | null>(null);
@@ -76,4 +76,4 @@ export const useExternalStateLogs = (dialogId: string): ExternalStateLogEntry[] 
   const getServerSnapshot = useCallback(() => serverSnapshotRef.current ?? getSnapshot(dialogId), [dialogId]);
 
   return useSyncExternalStore(subscribe, getClientSnapshot, getServerSnapshot);
-}
+};

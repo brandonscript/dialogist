@@ -193,7 +193,7 @@ const JotaiCardInner = () => {
       logPortalIndex={2}
     />
   );
-}
+};
 
 // Wrapper component that provides Jotai Provider
 export const JotaiCard = Object.assign(

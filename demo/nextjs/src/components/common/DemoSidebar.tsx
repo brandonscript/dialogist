@@ -50,7 +50,7 @@ const DemoSidebarInner = () => {
       ))}
     </FlexBox>
   );
-}
+};
 
 /** Memoized so client navigations (pathname) do not re-render every demo card / RenderTracker. */
 export const DemoSidebar = memo(DemoSidebarInner);

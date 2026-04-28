@@ -51,7 +51,7 @@ const buildDialogResult = (label: string, color: string): DialogResult => {
     text: label,
     color,
   };
-}
+};
 
 export const CustomActionsCard = Object.assign(
   memo(function CustomActionsCard() {

@@ -41,7 +41,7 @@ const trimSnippetEdges = (code: string): string => {
     end -= 1;
   }
   return lines.slice(start, end).join("\n");
-}
+};
 
 const dedentCode = (code: string): string => {
   const lines = code.split("\n");
@@ -50,7 +50,7 @@ const dedentCode = (code: string): string => {
   const minIndent = Math.min(...nonEmpty.map((l) => l.match(/^(\s*)/)?.[1].length ?? 0));
   if (minIndent === 0) return code;
   return lines.map((l) => l.slice(minIndent)).join("\n");
-}
+};
 
 export const CodeBlock = memo(function CodeBlock({
   children,

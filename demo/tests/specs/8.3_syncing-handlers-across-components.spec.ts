@@ -6,6 +6,9 @@ test("dialog-orchestration/syncing-handlers-across-components", async ({ demoPag
   await d.expectWindowed();
   await d.expectCardVisible("Syncing handlers across components");
   await expect(
-    d.cardRoot("dialog-orchestration", "syncing-handlers-across-components").getByText(/ownerToken|openDialog/).first(),
+    d
+      .cardRoot("dialog-orchestration", "syncing-handlers-across-components")
+      .getByText(/ownerToken|openDialog/)
+      .first(),
   ).toBeVisible();
 });

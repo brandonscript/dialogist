@@ -24,15 +24,11 @@ export const ActionSquaresIcon = ({ count = 1, gap = 0.25, twoTone = true, sx }:
   };
 
   return (
-    <FlexBox
-      row
-      gap={gap}
-      sx={sx === undefined ? baseSx : [baseSx, ...(Array.isArray(sx) ? sx : [sx])]}
-    >
+    <FlexBox row gap={gap} sx={sx === undefined ? baseSx : [baseSx, ...(Array.isArray(sx) ? sx : [sx])]}>
       {Array.from({ length: count }).map((_, index) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: decorative fixed-length array, no meaningful identifier
         <LuSquare key={index} />
       ))}
     </FlexBox>
   );
-}
+};

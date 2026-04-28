@@ -19,7 +19,7 @@ const notifyPrefixListeners = (changedKey: string, listeners: Map<string, Set<Li
       });
     }
   }
-}
+};
 
 class DialogStateStore {
   private dialogs = new Map<string, DialogState>();

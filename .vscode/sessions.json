@@ -37,9 +37,7 @@
           "icon": "folder",
           "color": "terminal.ansiBlue",
           "cwd": "./demo/nextjs",
-          "commands": [
-            "npm run dev"
-          ]
+          "commands": ["npm run dev"]
         }
       ]
     ]

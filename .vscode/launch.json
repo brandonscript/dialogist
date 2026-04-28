@@ -7,10 +7,7 @@
       "request": "launch",
       "cwd": "${workspaceFolder}/demo/nextjs",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "run",
-        "dev"
-      ],
+      "runtimeArgs": ["run", "dev"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "presentation": {
@@ -27,10 +24,7 @@
       "request": "launch",
       "cwd": "${workspaceFolder}/demo/nextjs",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "run",
-        "dev:turbo"
-      ],
+      "runtimeArgs": ["run", "dev:turbo"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "presentation": {
@@ -53,10 +47,7 @@
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "run",
-        "build"
-      ],
+      "runtimeArgs": ["run", "build"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "presentation": {
@@ -68,10 +59,7 @@
   "compounds": [
     {
       "name": "🎯 Build & Run Demo (Regular)",
-      "configurations": [
-        "🔧 Build Dialogist Package",
-        "🚀 Next.js Demo (Regular)"
-      ],
+      "configurations": ["🔧 Build Dialogist Package", "🚀 Next.js Demo (Regular)"],
       "presentation": {
         "group": "compound",
         "order": 1
@@ -79,10 +67,7 @@
     },
     {
       "name": "⚡ Build & Run Demo (Turbopack)",
-      "configurations": [
-        "🔧 Build Dialogist Package",
-        "⚡ Next.js Demo (Turbopack)"
-      ],
+      "configurations": ["🔧 Build Dialogist Package", "⚡ Next.js Demo (Turbopack)"],
       "presentation": {
         "group": "compound",
         "order": 2

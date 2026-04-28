@@ -30,4 +30,4 @@ export const DemoTitle = ({ children }: React.PropsWithChildren) => {
       </RenderTrackerWrapper>
     </TitleContainer>
   );
-}
+};

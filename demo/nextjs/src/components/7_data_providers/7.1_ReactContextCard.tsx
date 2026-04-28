@@ -142,12 +142,12 @@ const useTodos = () => {
   const ctx = useContext(TodosContext);
   if (!ctx) throw new Error("useTodos must be used within TodosProvider");
   return ctx;
-}
+};
 
 const TodosProvider = ({ children, initialValue = [] }: { children: ReactNode; initialValue?: TodoItem[] }) => {
   const [value, setValue] = useState<TodoItem[]>(initialValue);
   return <TodosContext.Provider value={{ value, setValue }}>{children}</TodosContext.Provider>;
-}
+};
 
 const initialTodos: TodoItem[] = [
   { id: "1", text: `${EMOJI_TODOS[0].emoji} ${EMOJI_TODOS[0].text}`, completed: false },
@@ -205,7 +205,7 @@ const ReactContextCardInner = () => {
       logPortalIndex={0}
     />
   );
-}
+};
 
 // Wrapper component that provides the context
 export const ReactContextCard = Object.assign(

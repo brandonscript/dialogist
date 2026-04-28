@@ -26,13 +26,16 @@ export const shallowEqual = (a: unknown, b: unknown): boolean => {
   if (keysA.length !== keysB.length) return false;
 
   for (let i = 0; i < keysA.length; i++) {
-    if (!Object.hasOwn(b, keysA[i]) || !Object.is((a as Record<string, unknown>)[keysA[i]], (b as Record<string, unknown>)[keysA[i]])) {
+    if (
+      !Object.hasOwn(b, keysA[i]) ||
+      !Object.is((a as Record<string, unknown>)[keysA[i]], (b as Record<string, unknown>)[keysA[i]])
+    ) {
       return false;
     }
   }
 
   return true;
-}
+};
 
 /**
  * Performs a 2-level shallow equality comparison.
@@ -90,5 +93,4 @@ export const shallowEqualLevel2 = (a: unknown, b: unknown): boolean => {
   }
 
   return true;
-}
-
+};

@@ -30,7 +30,7 @@ const createShadow = ({ umbra, penumbra, ambient }: { umbra: Shadow; penumbra: S
     : `${ambient[0] * scale}px ${ambient[1] * scale}px ${ambient[2] * scale}px ${ambient[3] * scale}px rgba(0,0,0,${shadowAmbientShadowOpacity * (ambient[4] ?? 1)})`;
 
   return [umbraShadow, penumbraShadow, ambientShadow].filter(Boolean).join(",");
-}
+};
 
 export const createSoftShadows = (intensity: number = 1): Shadows => {
   const s = intensity;

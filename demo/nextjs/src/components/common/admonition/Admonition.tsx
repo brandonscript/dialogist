@@ -81,7 +81,7 @@ const variantTones = (theme: Theme, variant: TintedAdmonitionVariant) => {
     labelText,
     bodyText,
   };
-}
+};
 
 export interface AdmonitionProps {
   variant?: AdmonitionVariant;
@@ -215,4 +215,4 @@ export const Admonition = ({ variant = "plain", title, children, sx }: Admonitio
       </Typography>
     </FlexBox>
   );
-}
+};

@@ -6,6 +6,9 @@ test("actions-and-results/action-events", async ({ demoPage: d }) => {
   await d.expectWindowed();
   await d.expectCardVisible("Action events");
   await expect(
-    d.cardRoot("actions-and-results", "action-events").getByText(/onOkClick|onCancelClick/).first(),
+    d
+      .cardRoot("actions-and-results", "action-events")
+      .getByText(/onOkClick|onCancelClick/)
+      .first(),
   ).toBeVisible();
 });

@@ -22,4 +22,4 @@ export const DemoActions = ({ actions, dialogKey, ButtonComponent, ActionCompone
       })}
     </div>
   );
-}
+};

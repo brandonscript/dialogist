@@ -57,7 +57,7 @@ export default defineConfig({
   webServer: [
     {
       cwd: "demos/mui",
-      command: "yarn dev",
+      command: "npm run dev",
       url: "http://127.0.0.1:3008",
       reuseExistingServer: !process.env.CI && !process.env.PLAYWRIGHT_FORCE_CLEAN,
       timeout: 60000, // Reduced timeout for faster feedback
@@ -69,5 +69,3 @@ export default defineConfig({
     },
   ],
 });
-
-

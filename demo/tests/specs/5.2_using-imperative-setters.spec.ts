@@ -6,6 +6,9 @@ test("updating-dialog-content/using-imperative-setters", async ({ demoPage: d })
   await d.expectWindowed();
   await d.expectCardVisible("Using imperative setters");
   await expect(
-    d.cardRoot("updating-dialog-content", "using-imperative-setters").getByText(/setTitle|setMessage/).first(),
+    d
+      .cardRoot("updating-dialog-content", "using-imperative-setters")
+      .getByText(/setTitle|setMessage/)
+      .first(),
   ).toBeVisible();
 });

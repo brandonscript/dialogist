@@ -74,4 +74,4 @@ export const withTooltip = <T extends ElementType>(Component: T) => {
   WithTooltipComponent.displayName = `WithTooltip(${componentName})`;
 
   return WithTooltipComponent;
-}
+};

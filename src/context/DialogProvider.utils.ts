@@ -124,7 +124,7 @@ export const shouldDialogUpdate = (
       return !deepEqualDeps(oldActionDep, newActionDep);
     }) ?? false
   );
-}
+};
 
 /**
  * Get the currently active (topmost) dialog ID from the dialog stack.
@@ -142,4 +142,4 @@ export const getActiveDialogKey = (dialogs: DialogState[]): string | null => {
     }
   }
   return null;
-}
+};

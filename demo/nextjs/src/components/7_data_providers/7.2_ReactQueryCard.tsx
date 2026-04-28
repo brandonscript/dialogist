@@ -261,7 +261,7 @@ const ReactQueryCardInner = () => {
       logPortalIndex={1}
     />
   );
-}
+};
 
 // Wrapper component that provides QueryClient
 export const ReactQueryCard = Object.assign(

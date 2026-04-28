@@ -98,14 +98,13 @@ npm run demo:nextjs
 
 Open <a href="http://localhost:5607" target="_blank" rel="noopener noreferrer">http://localhost:5607</a> in your browser. The `demo:nextjs` script starts the Next.js dev server for `demo/nextjs` on port **5607** by default.
 
-
 ## Contributing
 
 Human contributors: see <a href="./AGENTS.md" target="_blank" rel="noopener noreferrer"><code>AGENTS.md</code></a> for project conventions, testing, and layout rules. While primarily written with LLMs in mind, it's good for humans too.
 
 Issues and pull requests are welcome. For larger changes, open an issue first so we can align on direction. Please run all tests (add/update tests to ensure coverage of your changes) and update the demo app if applicable. All code accepted to main must be reviewed by you, the human.
 
-If you contribute to this project, you agree to adhere to the 
+If you contribute to this project, you agree to adhere to the
 
 ## Fair AI and LLM usage
 

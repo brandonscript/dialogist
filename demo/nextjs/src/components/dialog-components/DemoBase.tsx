@@ -36,4 +36,4 @@ export const DemoBase = ({ children, ...props }: BaseDialogProps) => {
       {children}
     </Dialog>
   );
-}
+};

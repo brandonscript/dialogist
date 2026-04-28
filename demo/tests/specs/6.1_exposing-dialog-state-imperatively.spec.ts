@@ -5,7 +5,11 @@ test("dialog-state-and-data-flow/exposing-dialog-state-imperatively", async ({ p
   await d.gotoCard("dialog-state-and-data-flow", "exposing-dialog-state-imperatively");
   await d.expectWindowed();
   await d.expectCardVisible("Exposing dialog state imperatively");
-  await d.clickButtonInCard("dialog-state-and-data-flow", "exposing-dialog-state-imperatively", "Show imperative dialog");
+  await d.clickButtonInCard(
+    "dialog-state-and-data-flow",
+    "exposing-dialog-state-imperatively",
+    "Show imperative dialog",
+  );
   await expect(page.getByRole("dialog")).toBeVisible();
   await d.dismissDialog(/Cancel|Close/i);
 });

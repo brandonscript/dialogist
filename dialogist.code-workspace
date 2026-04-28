@@ -2,18 +2,15 @@
   "folders": [
     {
       "path": ".",
-      "name": "🦑 root"
+      "name": "🦑 root",
     },
     {
       "path": "demo/nextjs",
-      "name": "📼 demo/nextjs"
-    }
+      "name": "📼 demo/nextjs",
+    },
   ],
   "settings": {
-    "colorize.languages": [
-      "javascript",
-      "typescript"
-    ],
+    "colorize.languages": ["javascript", "typescript"],
     "workbench.colorCustomizations": {
       "activityBar.activeBackground": "#92e2ca",
       "activityBar.background": "#92e2ca",
@@ -33,7 +30,7 @@
       "titleBar.activeForeground": "#15202b",
       "titleBar.inactiveBackground": "#6ad7b699",
       "titleBar.inactiveForeground": "#15202b99",
-      "statusBar.debuggingForeground": "#15202b"
+      "statusBar.debuggingForeground": "#15202b",
     },
     "peacock.color": "#6ad7b6",
     "peacock.affectDebuggingStatusBar": true,
@@ -42,20 +39,20 @@
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+      "source.fixAll.eslint": "explicit",
     },
     "files.exclude": {
       "**/lib": true,
       "**/build": true,
-      "**/*.tsbuildinfo": true
+      "**/*.tsbuildinfo": true,
     },
     "search.exclude": {
       "**/node_modules": true,
       "**/.yarn": true,
       "**/lib": true,
-      "**/build": true
+      "**/build": true,
     },
     "jest.jestCommandLine": "yarn jest",
-    "jest.runMode": "on-demand"
-  }
+    "jest.runMode": "on-demand",
+  },
 }
