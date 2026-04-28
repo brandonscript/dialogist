@@ -29,7 +29,10 @@
     "README.md",
     "assets/readme/**/*"
   ],
-  "repository": "https://github.com/brandonscript/dialogist",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brandonscript/dialogist.git"
+  },
   "author": "github.com/brandonscript",
   "license": "MIT",
   "engines": {
@@ -44,7 +47,8 @@
     "lint": "prettier . --write --ignore-unknown && biome check --write src demo/nextjs/src",
     "lint:fix": "biome check --write --unsafe src demo/nextjs/src",
     "precommit": "./.husky/pre-commit",
-    "publish": "npm publish",
+    "release": "node scripts/publish-package.mjs",
+    "release:dry-run": "node scripts/publish-package.mjs --dry-run",
     "test": "jest",
     "test:watch": "jest --watch",
     "typecheck": "tsc --noEmit --incremental false",

@@ -1,7 +1,11 @@
 #!/bin/bash
 
-# A simple script to set the version across all packages
-# Usage: ./scripts/version.sh [version]
+# Bump version for the published package: root package.json, package-lock.json,
+# and the README package version line.
+# Usage: ./scripts/version.sh <version>
+# Run from the repository root.
+
+set -e
 
 if [ -z "$1" ]; then
   echo "Usage: $0 <version>"
@@ -11,22 +15,35 @@ fi
 
 NEW_VERSION="$1"
 
-# Validate semantic version format
 if ! [[ $NEW_VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$ ]]; then
-  echo "Error: Invalid semantic version format. Expected format: X.Y.Z"
+  echo "Error: Invalid semantic version format. Expected X.Y.Z or a valid semver with prerelease/build."
   exit 1
 fi
 
-echo "Setting version to $NEW_VERSION across all packages..."
+git_root=$(git rev-parse --show-toplevel 2>/dev/null) || git_root=""
+if [ -n "$git_root" ]; then
+  cd "$git_root" || exit 1
+fi
 
-# Update root package.json
+echo "Setting version to $NEW_VERSION..."
+
 jq --arg version "$NEW_VERSION" '.version = $version' package.json > package.json.tmp && mv package.json.tmp package.json
 
-# Single package - only root package.json to update
-echo "✓ Single package version updated"
+if [[ -f package-lock.json ]]; then
+  jq --arg version "$NEW_VERSION" '.version = $version | .packages[""].version = $version' package-lock.json > package-lock.json.tmp &&
+    mv package-lock.json.tmp package-lock.json
+fi
+
+if [[ -f README.md ]]; then
+  perl -i -pe "s/^\\*\\*Package version:\\*\\* .*/**Package version:** $NEW_VERSION/" README.md
+fi
 
 echo "✓ Version updated to $NEW_VERSION"
-echo "Remember to commit these changes and create a git tag:"
-echo "  git add ."
-echo "  git commit -m \"chore: bump version to $NEW_VERSION\""
-echo "  git tag v$NEW_VERSION"
+echo ""
+echo "Next steps:"
+echo "  1. Review: git diff"
+echo "  2. Commit: git add package.json package-lock.json README.md && git commit -m \"chore: bump version to $NEW_VERSION\""
+echo "  3. Tag:   git tag -a \"v$NEW_VERSION\" -m \"v$NEW_VERSION\""
+echo "  4. Push:  git push origin main && git push origin \"v$NEW_VERSION\""
+echo "  5. Release (GitHub CLI): gh release create \"v$NEW_VERSION\" --title \"v$NEW_VERSION\" --generate-notes"
+echo "  6. Publish: npm run release   # or npm run release:dry-run first"

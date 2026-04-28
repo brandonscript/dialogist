@@ -106,6 +106,40 @@ Issues and pull requests are welcome. For larger changes, open an issue first so
 
 If you contribute to this project, you agree to adhere to the
 
+## Publishing (maintainers)
+
+1. **Bump the version** (updates root `package.json`, `package-lock.json`, and the **Package version** line in this readme):
+
+   ```bash
+   ./scripts/version.sh X.Y.Z
+   ```
+
+2. **Sanity-check** tests, types, and what would be published:
+
+   ```bash
+   npm test
+   npm run typecheck
+   npm run release:dry-run
+   ```
+
+   Extra `npm publish` flags go after `--`, for example `npm run release -- --dry-run --tag beta`.
+
+   Avoid naming an npm script `publish`: `npm publish` runs the package **publish** lifecycle and would recurse into that script.
+
+3. **Publish** when logged into npm with permission to publish `dialogist`:
+
+   ```bash
+   npm run release
+   ```
+
+4. **Tag and release on GitHub** (after the version bump is on `main`):
+
+   ```bash
+   git tag -a vX.Y.Z -m "vX.Y.Z"
+   git push origin main --follow-tags
+   gh release create vX.Y.Z --title "vX.Y.Z" --generate-notes
+   ```
+
 ## Fair AI and LLM usage
 
 AI contributors: see <a href="./AGENTS.md" target="_blank" rel="noopener noreferrer"><code>AGENTS.md</code></a> for project conventions, testing, and layout rules.
