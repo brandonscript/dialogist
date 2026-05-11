@@ -5,6 +5,7 @@ import { useDemoState } from "../../contexts/DemoStateContext";
 import { useDemoRouteScroll } from "../../hooks/useDemoRouteScroll";
 import { AppTopBar } from "./AppTopBar";
 import { DemoSidebar } from "./DemoSidebar";
+import { MobileNavOverlay } from "./MobileNav";
 import { Sandbox } from "./Sandbox";
 import { TabBar } from "./TabBar";
 
@@ -25,18 +26,18 @@ export const DemoAppShell = () => {
   return (
     <>
       <DemoRouteScroll />
+      <MobileNavOverlay />
       <Box
         data-dialog-mode={isFullscreen ? "fullscreen" : "windowed"}
         sx={{
           display: "grid",
-          gridTemplateAreas: `
-          "header header"
-          "tabs tabs"
-          "sidebar sandbox"
-        `,
+          gridTemplateAreas: {
+            xs: `"header" "tabs" "sidebar"`,
+            md: `"header header" "tabs tabs" "sidebar sandbox"`,
+          },
           gridTemplateRows: "auto auto 1fr",
-          gridTemplateColumns: "1fr 2fr",
-          height: "100vh",
+          gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "minmax(0, 1fr) minmax(0, 2fr)" },
+          height: "100dvh",
           backgroundColor: (t) => t.palette.background.default,
         }}
       >
@@ -53,14 +54,14 @@ export const DemoAppShell = () => {
           sx={{
             gridArea: "sidebar",
             overflowY: "auto",
-            borderRight: (t) => `1px solid ${t.palette.divider}`,
+            borderRight: { md: (t) => `1px solid ${t.palette.divider}` },
             backgroundColor: (t) => t.palette.background.paper,
           }}
         >
           <DemoSidebar />
         </Box>
 
-        <Box sx={{ gridArea: "sandbox" }}>
+        <Box sx={{ gridArea: "sandbox", minHeight: 0, display: { xs: "none", md: "block" } }}>
           <Sandbox />
         </Box>
       </Box>

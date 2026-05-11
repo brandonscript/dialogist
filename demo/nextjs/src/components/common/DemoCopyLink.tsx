@@ -100,7 +100,7 @@ const CopyLinkButton = ({ copied, variant }: { copied: boolean; variant: DemoCop
 };
 
 export type DemoCopyLinkRowProps = {
-  /** Relative path (and optional hash), e.g. `/getting-started` or `/a/b#subsection`. */
+  /** Relative path (and optional hash), e.g. `/the-basics` or `/a/b#subsection`. */
   pathToCopy: string;
   children: ReactNode;
   ariaLabel?: string;

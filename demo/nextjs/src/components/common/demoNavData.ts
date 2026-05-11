@@ -1,9 +1,9 @@
 import type { ComponentType } from "react";
 
-import { AlertDialogCard } from "../1_getting_started/1.1_AlertDialogCard";
-import { ConfirmationDialogCard } from "../1_getting_started/1.2_ConfirmationDialogCard";
-import { AsyncConfirmationDialogCard } from "../1_getting_started/1.3_AsyncDialogCard";
-import { DialogConfigurationCard } from "../1_getting_started/1.4_DialogConfigCard";
+import { AlertDialogCard } from "../1_the_basics/1.1_AlertDialogCard";
+import { ConfirmationDialogCard } from "../1_the_basics/1.2_ConfirmationDialogCard";
+import { AsyncConfirmationDialogCard } from "../1_the_basics/1.3_AsyncDialogCard";
+import { DialogConfigurationCard } from "../1_the_basics/1.4_DialogConfigCard";
 import { BuiltinActionsCard } from "../2_actions_results/2.1_BuiltinActionsCard";
 import { CustomActionsCard } from "../2_actions_results/2.2_CustomActionsCard";
 import { ActionGroupsCard } from "../2_actions_results/2.3_ActionGroupsCard";
@@ -109,10 +109,10 @@ const demoCard = (name: string, component: DemoCardComponent): DemoCard => {
 
 export const DEMO_REGISTRY: DemoSection[] = [
   {
-    category: "Getting started",
-    sectionSlug: "getting-started",
-    label: "Getting started",
-    tabLabel: "getting started",
+    category: "The basics",
+    sectionSlug: "the-basics",
+    label: "The basics",
+    tabLabel: "the basics",
     cards: [
       demoCard("Alert dialog", AlertDialogCard),
       demoCard("Confirmation dialog", ConfirmationDialogCard),

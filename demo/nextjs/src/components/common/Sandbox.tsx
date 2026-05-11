@@ -70,6 +70,7 @@ const SandboxMain = memo(function SandboxMain({ isFullscreen, onToggle, onKeyDow
           backgroundColor: (t) => t.palette.background.paper,
           border: (t) => `1px solid ${t.palette.divider}`,
           cursor: "pointer",
+          display: { xs: "none", md: "block" },
         }}
         role="button"
         aria-pressed={isFullscreen}

@@ -2,9 +2,13 @@
 
 import {
   AppBar,
+  Box,
   Button,
+  Divider,
   FormControlLabel,
   IconButton,
+  Menu,
+  MenuItem,
   Switch,
   styled,
   Toolbar,
@@ -12,11 +16,14 @@ import {
   Typography,
 } from "@mui/material";
 import { FlexBox } from "@mui-flexy/v7";
+import { useRef, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
+import { LuActivity } from "react-icons/lu";
 
 import { useRenderTracking } from "../../contexts/RenderTrackingContext";
 import { emitExternalStateResetAll, useHasDirtyExternalState } from "../7_data_providers/globalReset";
 import { Span } from "./Elements";
+import { MobileNavTrigger } from "./MobileNav";
 import { RenderTracker } from "./RenderTracker";
 
 const SWITCH_WIDTH = 44;
@@ -75,6 +82,85 @@ const LabeledSwitch = styled(Switch)(({ theme }) =>
   }),
 );
 
+const MobileRenderMenu = () => {
+  const { showRenderTracking, toggleRenderTracking, resetRenderTracking } = useRenderTracking();
+  const hasDirtyExternalState = useHasDirtyExternalState();
+  const anchorRef = useRef<HTMLButtonElement | null>(null);
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Tooltip title="Render tracking">
+        <IconButton
+          ref={anchorRef}
+          aria-label="Render tracking options"
+          onClick={() => setOpen(true)}
+          sx={{
+            display: { xs: "inline-flex", sm: "none" },
+            color: "secondary.main",
+            p: 0.75,
+            position: "relative",
+            "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.08)" },
+          }}
+        >
+          <LuActivity size={20} />
+          {showRenderTracking && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: 6,
+                right: 6,
+                width: 6,
+                height: 6,
+                borderRadius: "50%",
+                backgroundColor: "primary.main",
+              }}
+            />
+          )}
+        </IconButton>
+      </Tooltip>
+      <Menu
+        anchorEl={anchorRef.current}
+        open={open}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        slotProps={{
+          paper: {
+            sx: {
+              mt: 0.5,
+              minWidth: 220,
+              backgroundColor: "background.secondary",
+              color: "secondary.main",
+            },
+          },
+        }}
+      >
+        <MenuItem disableRipple sx={{ gap: 1.5, justifyContent: "space-between", "&:hover": { bgcolor: "transparent" } }}>
+          <Typography variant="caption" sx={{ fontWeight: 500 }}>
+            Render tracking
+          </Typography>
+          <LabeledSwitch checked={showRenderTracking} onChange={() => toggleRenderTracking()} size="small" />
+        </MenuItem>
+        <Divider sx={{ borderColor: "rgba(255,255,255,0.1)" }} />
+        <MenuItem
+          sx={{ gap: 1, pt: 1, "&:hover": { bgcolor: "transparent" } }}
+          disableRipple
+        >
+          <Button variant="contained" color="primary" size="small" fullWidth onClick={() => { resetRenderTracking(); setOpen(false); }}>
+            Reset
+          </Button>
+          {hasDirtyExternalState && (
+            <Button variant="contained" color="primary" size="small" fullWidth onClick={() => { emitExternalStateResetAll(); setOpen(false); }}>
+              Clear state
+            </Button>
+          )}
+        </MenuItem>
+      </Menu>
+    </>
+  );
+};
+
 export const AppTopBar = () => {
   const { showRenderTracking, toggleRenderTracking, resetRenderTracking } = useRenderTracking();
   const hasDirtyExternalState = useHasDirtyExternalState();
@@ -86,11 +172,12 @@ export const AppTopBar = () => {
       elevation={0}
       sx={{ bgcolor: "background.secondary", color: "secondary.main", borderRadius: 0 }}
     >
-      <Toolbar sx={{ minHeight: 56, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2 }}>
+      <Toolbar sx={{ minHeight: 56, display: "flex", alignItems: "center", gap: 2, px: { xs: 1, sm: 2 } }}>
+        <MobileNavTrigger />
         <Typography color="secondary.main" variant="h6" sx={{ fontWeight: 700, textTransform: "lowercase" }}>
           Dialogist
         </Typography>
-        <FlexBox y="center" gap={2} ml="auto" flexGrow={1}>
+        <FlexBox y="center" gap={2} ml="auto" flexGrow={1} sx={{ display: { xs: "none", sm: "flex" } }}>
           <Tooltip
             title={
               <span>
@@ -119,7 +206,12 @@ export const AppTopBar = () => {
             )}
           </FlexBox>
         </FlexBox>
-        <RenderTracker componentName="HomePage" variant="light" sx={{ position: "static", m: 0 }} />
+        <RenderTracker
+          componentName="HomePage"
+          variant="light"
+          sx={{ position: "static", m: 0, display: { xs: "none", md: "block" } }}
+        />
+        <MobileRenderMenu />
         <Tooltip title="Dialogist on GitHub">
           <IconButton
             component="a"
@@ -130,6 +222,7 @@ export const AppTopBar = () => {
             sx={{
               color: "secondary.main",
               p: 0.75,
+              ml: { xs: "auto", sm: 0 },
               "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.08)" },
             }}
           >

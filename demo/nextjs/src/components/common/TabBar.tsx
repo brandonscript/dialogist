@@ -93,6 +93,7 @@ export const TabBar = () => {
   return (
     <Box
       sx={{
+        display: { xs: "none", md: "block" },
         bgcolor: (t) => `color-mix(in srgb, ${t.palette.background.secondary} 92.5%, white)`,
         borderBottom: (t) => `1px solid ${t.palette.divider}`,
       }}
@@ -103,6 +104,10 @@ export const TabBar = () => {
         sx={{
           minHeight: 40,
           px: 2,
+          overflowX: "auto",
+          flexWrap: "nowrap",
+          scrollbarWidth: "none",
+          "&::-webkit-scrollbar": { display: "none" },
         }}
       >
         {SECTIONS.map((section) => {
@@ -121,6 +126,8 @@ export const TabBar = () => {
                 color: tabActive ? "secondary.main" : "rgba(255, 255, 255, 0.7)",
                 fontSize: "0.75rem",
                 fontWeight: tabActive ? 600 : 500,
+                whiteSpace: "nowrap",
+                flexShrink: 0,
                 px: 3,
                 position: "relative",
                 borderRadius: 0,

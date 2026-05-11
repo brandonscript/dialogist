@@ -55,7 +55,7 @@ export const RequireWindowedMode = ({
   innerMargin,
   switchLabel = DEFAULT_SWITCH_LABEL,
 }: WindowedModePromptProps) => {
-  const { isFullscreen } = useDemoState();
+  const { isFullscreen, isMobile } = useDemoState();
   const hasChildren = children != null && children !== false;
 
   const innerContent = (innerChildren: ReactNode = <WindowedModeToggle label={switchLabel} />) => (
@@ -69,6 +69,20 @@ export const RequireWindowedMode = ({
       {innerChildren}
     </DemoCardPaper>
   );
+
+  if (isMobile) {
+    return (
+      <FlexBox column width="100%" sx={{ mt, my, mb }}>
+        <DemoCardPaper mt={0} my={0} mb={0} innerMargin={innerMargin}>
+          <Typography variant="caption" color="text.secondary" component="span">
+            This demo works best with windowed mode on a larger screen. The buttons below still open dialogs in
+            fullscreen.
+          </Typography>
+        </DemoCardPaper>
+        {hasChildren && innerContent(children)}
+      </FlexBox>
+    );
+  }
 
   if (!hasChildren) {
     return (
