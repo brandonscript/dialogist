@@ -19,7 +19,10 @@ npm run typecheck
 # Run demo type checking
 echo ""
 echo "Running demo type checking..."
-(cd demo/nextjs && npm run typecheck)
+# Delete stale incremental cache before typechecking — tsc's --incremental false CLI flag
+# does not reliably override tsconfig's `incremental: true` in TypeScript 5.x, so a stale
+# .tsbuildinfo can cause TypeScript to skip re-checking recently modified files.
+(cd demo/nextjs && rm -f tsconfig.tsbuildinfo && npm run typecheck)
 
 # Run linting
 echo ""

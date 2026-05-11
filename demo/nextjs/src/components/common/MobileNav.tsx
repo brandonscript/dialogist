@@ -1,10 +1,9 @@
 "use client";
 
-import { Box, Divider, Drawer, IconButton, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { Box, Divider, Drawer, Fade, IconButton } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { forwardRef, useEffect } from "react";
 import { LuMenu, LuX } from "react-icons/lu";
 
 import { useDemoState } from "../../contexts/DemoStateContext";
@@ -17,21 +16,50 @@ import {
   getSubHeadingsForNav,
 } from "./demoNavData";
 
+/** Height of the AppTopBar — used to offset the Drawer so the bar stays visible. */
+const APPBAR_HEIGHT = 56;
+
+const NavFade = forwardRef<HTMLDivElement, React.ComponentProps<typeof Fade>>(
+  function NavFade(props, ref) {
+    return <Fade {...props} ref={ref} timeout={200} />;
+  },
+);
+
+const iconBoxSx = (visible: boolean, rotateHidden: string) => ({
+  position: "absolute" as const,
+  inset: 0,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  transition: "opacity 0.22s ease, transform 0.25s ease",
+  opacity: visible ? 1 : 0,
+  transform: visible ? "rotate(0deg) scale(1)" : `${rotateHidden} scale(0.4)`,
+  pointerEvents: "none" as const,
+});
+
 export const MobileNavTrigger = () => {
-  const { setMobileNavOpen } = useDemoState();
+  const { isMobileNavOpen, setMobileNavOpen } = useDemoState();
   return (
     <IconButton
-      aria-label="Open navigation"
-      onClick={() => setMobileNavOpen(true)}
+      aria-label={isMobileNavOpen ? "Close navigation" : "Open navigation"}
+      onClick={() => setMobileNavOpen(!isMobileNavOpen)}
       sx={{
         display: { xs: "inline-flex", md: "none" },
         color: "secondary.main",
         p: 0.75,
         mr: 0.5,
+        position: "relative",
         "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.08)" },
       }}
     >
-      <LuMenu size={22} />
+      <Box sx={iconBoxSx(!isMobileNavOpen, "rotate(90deg)")}>
+        <LuMenu size={22} />
+      </Box>
+      <Box sx={iconBoxSx(isMobileNavOpen, "rotate(-90deg)")}>
+        <LuX size={22} />
+      </Box>
+      {/* Keeps the button sized correctly */}
+      <Box sx={{ width: 22, height: 22, visibility: "hidden" }} aria-hidden />
     </IconButton>
   );
 };
@@ -53,45 +81,25 @@ export const MobileNavOverlay = () => {
       anchor="top"
       open={isMobileNavOpen}
       onClose={() => setMobileNavOpen(false)}
-      sx={{ display: { xs: "block", md: "none" } }}
+      slots={{ transition: NavFade }}
+      sx={{
+        display: { xs: "block", md: "none" },
+        top: `${APPBAR_HEIGHT}px`,
+      }}
       PaperProps={{
         sx: {
+          top: `${APPBAR_HEIGHT}px`,
           width: "100vw",
-          height: "100dvh",
+          height: `calc(100dvh - ${APPBAR_HEIGHT}px)`,
           overflowY: "auto",
+          borderRadius: 0,
           backgroundColor: (t) => t.palette.background.paper,
         },
       }}
+      slotProps={{
+        backdrop: { sx: { top: `${APPBAR_HEIGHT}px` } },
+      }}
     >
-      <FlexBox
-        x="space-between"
-        y="center"
-        sx={{
-          px: 2,
-          minHeight: 56,
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-          backgroundColor: (t) => t.palette.background.secondary,
-          position: "sticky",
-          top: 0,
-          zIndex: 1,
-        }}
-      >
-        <Typography variant="h6" sx={{ fontWeight: 700, textTransform: "lowercase", color: "secondary.main" }}>
-          Dialogist
-        </Typography>
-        <IconButton
-          aria-label="Close navigation"
-          onClick={() => setMobileNavOpen(false)}
-          sx={{
-            color: "secondary.main",
-            p: 0.75,
-            "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.08)" },
-          }}
-        >
-          <LuX size={22} />
-        </IconButton>
-      </FlexBox>
-
       <Box sx={{ py: 2, px: 2 }}>
         {DEMO_REGISTRY.map((section, sectionIndex) => {
           const isSectionActive = activeSectionSlug === section.sectionSlug;
