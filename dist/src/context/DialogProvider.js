@@ -1,12 +1,11 @@
 "use client";
 import { slicedToArray as _slicedToArray, objectSpread2 as _objectSpread2, toConsumableArray as _toConsumableArray, createForOfIteratorHelper as _createForOfIteratorHelper } from '../../_virtual/_rollupPluginBabelHelpers.js';
-import { GlobalStyles } from '@mui/material';
 import { deepmerge } from '../../node_modules/deepmerge-ts/dist/node/index.js';
 import { useState, useRef, useLayoutEffect, useEffect, startTransition, useCallback, useMemo } from 'react';
+import { DialogistGlobalStyles } from '../components/DialogistGlobalStyles.js';
 import { DialogScaffolding } from '../components/DialogScaffolding.js';
 import { useDialogCallbacks } from '../hooks/useDialogCallbacks.js';
 import { resolveHandler, clearDialogHandlersRow, seedDialogHandlers, extractReactiveHandlersFromConfig, readOwnerTokenFromOpenConfig, resyncDialogHandlersFromConfig, stripInternalDialogOpenFields } from '../state/DialogHandlers.js';
-import { dialogistStyles } from '../theme/dialogTheme.js';
 import { deepEqual as _deepEqual } from '../utils/deepCompare.js';
 import { evaluateDialogCanClose } from '../utils/dialogCanClose.js';
 import { dialogKeyStartsWith, resolveDialogKey, ensureDialogKeyArray } from '../utils/dialogKey.js';
@@ -100,7 +99,9 @@ var DialogProviderCore = function DialogProviderCore(_ref) {
     slots = _ref.slots,
     slotProps = _ref.slotProps,
     onConflict = _ref.onConflict,
-    throwOnConflictProp = _ref.throwOnConflict;
+    throwOnConflictProp = _ref.throwOnConflict,
+    _ref$cssMode = _ref.cssMode,
+    cssMode = _ref$cssMode === void 0 ? "inject" : _ref$cssMode;
   useRenderInstrumentation("DialogProviderCore");
   var _useState = useState([]),
     _useState2 = _slicedToArray(_useState, 2),
@@ -683,8 +684,8 @@ var DialogProviderCore = function DialogProviderCore(_ref) {
       value: callbacks,
       children: /*#__PURE__*/jsxs(DialogStateContext.Provider, {
         value: stateContextValue,
-        children: [/*#__PURE__*/jsx(GlobalStyles, {
-          styles: dialogistStyles
+        children: [/*#__PURE__*/jsx(DialogistGlobalStyles, {
+          mode: cssMode
         }), children, /*#__PURE__*/jsx(DialogScaffolding, {
           dialogs: dialogs,
           onClose: closeDialog,
@@ -729,7 +730,8 @@ var DialogProvider = function DialogProvider(_ref2) {
     slots = _ref2.slots,
     slotProps = _ref2.slotProps,
     onConflict = _ref2.onConflict,
-    throwOnConflict = _ref2.throwOnConflict;
+    throwOnConflict = _ref2.throwOnConflict,
+    cssMode = _ref2.cssMode;
   return /*#__PURE__*/jsx(DialogSlotRegistryProvider, {
     children: /*#__PURE__*/jsx(DialogProviderCore, {
       defaultOptions: defaultOptions,
@@ -737,6 +739,7 @@ var DialogProvider = function DialogProvider(_ref2) {
       slotProps: slotProps,
       onConflict: onConflict,
       throwOnConflict: throwOnConflict,
+      cssMode: cssMode,
       children: children
     })
   });

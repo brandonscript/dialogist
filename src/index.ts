@@ -1,8 +1,16 @@
 // Dialogist - A centralized dialog manager for React applications
 
 export { type DialogistClasses, dialogistClasses } from "./classes";
+export { DialogistGlobalStyles, type DialogistGlobalStylesMode } from "./components/DialogistGlobalStyles";
 export * from "./context/DialogActionsContext";
 export * from "./context/DialogCallbacksContext";
+export {
+  DEFAULT_DIALOGIST_ADAPTER,
+  type DialogistAdapter,
+  DialogistAdapterProvider,
+  type DialogistAdapterProviderProps,
+  useDialogistAdapter,
+} from "./context/DialogistAdapterContext";
 export * from "./context/DialogProvider";
 export * from "./context/DialogStateContext";
 export { useDeepCallback, useDeepEffect, useDeepMemo } from "./hooks/useDeepCompare";
@@ -22,11 +30,16 @@ export * from "./hooks/useMemoizedDialogParts";
 export * from "./hooks/useShallowEffect";
 export type { DialogHandlersSnapshot, ReactiveDialogHandlers } from "./state/DialogHandlers";
 export * from "./state/DialogState";
-export * from "./theme/dialogTheme";
+export {
+  dialogistStyles,
+  type DialogistNestedKey,
+  pickFromDialogistStyles,
+} from "./theme/dialogTheme";
 export * from "./types";
 export * from "./useDialog";
 export * from "./utils/chainEventHandlers";
 export * from "./utils/classNames";
 export { deepEqual, deepEqualDeps } from "./utils/deepCompare";
 export { resolveDialogPartContent } from "./utils/resolveDialogPartContent";
+export { serializeStylesToCss } from "./utils/cssSerialize";
 export { DIALOGIST_VERSION } from "./version";

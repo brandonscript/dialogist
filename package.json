@@ -21,7 +21,30 @@
     "./classes": {
       "types": "./dist/classes.d.ts",
       "import": "./dist/classes.js"
-    }
+    },
+    "./styles.css": "./dist/dialogist.css",
+    "./mui": {
+      "types": "./dist/src/adapters/mui/index.d.ts",
+      "import": "./dist/src/adapters/mui/index.js"
+    },
+    "./base-ui": {
+      "types": "./dist/src/adapters/base-ui/index.d.ts",
+      "import": "./dist/src/adapters/base-ui/index.js"
+    },
+    "./shadcn": {
+      "types": "./dist/src/adapters/shadcn/index.d.ts",
+      "import": "./dist/src/adapters/shadcn/index.js"
+    },
+    "./shadcn/template": {
+      "types": "./dist/src/adapters/shadcn/templates/dialog.d.ts",
+      "import": "./dist/src/adapters/shadcn/templates/dialog.js"
+    },
+    "./tailwind": {
+      "types": "./dist/src/adapters/tailwind/index.d.ts",
+      "import": "./dist/src/adapters/tailwind/index.js"
+    },
+    "./tailwind/preset.cjs": "./dist/src/adapters/tailwind/preset.cjs",
+    "./tailwind/theme.css": "./dist/src/adapters/tailwind/theme.css"
   },
   "files": [
     "dist/**/*",
@@ -39,7 +62,7 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "build": "npm run clean && rollup -c && npx tsc --project tsconfig.declarations.json && cp dist/src/index.d.ts dist/index.d.ts",
+    "build": "npm run clean && rollup -c && npx tsc --project tsconfig.declarations.json && cp dist/src/index.d.ts dist/index.d.ts && node scripts/build-styles.mjs && cp src/adapters/tailwind/preset.cjs dist/src/adapters/tailwind/preset.cjs && cp src/adapters/tailwind/theme.css dist/src/adapters/tailwind/theme.css",
     "clean": "rm -rf dist && mkdir -p dist",
     "demo": "cd demo/nextjs && npm run dev",
     "demo:nextjs": "cd demo/nextjs && npm run dev",
@@ -59,6 +82,7 @@
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.27.0",
+    "@base-ui-components/react": "^1.0.0-rc.0",
     "@biomejs/biome": "latest",
     "@emotion/babel-plugin": "^11.13.5",
     "@emotion/jest": "^11.13.0",
@@ -104,25 +128,32 @@
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
+    "@base-ui-components/react": "^1.0.0-rc.0",
     "@emotion/react": ">=11.0.0",
     "@emotion/styled": ">=11.0.0",
     "@mui/material": "^7.3.4",
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react-dom": ">=18.0.0",
+    "tailwindcss": ">=3.0.0"
   },
   "peerDependenciesMeta": {
+    "@base-ui-components/react": {
+      "optional": true
+    },
     "@emotion/react": {
-      "optional": false
+      "optional": true
     },
     "@emotion/styled": {
-      "optional": false
+      "optional": true
     },
     "@mui/material": {
-      "optional": false
+      "optional": true
+    },
+    "tailwindcss": {
+      "optional": true
     }
   },
   "dependencies": {
-    "@mui/system": "^7.3.3",
     "clsx": "^2.1.1",
     "deepmerge-ts": "^5.1.0"
   },

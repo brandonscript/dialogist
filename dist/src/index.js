@@ -1,6 +1,8 @@
 export { dialogistClasses } from './classes.js';
+export { DialogistGlobalStyles } from './components/DialogistGlobalStyles.js';
 export { DialogActionsContext, useDialogActionsContext } from './context/DialogActionsContext.js';
 export { DialogCallbacksContext } from './context/DialogCallbacksContext.js';
+export { DEFAULT_DIALOGIST_ADAPTER, DialogistAdapterProvider, useDialogistAdapter } from './context/DialogistAdapterContext.js';
 export { DialogProvider } from './context/DialogProvider.js';
 export { DialogStateContext } from './context/DialogStateContext.js';
 export { useDeepCallback, useDeepEffect, useDeepMemo } from './hooks/useDeepCompare.js';
@@ -19,11 +21,12 @@ export { useKeyPress } from './hooks/useKeyPress.js';
 export { useMemoizedDialogParts } from './hooks/useMemoizedDialogParts.js';
 export { useLayoutShallowEffect, useShallowEffect } from './hooks/useShallowEffect.js';
 export { clearDialogStateValue, getDialogStateValue, setDialogStateValue, setDialogStateValueFromDialog, setDialogStateValueFromExternal, useDialogStateSource, useDialogStateValue } from './state/DialogState.js';
-export { dialogistExtendMuiTheme, dialogistStyles } from './theme/dialogTheme.js';
+export { dialogistStyles, pickFromDialogistStyles } from './theme/dialogTheme.js';
 export { useDialog } from './useDialog.js';
 export { chainEventHandlers } from './utils/chainEventHandlers.js';
 export { classNames } from './utils/classNames.js';
 export { deepEqual, deepEqualDeps } from './utils/deepCompare.js';
 export { resolveDialogPartContent } from './utils/resolveDialogPartContent.js';
+export { serializeStylesToCss } from './utils/cssSerialize.js';
 export { DIALOGIST_VERSION } from './version.js';
 //# sourceMappingURL=index.js.map

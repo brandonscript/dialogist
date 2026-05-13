@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import { type DialogistGlobalStylesMode } from "../components/DialogistGlobalStyles";
 import type { BaseDialogConfig, DialogComponents, DialogSlotProps } from "../types";
 /** Default options merged with each `dialog.open()` call (including `onConflict`). */
 export type DefaultOptions = Partial<BaseDialogConfig>;
@@ -17,5 +18,14 @@ export interface DialogProviderProps {
      * Fallback when active and incoming configs leave `throwOnConflict` unset (see {@link DialogConflictResolver}).
      */
     throwOnConflict?: boolean;
+    /**
+     * How the provider should publish the framework-agnostic `dialogistStyles`.
+     *
+     * - `"inject"` (default): inject a `<style id="dialogist-global-styles">` tag once per
+     *   document. Refcounted across multiple providers.
+     * - `"external"`: do nothing — consumers `import "dialogist/styles.css"` themselves.
+     * - `"none"`: opt out entirely (use when an adapter renders its own GlobalStyles).
+     */
+    cssMode?: DialogistGlobalStylesMode;
 }
-export declare const DialogProvider: ({ children, defaultOptions, slots, slotProps, onConflict, throwOnConflict, }: DialogProviderProps) => import("react/jsx-runtime").JSX.Element;
+export declare const DialogProvider: ({ children, defaultOptions, slots, slotProps, onConflict, throwOnConflict, cssMode, }: DialogProviderProps) => import("react/jsx-runtime").JSX.Element;

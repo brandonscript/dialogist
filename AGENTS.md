@@ -4,9 +4,9 @@
 
 ## Project Overview
 
-Dialogist is a centralized dialog manager for React applications, similar to Notistack but for dialogs. It provides a single package solution for managing all dialogs in your application with a promise-based API, style-agnostic core, and MUI integration.
+Dialogist is a centralized dialog manager for React applications, similar to Notistack but for dialogs. It provides a single package solution for managing all dialogs in your application with a promise-based API, a style-agnostic core, and **first-class adapters for multiple UI libraries** (MUI, Base UI, shadcn, Tailwind).
 
-**Current state:** Single package (future: multi-package architecture planned)
+**Current state:** Single npm package with subpath exports per adapter (e.g. `dialogist/mui`, `dialogist/base-ui`, `dialogist/shadcn`, `dialogist/tailwind`). Adapters live under `src/adapters/<name>/` and are emitted as separate entry chunks at build time. See [`docs/adapters.md`](./docs/adapters.md) for the full adapter overview and migration notes.
 
 ### MCP Servers / Agents
 
@@ -75,11 +75,14 @@ Dialogist is a centralized dialog manager for React applications, similar to Not
 
 ### `src/` directory (publishable library)
 
-- Core dialog management logic (contexts, hooks, types)
+- Core dialog management logic (contexts, hooks, types) with **zero MUI imports**
 - Built with Rollup, published to npm
 - Uses only React built-ins and minimal dependencies (deepmerge-ts, clsx)
 - Exports via `src/index.ts`
-- Must work with any MUI v7+ application
+- Headless defaults in `src/components/headless/` (DOM-only `Base`, `Title`, `Content`, `ActionsContainer`, `Actions`, `StatusBar`, `Footer`)
+- Adapters in `src/adapters/<name>/` — each exports a `<name>Slots` bundle and (optionally) a theme integration helper. Adapters import their own peer deps; the core never does.
+- CSS pipeline: `dialogistStyles` (in `src/theme/dialogTheme.ts`) is serialized to `dist/dialogist.css` by `scripts/build-styles.mjs` and exported as `dialogist/styles.css`. Runtime injection is handled by `DialogistGlobalStyles` (refcounted `<style>` tag) with three modes: `"inject"` (default), `"external"`, `"none"`.
+- Theme tokens that used to be read via `useTheme()` (transition duration/easing, spacing) now flow through `DialogistAdapterContext`, with sensible defaults so the headless core works with no provider. The MUI adapter's `MuiDialogistAdapterProvider` overrides those values from the active MUI theme.
 
 ### `demo/nextjs/` directory (demo application)
 
@@ -223,8 +226,10 @@ Dialog Components - consume variables via var(...)
 
 ### React Components - Source Code (`src/`)
 
-- **✅ Use built-in React components only**
-- **✅ No third-party UI libraries** in source code unless explicitly requested by the user
+- **✅ Core (`src/`, excluding `src/adapters/`) uses only built-in React + DOM APIs** — no UI library imports
+- **✅ Adapters (`src/adapters/<name>/`) may import their adapter's peer dependency (and only that peer)** — e.g. `src/adapters/mui/` may import from `@mui/material`, `src/adapters/base-ui/` may import from `@base-ui-components/react`
+- **❌ Never import a UI library from `src/` outside its dedicated adapter folder**
+- **❌ Never make an adapter depend on another adapter's peer dependency**
 
 ### React Components - Demo Code (`demo/`)
 

@@ -1,12 +1,14 @@
-import type { ThemeOptions } from "@mui/material/styles";
-import { deepmerge } from "deepmerge-ts";
-
 import { dialogistClasses } from "../classes";
 
 /**
  * Framework-agnostic, static base styles with sensible defaults.
- * This does not reference MUI Theme. Consumers can layer their own theme
- * or override variables via CSS.
+ * This does not reference any component library theme; consumers (or adapters) layer
+ * their own theme or override variables via CSS.
+ *
+ * The shape is JSS-like and is consumed in two ways:
+ *  - At runtime by {@link DialogProvider} (or an MUI `GlobalStyles`) for inline injection.
+ *  - At build time by `scripts/build-styles.mjs` which serializes it to a CSS file
+ *    consumers can `import "dialogist/styles.css"`.
  */
 export const dialogistStyles = {
   "@keyframes dialogistFlowBackAppear": {
@@ -280,8 +282,8 @@ export const dialogistStyles = {
   },
 } as const;
 
-// Helper to pluck nested style blocks from dialogistStyles
-type DialogistNestedKeys =
+/** Helper used by adapters to pluck nested style blocks from {@link dialogistStyles}. */
+export type DialogistNestedKey =
   | typeof dialogistClasses.rootPaper
   | typeof dialogistClasses.title
   | typeof dialogistClasses.content
@@ -300,88 +302,10 @@ type DialogistNestedKeys =
   | typeof dialogistClasses.statusBar;
 
 type CssStyleObject = { [key: string]: string | number | CssStyleObject };
-const pickFromDialogist = (className: DialogistNestedKeys): CssStyleObject => {
+
+/** Pluck a `& .className` nested block from {@link dialogistStyles}. Used by adapters. */
+export const pickFromDialogistStyles = (className: DialogistNestedKey): CssStyleObject => {
   const baseBlock = dialogistStyles[`.${dialogistClasses.base}`] as CssStyleObject;
   const nested = baseBlock[`& .${className}`] as CssStyleObject | undefined;
   return nested ?? {};
 };
-
-/**
- * MUI adapter that maps Dialogist CSS variables onto MUI components.
- * Built by referencing dialogistStyles so there are no duplicated values.
- */
-const baseDialogistMuiComponents: ThemeOptions["components"] = {
-  MuiDialog: {
-    styleOverrides: {
-      root: ({ theme }) => ({
-        [`&.${dialogistClasses.base}`]: {
-          "--dialogist-primary-main": theme.palette.primary.main,
-          "--dialogist-primary-contrastText": theme.palette.primary.contrastText,
-          "--dialogist-secondary-main": theme.palette.secondary.main,
-          "--dialogist-secondary-contrastText": theme.palette.secondary.contrastText,
-          "--dialogist-text-primary": theme.palette.text.primary,
-          "--dialogist-text-secondary": theme.palette.text.secondary,
-          "--dialogist-bg-paper": theme.palette.background.paper,
-          "--dialogist-bg-secondary": (theme.palette.grey as unknown as Record<number, string>)[100] ?? "#f5f5f5",
-          "--dialogist-title-text": theme.palette.text.primary,
-          "--dialogist-content-text": theme.palette.text.secondary,
-          "--dialogist-footer-text": theme.palette.text.secondary,
-          "--dialogist-font-family": `var(--font-sans, ${theme.typography.fontFamily})`,
-          "--dialogist-spacing": typeof theme.spacing === "function" ? theme.spacing(4) : "32px",
-          "--dialogist-title-font-size": theme.typography.h6.fontSize,
-          "--dialogist-statusBar-font-size": theme.typography.caption.fontSize,
-          "--dialogist-content-font-size": theme.typography.body2.fontSize,
-          "--dialogist-backdrop-color":
-            (theme as { palette: { mode?: string } }).palette.mode === "dark"
-              ? "rgba(0, 0, 0, 0.7)"
-              : "rgba(0, 0, 0, 0.5)",
-        },
-        // Keep backdrop visible if provider sets data attribute on the portal container
-        '& [data-preserve-backdrop="true"] .MuiBackdrop-root': {
-          opacity: 1,
-          transition: "none",
-        },
-      }),
-      paper: pickFromDialogist(dialogistClasses.rootPaper),
-    },
-  },
-  MuiDialogTitle: {
-    styleOverrides: {
-      root: {
-        ...pickFromDialogist(dialogistClasses.title),
-      },
-    },
-  },
-  MuiDialogContent: {
-    styleOverrides: {
-      root: {
-        ...pickFromDialogist(dialogistClasses.content),
-      },
-    },
-  },
-  MuiDialogActions: {
-    styleOverrides: {
-      root: {
-        ...pickFromDialogist(dialogistClasses.actionsContainer),
-        "&.MuiDialogActions-spacing > :not(:first-of-type)": {
-          marginLeft: 0,
-        },
-      },
-    },
-  },
-  MuiBackdrop: {
-    styleOverrides: {
-      root: pickFromDialogist(dialogistClasses.backdrop),
-    },
-  },
-} as const;
-
-/**
- * Merge helper - consumer theme wins over Dialogist defaults.
- * @param existingTheme - The existing theme to extend.
- * @returns The extended theme.
- */
-export const dialogistExtendMuiTheme = <T extends object = object>(theme: T): T =>
-  deepmerge(theme, {
-    components: baseDialogistMuiComponents,
-  }) as T;

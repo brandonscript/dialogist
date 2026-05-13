@@ -38,7 +38,15 @@ const preserveUseClientDirectives = () => ({
 });
 
 export default {
-  input: ["src/index.ts", "classes.ts"],
+  input: [
+    "src/index.ts",
+    "classes.ts",
+    "src/adapters/mui/index.ts",
+    "src/adapters/base-ui/index.ts",
+    "src/adapters/shadcn/index.ts",
+    "src/adapters/shadcn/templates/dialog.tsx",
+    "src/adapters/tailwind/index.ts",
+  ],
   output: [
     {
       dir: "dist",
@@ -89,7 +97,7 @@ export default {
     replace(replaceEntries()),
     preserveUseClientDirectives(),
   ],
-  external: ["react", "react-dom", /^@mui\/.*$/],
+  external: ["react", "react-dom", /^@mui\/.*$/, /^@emotion\/.*$/, /^@base-ui-components\/.*$/],
   onwarn(warning, warn) {
     if (warning.code === "MODULE_LEVEL_DIRECTIVE" && warning.message.includes('"use client"')) {
       return;

@@ -1,6 +1,5 @@
 "use client";
 
-import { GlobalStyles } from "@mui/material";
 import { deepmerge } from "deepmerge-ts";
 import {
   type ReactNode,
@@ -13,6 +12,7 @@ import {
   useState,
 } from "react";
 
+import { DialogistGlobalStyles, type DialogistGlobalStylesMode } from "../components/DialogistGlobalStyles";
 import { DialogScaffolding } from "../components/DialogScaffolding";
 import { useDialogCallbacks } from "../hooks/useDialogCallbacks";
 import {
@@ -24,7 +24,6 @@ import {
   seedDialogHandlers,
   stripInternalDialogOpenFields,
 } from "../state/DialogHandlers";
-import { dialogistStyles } from "../theme/dialogTheme";
 import type {
   BaseDialogConfig,
   DialogCloseEvent,
@@ -171,6 +170,15 @@ export interface DialogProviderProps {
    * Fallback when active and incoming configs leave `throwOnConflict` unset (see {@link DialogConflictResolver}).
    */
   throwOnConflict?: boolean;
+  /**
+   * How the provider should publish the framework-agnostic `dialogistStyles`.
+   *
+   * - `"inject"` (default): inject a `<style id="dialogist-global-styles">` tag once per
+   *   document. Refcounted across multiple providers.
+   * - `"external"`: do nothing — consumers `import "dialogist/styles.css"` themselves.
+   * - `"none"`: opt out entirely (use when an adapter renders its own GlobalStyles).
+   */
+  cssMode?: DialogistGlobalStylesMode;
 }
 
 const DialogProviderCore = ({
@@ -180,6 +188,7 @@ const DialogProviderCore = ({
   slotProps,
   onConflict,
   throwOnConflict: throwOnConflictProp,
+  cssMode = "inject",
 }: DialogProviderProps) => {
   useRenderInstrumentation("DialogProviderCore");
 
@@ -856,7 +865,7 @@ const DialogProviderCore = ({
     <DialogActionsContext.Provider value={actionsContextValue}>
       <DialogCallbacksContext.Provider value={callbacks}>
         <DialogStateContext.Provider value={stateContextValue}>
-          <GlobalStyles styles={dialogistStyles} />
+          <DialogistGlobalStyles mode={cssMode} />
           {children}
           <DialogScaffolding dialogs={dialogs} onClose={closeDialog} slots={slots} slotProps={slotProps} />
         </DialogStateContext.Provider>
@@ -912,6 +921,7 @@ export const DialogProvider = ({
   slotProps,
   onConflict,
   throwOnConflict,
+  cssMode,
 }: DialogProviderProps) => {
   return (
     <DialogSlotRegistryProvider>
@@ -921,6 +931,7 @@ export const DialogProvider = ({
         slotProps={slotProps}
         onConflict={onConflict}
         throwOnConflict={throwOnConflict}
+        cssMode={cssMode}
       >
         {children}
       </DialogProviderCore>

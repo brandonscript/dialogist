@@ -1,17 +1,15 @@
 "use client";
 
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, styled, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { type CSSProperties, memo, type Ref, useCallback, useLayoutEffect, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { dialogistClasses } from "../classes";
+import { useDialogistAdapter } from "../context/DialogistAdapterContext";
 import { useDeepMemo } from "../hooks/useDeepCompare";
 import { useMemoizedDialogParts } from "../hooks/useMemoizedDialogParts";
 import type {
   BaseDialogProps,
   CustomDialogConfig,
-  DialogActionProps,
   DialogActionsAlign,
   DialogCloseOptions,
   DialogCloseReason,
@@ -23,6 +21,15 @@ import type {
 import { classNames } from "../utils/classNames";
 import { type ConfigForActions, deriveEffectiveActions } from "../utils/dialogActions";
 import { resolveDialogPartContent } from "../utils/resolveDialogPartContent";
+import { HeadlessBase } from "./headless/HeadlessBase";
+import {
+  HeadlessActions,
+  HeadlessActionsContainer,
+  HeadlessContent,
+  HeadlessFooter,
+  HeadlessStatusBar,
+  HeadlessTitle,
+} from "./headless/headlessDefaults";
 
 const ACTIONS_ALIGN_TO_CSS: Record<DialogActionsAlign, string> = {
   start: "flex-start",
@@ -31,84 +38,6 @@ const ACTIONS_ALIGN_TO_CSS: Record<DialogActionsAlign, string> = {
   "space-between": "space-between",
   "space-around": "space-around",
   "space-evenly": "space-evenly",
-};
-
-const resolveActionsGap = (
-  theme: { spacing: (value: number) => string },
-  value: number | string | undefined,
-  fallback: number,
-): string => {
-  const v = value === undefined ? fallback : value;
-  return typeof v === "number" ? theme.spacing(v) : v;
-};
-
-const getActionKeyPart = (action: DialogActionProps): string =>
-  action.id ?? action.title ?? (typeof action.children === "string" ? action.children : "anonymous");
-
-// Default Actions: one inner row when multiple groups so DialogActions has a single child — theme
-// `gap` on `.Dialogist-actionsContainer` then does not space every button. Row `gap` = between
-// groups; each cluster uses `intraGroupGap` (see {@link import("../types").ActionsStyle}).
-// Layout tokens use CSS variables consumed by `.Dialogist-actionsRow` / `.Dialogist-actionsGroup`
-// in `dialogistStyles` (no MUI `sx` on these wrappers).
-const DefaultActions = ({
-  actionGroups,
-  dialogKey,
-  actionsStyle,
-}: {
-  actionGroups: import("../types").DialogActionProps[][];
-  dialogKey: string;
-  actionsStyle?: import("../types").ActionsStyle;
-}) => {
-  const theme = useTheme();
-  const hasMultipleGroups = actionGroups.length > 1;
-  const justifyFromAlign = actionsStyle?.align ? ACTIONS_ALIGN_TO_CSS[actionsStyle.align] : undefined;
-  const hasSingleGroup = actionGroups.length === 1;
-  /** Matches `--dialogist-actionsContainer-justify` default when `align` is omitted. */
-  const justifyContent = justifyFromAlign ?? "center";
-
-  const innerGapRaw = hasMultipleGroups
-    ? actionsStyle?.intraGroupGap !== undefined
-      ? actionsStyle.intraGroupGap
-      : 1
-    : (actionsStyle?.gap ?? 1);
-
-  const groupBoxes = actionGroups.map((group) => (
-    <div
-      key={`${dialogKey}-group-${group.map(getActionKeyPart).join("-")}`}
-      className={dialogistClasses.actionsGroup}
-      data-dialogist-layout={hasSingleGroup ? "single" : undefined}
-      style={
-        {
-          "--dialogist-actionsGroup-gap": resolveActionsGap(theme, innerGapRaw, 1),
-          "--dialogist-actionsGroup-justify": hasMultipleGroups ? "flex-start" : justifyContent,
-        } as CSSProperties
-      }
-    >
-      {group.map((action) => (
-        <Button {...action.props} key={`${dialogKey}-action-${getActionKeyPart(action)}`}>
-          {action.children || action.title}
-        </Button>
-      ))}
-    </div>
-  ));
-
-  if (hasMultipleGroups) {
-    return (
-      <div
-        className={dialogistClasses.actionsRow}
-        style={
-          {
-            "--dialogist-actionsRow-gap": resolveActionsGap(theme, actionsStyle?.gap, 1),
-            "--dialogist-actionsRow-justify": justifyContent,
-          } as CSSProperties
-        }
-      >
-        {groupBoxes}
-      </div>
-    );
-  }
-
-  return <>{groupBoxes}</>;
 };
 
 interface DialogScaffoldingProps<
@@ -132,40 +61,10 @@ interface DialogRendererProps<C extends React.ComponentType<BaseDialogProps> = R
   suppressBackdrop?: boolean;
 }
 
-const DefaultStyledDialog = styled(
-  ({ className, slotProps, hideBackdrop, container, ...props }: BaseDialogProps) => (
-    <Dialog
-      className={`${dialogistClasses.base} ${className || ""}`.trim()}
-      {...props}
-      container={container}
-      disableAutoFocus={props.disableAutoFocus}
-      disableEnforceFocus={props.disableEnforceFocus}
-      disableRestoreFocus={props.disableRestoreFocus}
-      PaperProps={{
-        className: classNames(dialogistClasses.rootPaper, className),
-        ...slotProps?.paper,
-      }}
-      slotProps={{
-        backdrop: hideBackdrop
-          ? { style: { display: "none" } }
-          : {
-              className: dialogistClasses.backdrop,
-              ...slotProps?.backdrop,
-            },
-      }}
-    />
-  ),
-  {
-    shouldForwardProp: (prop) => prop !== "overflow" && prop !== "borderRadius",
-  },
-)<BaseDialogProps>(({ overflow }) => ({
-  overflow: overflow || "hidden",
-}));
-
 // Stable dialog renderer that only updates when dialog content changes
 const StableDialogRenderer = memo(
   ({
-    DialogComponent = DefaultStyledDialog,
+    DialogComponent = HeadlessBase,
     dialog,
     onClose,
     overflow,
@@ -174,7 +73,7 @@ const StableDialogRenderer = memo(
     suppressBackdrop,
   }: DialogRendererProps) => {
     const { key: dialogKey, type, config } = dialog;
-    const theme = useTheme();
+    const adapter = useDialogistAdapter();
 
     // Ref for the Paper element (Dialog content container) to animate transitions
     const paperRef = useRef<HTMLDivElement>(null);
@@ -193,12 +92,9 @@ const StableDialogRenderer = memo(
         baseInlineTransition.current = element.style.transition;
       }
 
-      const resizeDuration =
-        typeof theme.transitions?.duration?.shortest === "number" ? theme.transitions.duration.shortest : 150;
-      const resizeEasing = theme.transitions?.easing?.easeOut ?? "cubic-bezier(0.4, 0, 0.2, 1)";
-      const resizeTransition = theme.transitions?.create
-        ? theme.transitions.create(["width", "height"], { duration: resizeDuration, easing: resizeEasing })
-        : `width ${resizeDuration}ms ${resizeEasing}, height ${resizeDuration}ms ${resizeEasing}`;
+      const resizeDuration = adapter.transitionDuration;
+      const resizeEasing = adapter.transitionEasing;
+      const resizeTransition = `width ${resizeDuration}ms ${resizeEasing}, height ${resizeDuration}ms ${resizeEasing}`;
 
       // 1. Check if currently locked/animating
       const isLocked = element.style.width !== "" || element.style.height !== "";
@@ -239,7 +135,6 @@ const StableDialogRenderer = memo(
         void element.offsetHeight;
 
         // Animate to Target
-        // Match MUI transition timings/easing (keep enter/exit transitions intact)
         element.style.transition = resizeTransition;
         element.style.width = `${targetRect.width}px`;
         element.style.height = `${targetRect.height}px`;
@@ -250,81 +145,64 @@ const StableDialogRenderer = memo(
           element.style.height = "";
           element.style.transition = baseInlineTransition.current || "";
         }, resizeDuration + 25);
-      } else {
-        // Restore styles if we cleared them and no change happened (e.g. just render but no layout change)
-        // But we cleared them to measure!
-        // If no change, we should restore 'auto' (empty string) if it was auto.
-        // If it was locked (animating) and no change in *target*, we should revert to locked?
-        // Actually, if isLocked was true, we are mid-animation.
-        // If visual == target (animation finished?), then we are done.
-        // If visual != target, we are interrupting.
-        // If we interrupt and target hasn't changed?
-        // We cleared styles. Animation stops.
-        // We should restore transition?
-        // This is edge case. Assuming 3s is long, interruptions are handled by FLIP logic above (widthChanged check uses visual vs target).
-        // If visual != target, then changed is true.
-        // So we enter the block and animate.
-        // If visual == target, then we reached target.
-        // We can leave styles cleared.
       }
 
       // Update prevRect for next time
       prevRect.current = targetRect;
     });
 
-    // Extract custom components with MUI defaults as fallbacks.
+    // Extract custom components with headless defaults as fallbacks.
     // Memoize wrappers so their identity is stable across renders.
     const Base = useMemo(() => slots?.Base ?? DialogComponent, [slots?.Base, DialogComponent]);
     const Title = useMemo(() => {
       if (slots?.Title) return slots.Title;
-      return ({ className, id, ...props }: React.ComponentProps<typeof DialogTitle>) => {
-        const mergedProps = {
-          ...props,
-          ...slotProps?.title,
-          className: classNames(dialogistClasses.title, className, slotProps?.title?.className),
-          id,
-        };
-        return <DialogTitle {...mergedProps} />;
-      };
+      return ({ className, id, ...props }: import("../types").DialogTitleSlotProps) => (
+        <HeadlessTitle
+          {...props}
+          {...slotProps?.title}
+          className={classNames(className, slotProps?.title?.className)}
+          id={id}
+        />
+      );
     }, [slots?.Title, slotProps?.title]);
     const Content = useMemo(() => {
       if (slots?.Content) return slots.Content;
-      return ({ className, id, ...props }: React.ComponentProps<typeof DialogContent>) => {
+      return ({ className, id, style, ...props }: import("../types").DialogContentSlotProps) => {
         const contentSlotProps = slotProps?.content as
-          | { sx?: object; style?: CSSProperties; className?: string }
+          | { style?: CSSProperties; className?: string }
           | undefined;
-        const mergedProps = {
-          ...props,
-          ...contentSlotProps,
-          sx: {
-            ...(props as { sx?: object }).sx,
-            ...(contentSlotProps?.sx ?? {}),
-          },
-          style: {
-            ...(props as { style?: CSSProperties }).style,
-            ...(contentSlotProps?.style ?? {}),
-          },
-          className: classNames(dialogistClasses.content, className, contentSlotProps?.className),
-          id,
-        };
-        return <DialogContent {...mergedProps} />;
+        return (
+          <HeadlessContent
+            {...props}
+            {...contentSlotProps}
+            className={classNames(className, contentSlotProps?.className)}
+            style={{
+              ...style,
+              ...(contentSlotProps?.style ?? {}),
+            }}
+            id={id}
+          />
+        );
       };
     }, [slots?.Content, slotProps?.content]);
     const ActionsContainer = useMemo(() => {
       if (slots?.ActionsContainer) return slots.ActionsContainer;
-      return ({ className, ...props }: React.ComponentProps<typeof DialogActions>) => {
-        const mergedProps = {
-          ...props,
-          ...slotProps?.actionsContainer,
-          // @ts-expect-error: className might not exist on generic props
-          className: classNames(dialogistClasses.actionsContainer, className, slotProps?.actionsContainer?.className),
-        };
-        return <DialogActions {...mergedProps} />;
+      return ({ className, ...props }: import("../types").DialogActionsContainerSlotProps) => {
+        const actionsContainerSlotProps = slotProps?.actionsContainer as
+          | { className?: string; style?: CSSProperties }
+          | undefined;
+        return (
+          <HeadlessActionsContainer
+            {...props}
+            {...actionsContainerSlotProps}
+            className={classNames(className, actionsContainerSlotProps?.className)}
+          />
+        );
       };
     }, [slots?.ActionsContainer, slotProps?.actionsContainer]);
     const StatusBar = slots?.StatusBar;
     const Footer = slots?.Footer;
-    const Actions = slots?.Actions || DefaultActions;
+    const Actions = slots?.Actions ?? HeadlessActions;
 
     // Stable ARIA ids for accessibility
     const baseDomId = useMemo(() => `dialogist-${dialogKey}`, [dialogKey]);
@@ -382,20 +260,18 @@ const StableDialogRenderer = memo(
               className={classNames(dialogistClasses.statusBar, slotProps?.statusBar?.className)}
               {...slotProps?.statusBar}
             />
-          ) : typeof statusBarRaw === "string" ? (
-            <Box
+          ) : (
+            <HeadlessStatusBar
+              content={statusBarResolved}
+              dialogKey={dialogKey}
+              dialogType={type}
               className={classNames(
                 dialogistClasses.statusBar,
-                dialogistClasses.topCorners,
+                typeof statusBarRaw === "string" ? dialogistClasses.topCorners : undefined,
                 slotProps?.statusBar?.className,
               )}
-            >
-              <Typography variant="caption" color="var(--dialogist-primary-contrastText)">
-                {statusBarRaw}
-              </Typography>
-            </Box>
-          ) : (
-            statusBarResolved
+              {...slotProps?.statusBar}
+            />
           )
         ) : null;
 
@@ -409,20 +285,17 @@ const StableDialogRenderer = memo(
               className={classNames(dialogistClasses.footer, slotProps?.footer?.className)}
               {...slotProps?.footer}
             />
-          ) : typeof footerRaw === "string" ? (
-            <Box
+          ) : (
+            <HeadlessFooter
+              content={footerResolved}
+              dialogKey={dialogKey}
               className={classNames(
                 dialogistClasses.footer,
-                dialogistClasses.bottomCorners,
+                typeof footerRaw === "string" ? dialogistClasses.bottomCorners : undefined,
                 slotProps?.footer?.className,
               )}
-            >
-              <Typography variant="caption" color="var(--dialogist-footer-text)">
-                {footerRaw}
-              </Typography>
-            </Box>
-          ) : (
-            footerResolved
+              {...slotProps?.footer}
+            />
           )
         ) : null;
 
@@ -458,6 +331,23 @@ const StableDialogRenderer = memo(
         contentSlot = resolveDialogPartContent(content as DialogPartContent, {});
       }
 
+      const paperStyle: CSSProperties = {
+        borderRadius: "var(--dialogist-border-radius)",
+        ...(config.width !== undefined && {
+          width: typeof config.width === "number" ? `${config.width}px` : config.width,
+        }),
+        ...(config.minWidth !== undefined && {
+          minWidth: typeof config.minWidth === "number" ? `${config.minWidth}px` : config.minWidth,
+        }),
+        ...(config.maxWidth !== undefined && {
+          maxWidth: typeof config.maxWidth === "number" ? `${config.maxWidth}px` : config.maxWidth,
+        }),
+        ...(config.borderRadius !== undefined && {
+          ["--dialogist-border-radius"]:
+            typeof config.borderRadius === "number" ? `${config.borderRadius}px` : config.borderRadius,
+        } as CSSProperties),
+      };
+
       return (
         <Base
           id={baseDomId}
@@ -472,20 +362,7 @@ const StableDialogRenderer = memo(
           slotProps={{
             paper: {
               ref: paperRef as Ref<HTMLDivElement>,
-              sx: {
-                borderRadius: "var(--dialogist-border-radius)",
-                ...(config.width !== undefined && {
-                  width: typeof config.width === "number" ? `${config.width}px` : config.width,
-                }),
-                ...(config.minWidth !== undefined && {
-                  minWidth: typeof config.minWidth === "number" ? `${config.minWidth}px` : config.minWidth,
-                }),
-                ...(config.maxWidth !== undefined && { maxWidth: config.maxWidth }),
-                ...(config.borderRadius !== undefined && {
-                  "--dialogist-border-radius":
-                    typeof config.borderRadius === "number" ? `${config.borderRadius}px` : config.borderRadius,
-                }),
-              },
+              style: paperStyle,
               ...slotProps?.base?.slotProps?.paper,
             },
             ...slotProps?.base?.slotProps,
@@ -578,17 +455,15 @@ const StableDialogRenderer = memo(
             )}
             {effectiveActions.length > 0 && (
               <ActionsContainer
-                sx={{
+                style={{
                   ...(config.actionsStyle?.align && {
                     "--dialogist-actionsContainer-justify": ACTIONS_ALIGN_TO_CSS[config.actionsStyle.align],
-                  }),
-                  // Custom `Actions` slot: buttons are usually direct flex children — apply `gap` here
-                  // like `open({ actionsStyle: { gap } })`. DefaultActions owns row `gap` when grouped.
+                  } as CSSProperties),
                   ...(config.actionsStyle?.gap !== undefined &&
                     slots?.Actions && {
-                      gap: config.actionsStyle.gap,
+                      gap: adapter.resolveSpacing(config.actionsStyle.gap, 1),
                     }),
-                  ...(slotProps?.actionsContainer as { sx?: object } | undefined)?.sx,
+                  ...((slotProps?.actionsContainer as { style?: CSSProperties } | undefined)?.style ?? {}),
                 }}
                 {...slotProps?.actionsContainer}
               >
@@ -632,6 +507,7 @@ const StableDialogRenderer = memo(
       Footer,
       Actions,
       suppressBackdrop,
+      adapter,
     ]);
 
     return dialogContent;

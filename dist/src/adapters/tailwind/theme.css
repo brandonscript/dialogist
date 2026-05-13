@@ -1,0 +1,31 @@
+/*
+ * Tailwind v4 token snippet for Dialogist.
+ *
+ * Copy this @theme block into your global stylesheet (e.g. `app/globals.css`) so
+ * Tailwind v4 utilities such as `bg-primary` and `text-foreground` map onto the
+ * Dialogist CSS variables published by `dialogist/styles.css`.
+ *
+ * Example usage:
+ *   @import "tailwindcss";
+ *   @import "dialogist/styles.css";
+ *
+ *   @theme {
+ *     ...the block below...
+ *   }
+ */
+@theme {
+  --color-background: var(--dialogist-bg-paper);
+  --color-foreground: var(--dialogist-text-primary);
+  --color-primary: var(--dialogist-primary-main);
+  --color-primary-foreground: var(--dialogist-primary-contrastText);
+  --color-secondary: var(--dialogist-secondary-main);
+  --color-secondary-foreground: var(--dialogist-secondary-contrastText);
+  --color-muted: var(--dialogist-bg-secondary);
+  --color-muted-foreground: var(--dialogist-text-secondary);
+  --color-accent: var(--dialogist-bg-secondary);
+  --color-accent-foreground: var(--dialogist-text-primary);
+  --color-border: color-mix(in srgb, var(--dialogist-text-primary) 12%, transparent);
+  --color-input: color-mix(in srgb, var(--dialogist-text-primary) 20%, transparent);
+  --color-ring: var(--dialogist-primary-main);
+  --radius-dialogist: var(--dialogist-border-radius);
+}

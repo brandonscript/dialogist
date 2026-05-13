@@ -1,5 +1,4 @@
-import type { DialogProps, PaperProps } from "@mui/material";
-import type { ComponentType, CSSProperties, ReactNode, RefObject } from "react";
+import type { ComponentType, CSSProperties, ReactNode, Ref, RefObject } from "react";
 
 import type { DialogActionEvent, DialogCallbackRegistration, DialogCloseEvent } from "./types/callbacks";
 
@@ -160,6 +159,9 @@ export interface DialogContentSlotProps {
 
 export interface DialogActionsContainerSlotProps {
   children?: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+  /** MUI-only escape hatch consumed by the MUI adapter; ignored by other adapters. */
   sx?: Record<string, unknown>;
   [key: string]: unknown;
 }
@@ -206,30 +208,53 @@ export interface DialogSlotProps {
   actions?: Partial<ActionsProps>;
 }
 
+/**
+ * Structural props for the dialog "paper" element shared across adapters.
+ * Adapters that wrap a richer component library (e.g. MUI Paper, Base UI Popup) accept
+ * any extra props they need via the `[key: string]: unknown` index signature.
+ */
+export interface DialogPaperSlotProps {
+  ref?: Ref<HTMLDivElement>;
+  className?: string;
+  style?: CSSProperties;
+  [key: string]: unknown;
+}
+
+/**
+ * Structural props for the backdrop element shared across adapters.
+ */
+export interface DialogBackdropSlotProps {
+  className?: string;
+  style?: CSSProperties;
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  [key: string]: unknown;
+}
+
 export interface BaseDialogProps
   extends React.PropsWithChildren<{
     open: boolean;
     onClose: () => void;
     overflow?: "visible" | "hidden";
-    container?: DialogProps["container"];
-    /** When true, the underlying MUI Dialog will not render its own backdrop */
+    /** Portal target for adapters that support one (Base UI / MUI). Headless ignores. */
+    container?: Element | (() => Element | null) | null;
+    /** When true, the underlying Base will not render its own backdrop */
     hideBackdrop?: boolean;
   }> {
   /** DOM id applied to the dialog root */
   id?: string;
-  className?: DialogProps["className"];
+  className?: string;
   slotProps?: {
-    paper?: Partial<PaperProps> & { ref?: React.Ref<HTMLDivElement> };
-    backdrop?: NonNullable<DialogProps["slotProps"]>["backdrop"];
+    paper?: DialogPaperSlotProps;
+    backdrop?: DialogBackdropSlotProps;
     [key: string]: unknown;
   };
   /** ARIA attributes for accessibility linkage */
-  "aria-labelledby"?: DialogProps["aria-labelledby"];
-  "aria-describedby"?: DialogProps["aria-describedby"];
-  /** Optional focus flags threaded to MUI Dialog for advanced scenarios */
-  disableAutoFocus?: DialogProps["disableAutoFocus"];
-  disableEnforceFocus?: DialogProps["disableEnforceFocus"];
-  disableRestoreFocus?: DialogProps["disableRestoreFocus"];
+  "aria-labelledby"?: string;
+  "aria-describedby"?: string;
+  /** Optional focus flags forwarded to the Base implementation. */
+  disableAutoFocus?: boolean;
+  disableEnforceFocus?: boolean;
+  disableRestoreFocus?: boolean;
   /** Optional paper radius for custom `Base` implementations (maps to `--dialogist-border-radius` when supported). */
   borderRadius?: number | string;
 }

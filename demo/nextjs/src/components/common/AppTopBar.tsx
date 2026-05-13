@@ -22,6 +22,7 @@ import { LuActivity } from "react-icons/lu";
 
 import { useRenderTracking } from "../../contexts/RenderTrackingContext";
 import { emitExternalStateResetAll, useHasDirtyExternalState } from "../7_data_providers/globalReset";
+import { AdapterSwitcher } from "./AdapterSwitcher";
 import { Span } from "./Elements";
 import { MobileNavTrigger } from "./MobileNav";
 import { RenderTracker } from "./RenderTracker";
@@ -177,7 +178,10 @@ export const AppTopBar = () => {
         <Typography color="secondary.main" variant="h6" sx={{ fontWeight: 700, textTransform: "lowercase" }}>
           Dialogist
         </Typography>
-        <FlexBox y="center" gap={2} ml="auto" flexGrow={1} sx={{ display: { xs: "none", sm: "flex" } }}>
+        <FlexBox y="center" ml={{ xs: "auto", sm: 2 }} sx={{ display: { xs: "none", md: "flex" } }}>
+          <AdapterSwitcher />
+        </FlexBox>
+        <FlexBox y="center" gap={2} ml={{ xs: 0, sm: "auto" }} flexGrow={1} sx={{ display: { xs: "none", sm: "flex" } }}>
           <Tooltip
             title={
               <span>

@@ -1,7 +1,13 @@
+import { dialogistClasses } from "../classes";
 /**
  * Framework-agnostic, static base styles with sensible defaults.
- * This does not reference MUI Theme. Consumers can layer their own theme
- * or override variables via CSS.
+ * This does not reference any component library theme; consumers (or adapters) layer
+ * their own theme or override variables via CSS.
+ *
+ * The shape is JSS-like and is consumed in two ways:
+ *  - At runtime by {@link DialogProvider} (or an MUI `GlobalStyles`) for inline injection.
+ *  - At build time by `scripts/build-styles.mjs` which serializes it to a CSS file
+ *    consumers can `import "dialogist/styles.css"`.
  */
 export declare const dialogistStyles: {
     readonly [x: string]: {
@@ -71,7 +77,7 @@ export declare const dialogistStyles: {
         readonly "--dialogist-footer-height"?: undefined;
         readonly "--dialogist-backdrop-color"?: undefined;
     } | {
-        readonly [x: string]: "block" | "hidden" | "none" | "center" | "left" | "flex-start" | "auto" | "var(--dialogist-border-radius)" | "stretch" | "column" | "12px" | "32px" | "var(--dialogist-spacing)" | "min(96vw, 320px)" | "min(90vw, 448px)" | "540px" | "#1976d2" | "#ffffff" | "#9c27b0" | "rgba(0, 0, 0, 0.87)" | "rgba(0, 0, 0, 0.6)" | "#f5f5f5" | "var(--dialogist-primary-main)" | "var(--font-sans, \"Roboto\",\"Helvetica\",\"Arial\",sans-serif)" | 600 | "var(--dialogist-text-primary)" | "0.75rem" | "1.25rem" | 400 | "0.875rem" | "var(--dialogist-text-secondary)" | "var(--dialogist-content-align)" | "calc(var(--dialogist-spacing) / 4)" | "16px" | "100ms ease-out" | "rgba(0, 0, 0, 0.5)" | {
+        readonly [x: string]: "hidden" | "12px" | "var(--dialogist-border-radius)" | "32px" | "var(--dialogist-spacing)" | "min(96vw, 320px)" | "min(90vw, 448px)" | "540px" | "#1976d2" | "#ffffff" | "#9c27b0" | "rgba(0, 0, 0, 0.87)" | "rgba(0, 0, 0, 0.6)" | "#f5f5f5" | "var(--dialogist-primary-main)" | "var(--font-sans, \"Roboto\",\"Helvetica\",\"Arial\",sans-serif)" | 600 | "var(--dialogist-text-primary)" | "0.75rem" | "left" | "1.25rem" | "center" | 400 | "0.875rem" | "var(--dialogist-text-secondary)" | "var(--dialogist-content-align)" | "block" | "column" | "stretch" | "flex-start" | "auto" | "none" | "calc(var(--dialogist-spacing) / 4)" | "16px" | "100ms ease-out" | "rgba(0, 0, 0, 0.5)" | {
             readonly borderRadius: "var(--dialogist-border-radius)";
             readonly "& [class*='Dialogist']": {
                 readonly fontFamily: "var(--dialogist-font-family)";
@@ -881,9 +887,11 @@ export declare const dialogistStyles: {
         };
     };
 };
-/**
- * Merge helper - consumer theme wins over Dialogist defaults.
- * @param existingTheme - The existing theme to extend.
- * @returns The extended theme.
- */
-export declare const dialogistExtendMuiTheme: <T extends object = object>(theme: T) => T;
+/** Helper used by adapters to pluck nested style blocks from {@link dialogistStyles}. */
+export type DialogistNestedKey = typeof dialogistClasses.rootPaper | typeof dialogistClasses.title | typeof dialogistClasses.content | typeof dialogistClasses.actionsContainer | typeof dialogistClasses.footer | typeof dialogistClasses.backdrop | typeof dialogistClasses.customBase | typeof dialogistClasses.customTitle | typeof dialogistClasses.customContent | typeof dialogistClasses.customActionsContainer | typeof dialogistClasses.customStatusBar | typeof dialogistClasses.customFooter | typeof dialogistClasses.topCorners | typeof dialogistClasses.bottomCorners | typeof dialogistClasses.allCorners | typeof dialogistClasses.statusBar;
+type CssStyleObject = {
+    [key: string]: string | number | CssStyleObject;
+};
+/** Pluck a `& .className` nested block from {@link dialogistStyles}. Used by adapters. */
+export declare const pickFromDialogistStyles: (className: DialogistNestedKey) => CssStyleObject;
+export {};

@@ -7,7 +7,7 @@ import {
   type ThemeOptions,
 } from "@mui/material/styles";
 import { blend, darken, getLuminance, lighten } from "@mui/system/colorManipulator";
-import { dialogistExtendMuiTheme } from "dialogist";
+import { dialogistExtendMuiTheme } from "dialogist/mui";
 
 import { extendThemeWithReactIcons } from "./components/icons/_MuiIconWrapper";
 import {

@@ -1,21 +1,21 @@
 "use client";
-import { objectWithoutProperties as _objectWithoutProperties, objectSpread2 as _objectSpread2 } from '../../_virtual/_rollupPluginBabelHelpers.js';
-import { styled, Dialog, DialogTitle, DialogContent, DialogActions, Box, Typography, Button } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import { memo, useRef, useLayoutEffect, useMemo, useCallback, createElement } from 'react';
+import { objectWithoutProperties as _objectWithoutProperties, objectSpread2 as _objectSpread2, defineProperty as _defineProperty } from '../../_virtual/_rollupPluginBabelHelpers.js';
+import { memo, useRef, useLayoutEffect, useMemo, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { dialogistClasses } from '../classes.js';
+import { useDialogistAdapter } from '../context/DialogistAdapterContext.js';
 import { useDeepMemo } from '../hooks/useDeepCompare.js';
 import { useMemoizedDialogParts } from '../hooks/useMemoizedDialogParts.js';
 import { classNames } from '../utils/classNames.js';
 import { deriveEffectiveActions } from '../utils/dialogActions.js';
 import { resolveDialogPartContent } from '../utils/resolveDialogPartContent.js';
-import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
+import { HeadlessBase } from './headless/HeadlessBase.js';
+import { HeadlessTitle, HeadlessContent, HeadlessActionsContainer, HeadlessActions, HeadlessStatusBar, HeadlessFooter } from './headless/headlessDefaults.js';
+import { jsx, jsxs } from 'react/jsx-runtime';
 
-var _excluded = ["className", "slotProps", "hideBackdrop", "container"],
-  _excluded2 = ["className", "id"],
-  _excluded3 = ["className", "id"],
-  _excluded4 = ["className"];
+var _excluded = ["className", "id"],
+  _excluded2 = ["className", "id", "style"],
+  _excluded3 = ["className"];
 var ACTIONS_ALIGN_TO_CSS = {
   start: "flex-start",
   center: "center",
@@ -24,112 +24,21 @@ var ACTIONS_ALIGN_TO_CSS = {
   "space-around": "space-around",
   "space-evenly": "space-evenly"
 };
-var resolveActionsGap = function resolveActionsGap(theme, value, fallback) {
-  var v = value === undefined ? fallback : value;
-  return typeof v === "number" ? theme.spacing(v) : v;
-};
-var getActionKeyPart = function getActionKeyPart(action) {
-  var _ref, _action$id;
-  return (_ref = (_action$id = action.id) !== null && _action$id !== void 0 ? _action$id : action.title) !== null && _ref !== void 0 ? _ref : typeof action.children === "string" ? action.children : "anonymous";
-};
-
-// Default Actions: one inner row when multiple groups so DialogActions has a single child — theme
-// `gap` on `.Dialogist-actionsContainer` then does not space every button. Row `gap` = between
-// groups; each cluster uses `intraGroupGap` (see {@link import("../types").ActionsStyle}).
-// Layout tokens use CSS variables consumed by `.Dialogist-actionsRow` / `.Dialogist-actionsGroup`
-// in `dialogistStyles` (no MUI `sx` on these wrappers).
-var DefaultActions = function DefaultActions(_ref2) {
-  var _actionsStyle$gap;
-  var actionGroups = _ref2.actionGroups,
-    dialogKey = _ref2.dialogKey,
-    actionsStyle = _ref2.actionsStyle;
-  var theme = useTheme();
-  var hasMultipleGroups = actionGroups.length > 1;
-  var justifyFromAlign = actionsStyle !== null && actionsStyle !== void 0 && actionsStyle.align ? ACTIONS_ALIGN_TO_CSS[actionsStyle.align] : undefined;
-  var hasSingleGroup = actionGroups.length === 1;
-  /** Matches `--dialogist-actionsContainer-justify` default when `align` is omitted. */
-  var justifyContent = justifyFromAlign !== null && justifyFromAlign !== void 0 ? justifyFromAlign : "center";
-  var innerGapRaw = hasMultipleGroups ? (actionsStyle === null || actionsStyle === void 0 ? void 0 : actionsStyle.intraGroupGap) !== undefined ? actionsStyle.intraGroupGap : 1 : (_actionsStyle$gap = actionsStyle === null || actionsStyle === void 0 ? void 0 : actionsStyle.gap) !== null && _actionsStyle$gap !== void 0 ? _actionsStyle$gap : 1;
-  var groupBoxes = actionGroups.map(function (group) {
-    return /*#__PURE__*/jsx("div", {
-      className: dialogistClasses.actionsGroup,
-      "data-dialogist-layout": hasSingleGroup ? "single" : undefined,
-      style: {
-        "--dialogist-actionsGroup-gap": resolveActionsGap(theme, innerGapRaw, 1),
-        "--dialogist-actionsGroup-justify": hasMultipleGroups ? "flex-start" : justifyContent
-      },
-      children: group.map(function (action) {
-        return /*#__PURE__*/createElement(Button, _objectSpread2(_objectSpread2({}, action.props), {}, {
-          key: "".concat(dialogKey, "-action-").concat(getActionKeyPart(action))
-        }), action.children || action.title);
-      })
-    }, "".concat(dialogKey, "-group-").concat(group.map(getActionKeyPart).join("-")));
-  });
-  if (hasMultipleGroups) {
-    return /*#__PURE__*/jsx("div", {
-      className: dialogistClasses.actionsRow,
-      style: {
-        "--dialogist-actionsRow-gap": resolveActionsGap(theme, actionsStyle === null || actionsStyle === void 0 ? void 0 : actionsStyle.gap, 1),
-        "--dialogist-actionsRow-justify": justifyContent
-      },
-      children: groupBoxes
-    });
-  }
-  return /*#__PURE__*/jsx(Fragment, {
-    children: groupBoxes
-  });
-};
-var DefaultStyledDialog = styled(function (_ref3) {
-  var className = _ref3.className,
-    slotProps = _ref3.slotProps,
-    hideBackdrop = _ref3.hideBackdrop,
-    container = _ref3.container,
-    props = _objectWithoutProperties(_ref3, _excluded);
-  return /*#__PURE__*/jsx(Dialog, _objectSpread2(_objectSpread2({
-    className: "".concat(dialogistClasses.base, " ").concat(className || "").trim()
-  }, props), {}, {
-    container: container,
-    disableAutoFocus: props.disableAutoFocus,
-    disableEnforceFocus: props.disableEnforceFocus,
-    disableRestoreFocus: props.disableRestoreFocus,
-    PaperProps: _objectSpread2({
-      className: classNames(dialogistClasses.rootPaper, className)
-    }, slotProps === null || slotProps === void 0 ? void 0 : slotProps.paper),
-    slotProps: {
-      backdrop: hideBackdrop ? {
-        style: {
-          display: "none"
-        }
-      } : _objectSpread2({
-        className: dialogistClasses.backdrop
-      }, slotProps === null || slotProps === void 0 ? void 0 : slotProps.backdrop)
-    }
-  }));
-}, {
-  shouldForwardProp: function shouldForwardProp(prop) {
-    return prop !== "overflow" && prop !== "borderRadius";
-  }
-})(function (_ref4) {
-  var overflow = _ref4.overflow;
-  return {
-    overflow: overflow || "hidden"
-  };
-});
-
 // Stable dialog renderer that only updates when dialog content changes
-var StableDialogRenderer = /*#__PURE__*/memo(function (_ref5) {
-  var _ref5$DialogComponent = _ref5.DialogComponent,
-    DialogComponent = _ref5$DialogComponent === void 0 ? DefaultStyledDialog : _ref5$DialogComponent,
-    dialog = _ref5.dialog,
-    onClose = _ref5.onClose,
-    overflow = _ref5.overflow,
-    slots = _ref5.slots,
-    slotProps = _ref5.slotProps,
-    suppressBackdrop = _ref5.suppressBackdrop;
+var StableDialogRenderer = /*#__PURE__*/memo(function (_ref) {
+  var _slots$Actions;
+  var _ref$DialogComponent = _ref.DialogComponent,
+    DialogComponent = _ref$DialogComponent === void 0 ? HeadlessBase : _ref$DialogComponent,
+    dialog = _ref.dialog,
+    onClose = _ref.onClose,
+    overflow = _ref.overflow,
+    slots = _ref.slots,
+    slotProps = _ref.slotProps,
+    suppressBackdrop = _ref.suppressBackdrop;
   var dialogKey = dialog.key,
     type = dialog.type,
     config = dialog.config;
-  var theme = useTheme();
+  var adapter = useDialogistAdapter();
 
   // Ref for the Paper element (Dialog content container) to animate transitions
   var paperRef = useRef(null);
@@ -140,18 +49,14 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref5) {
   // Preserve any existing inline transition (avoid capturing our own mid-animation value)
   var baseInlineTransition = useRef(undefined);
   useLayoutEffect(function () {
-    var _theme$transitions, _theme$transitions$ea, _theme$transitions2, _theme$transitions3;
     var element = paperRef.current;
     if (!element) return;
     if (baseInlineTransition.current === undefined) {
       baseInlineTransition.current = element.style.transition;
     }
-    var resizeDuration = typeof ((_theme$transitions = theme.transitions) === null || _theme$transitions === void 0 || (_theme$transitions = _theme$transitions.duration) === null || _theme$transitions === void 0 ? void 0 : _theme$transitions.shortest) === "number" ? theme.transitions.duration.shortest : 150;
-    var resizeEasing = (_theme$transitions$ea = (_theme$transitions2 = theme.transitions) === null || _theme$transitions2 === void 0 || (_theme$transitions2 = _theme$transitions2.easing) === null || _theme$transitions2 === void 0 ? void 0 : _theme$transitions2.easeOut) !== null && _theme$transitions$ea !== void 0 ? _theme$transitions$ea : "cubic-bezier(0.4, 0, 0.2, 1)";
-    var resizeTransition = (_theme$transitions3 = theme.transitions) !== null && _theme$transitions3 !== void 0 && _theme$transitions3.create ? theme.transitions.create(["width", "height"], {
-      duration: resizeDuration,
-      easing: resizeEasing
-    }) : "width ".concat(resizeDuration, "ms ").concat(resizeEasing, ", height ").concat(resizeDuration, "ms ").concat(resizeEasing);
+    var resizeDuration = adapter.transitionDuration;
+    var resizeEasing = adapter.transitionEasing;
+    var resizeTransition = "width ".concat(resizeDuration, "ms ").concat(resizeEasing, ", height ").concat(resizeDuration, "ms ").concat(resizeEasing);
 
     // 1. Check if currently locked/animating
     var isLocked = element.style.width !== "" || element.style.height !== "";
@@ -191,7 +96,6 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref5) {
       void element.offsetHeight;
 
       // Animate to Target
-      // Match MUI transition timings/easing (keep enter/exit transitions intact)
       element.style.transition = resizeTransition;
       element.style.width = "".concat(targetRect.width, "px");
       element.style.height = "".concat(targetRect.height, "px");
@@ -208,7 +112,7 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref5) {
     prevRect.current = targetRect;
   });
 
-  // Extract custom components with MUI defaults as fallbacks.
+  // Extract custom components with headless defaults as fallbacks.
   // Memoize wrappers so their identity is stable across renders.
   var Base = useMemo(function () {
     var _slots$Base;
@@ -216,51 +120,47 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref5) {
   }, [slots === null || slots === void 0 ? void 0 : slots.Base, DialogComponent]);
   var Title = useMemo(function () {
     if (slots !== null && slots !== void 0 && slots.Title) return slots.Title;
-    return function (_ref6) {
+    return function (_ref2) {
       var _slotProps$title;
-      var className = _ref6.className,
-        id = _ref6.id,
-        props = _objectWithoutProperties(_ref6, _excluded2);
-      var mergedProps = _objectSpread2(_objectSpread2(_objectSpread2({}, props), slotProps === null || slotProps === void 0 ? void 0 : slotProps.title), {}, {
-        className: classNames(dialogistClasses.title, className, slotProps === null || slotProps === void 0 || (_slotProps$title = slotProps.title) === null || _slotProps$title === void 0 ? void 0 : _slotProps$title.className),
+      var className = _ref2.className,
+        id = _ref2.id,
+        props = _objectWithoutProperties(_ref2, _excluded);
+      return /*#__PURE__*/jsx(HeadlessTitle, _objectSpread2(_objectSpread2(_objectSpread2({}, props), slotProps === null || slotProps === void 0 ? void 0 : slotProps.title), {}, {
+        className: classNames(className, slotProps === null || slotProps === void 0 || (_slotProps$title = slotProps.title) === null || _slotProps$title === void 0 ? void 0 : _slotProps$title.className),
         id: id
-      });
-      return /*#__PURE__*/jsx(DialogTitle, _objectSpread2({}, mergedProps));
+      }));
     };
   }, [slots === null || slots === void 0 ? void 0 : slots.Title, slotProps === null || slotProps === void 0 ? void 0 : slotProps.title]);
   var Content = useMemo(function () {
     if (slots !== null && slots !== void 0 && slots.Content) return slots.Content;
-    return function (_ref7) {
-      var _contentSlotProps$sx, _contentSlotProps$sty;
-      var className = _ref7.className,
-        id = _ref7.id,
-        props = _objectWithoutProperties(_ref7, _excluded3);
+    return function (_ref3) {
+      var _contentSlotProps$sty;
+      var className = _ref3.className,
+        id = _ref3.id,
+        style = _ref3.style,
+        props = _objectWithoutProperties(_ref3, _excluded2);
       var contentSlotProps = slotProps === null || slotProps === void 0 ? void 0 : slotProps.content;
-      var mergedProps = _objectSpread2(_objectSpread2(_objectSpread2({}, props), contentSlotProps), {}, {
-        sx: _objectSpread2(_objectSpread2({}, props.sx), (_contentSlotProps$sx = contentSlotProps === null || contentSlotProps === void 0 ? void 0 : contentSlotProps.sx) !== null && _contentSlotProps$sx !== void 0 ? _contentSlotProps$sx : {}),
-        style: _objectSpread2(_objectSpread2({}, props.style), (_contentSlotProps$sty = contentSlotProps === null || contentSlotProps === void 0 ? void 0 : contentSlotProps.style) !== null && _contentSlotProps$sty !== void 0 ? _contentSlotProps$sty : {}),
-        className: classNames(dialogistClasses.content, className, contentSlotProps === null || contentSlotProps === void 0 ? void 0 : contentSlotProps.className),
+      return /*#__PURE__*/jsx(HeadlessContent, _objectSpread2(_objectSpread2(_objectSpread2({}, props), contentSlotProps), {}, {
+        className: classNames(className, contentSlotProps === null || contentSlotProps === void 0 ? void 0 : contentSlotProps.className),
+        style: _objectSpread2(_objectSpread2({}, style), (_contentSlotProps$sty = contentSlotProps === null || contentSlotProps === void 0 ? void 0 : contentSlotProps.style) !== null && _contentSlotProps$sty !== void 0 ? _contentSlotProps$sty : {}),
         id: id
-      });
-      return /*#__PURE__*/jsx(DialogContent, _objectSpread2({}, mergedProps));
+      }));
     };
   }, [slots === null || slots === void 0 ? void 0 : slots.Content, slotProps === null || slotProps === void 0 ? void 0 : slotProps.content]);
   var ActionsContainer = useMemo(function () {
     if (slots !== null && slots !== void 0 && slots.ActionsContainer) return slots.ActionsContainer;
-    return function (_ref8) {
-      var _slotProps$actionsCon;
-      var className = _ref8.className,
-        props = _objectWithoutProperties(_ref8, _excluded4);
-      var mergedProps = _objectSpread2(_objectSpread2(_objectSpread2({}, props), slotProps === null || slotProps === void 0 ? void 0 : slotProps.actionsContainer), {}, {
-        // @ts-expect-error: className might not exist on generic props
-        className: classNames(dialogistClasses.actionsContainer, className, slotProps === null || slotProps === void 0 || (_slotProps$actionsCon = slotProps.actionsContainer) === null || _slotProps$actionsCon === void 0 ? void 0 : _slotProps$actionsCon.className)
-      });
-      return /*#__PURE__*/jsx(DialogActions, _objectSpread2({}, mergedProps));
+    return function (_ref4) {
+      var className = _ref4.className,
+        props = _objectWithoutProperties(_ref4, _excluded3);
+      var actionsContainerSlotProps = slotProps === null || slotProps === void 0 ? void 0 : slotProps.actionsContainer;
+      return /*#__PURE__*/jsx(HeadlessActionsContainer, _objectSpread2(_objectSpread2(_objectSpread2({}, props), actionsContainerSlotProps), {}, {
+        className: classNames(className, actionsContainerSlotProps === null || actionsContainerSlotProps === void 0 ? void 0 : actionsContainerSlotProps.className)
+      }));
     };
   }, [slots === null || slots === void 0 ? void 0 : slots.ActionsContainer, slotProps === null || slotProps === void 0 ? void 0 : slotProps.actionsContainer]);
   var StatusBar = slots === null || slots === void 0 ? void 0 : slots.StatusBar;
   var Footer = slots === null || slots === void 0 ? void 0 : slots.Footer;
-  var Actions = (slots === null || slots === void 0 ? void 0 : slots.Actions) || DefaultActions;
+  var Actions = (_slots$Actions = slots === null || slots === void 0 ? void 0 : slots.Actions) !== null && _slots$Actions !== void 0 ? _slots$Actions : HeadlessActions;
 
   // Stable ARIA ids for accessibility
   var baseDomId = useMemo(function () {
@@ -303,34 +203,29 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref5) {
 
   // Memoize dialog content to prevent unnecessary re-renders using deep comparison
   var dialogContent = useDeepMemo(function () {
-    var _slotProps$statusBar, _slotProps$statusBar2, _slotProps$footer, _slotProps$footer2, _slotProps$base, _slotProps$base2, _slotProps$base3, _config$actionsStyle, _config$actionsStyle2, _slotProps$actionsCon2;
+    var _slotProps$statusBar, _slotProps$statusBar2, _slotProps$footer, _slotProps$footer2, _slotProps$base, _slotProps$base2, _slotProps$base3, _config$actionsStyle, _config$actionsStyle2, _style, _slotProps$actionsCon;
     var statusBarResolved = statusBarRaw != null && statusBarRaw !== false ? resolveDialogPartContent(statusBarRaw) : null;
     var statusBar = statusBarRaw != null && statusBarRaw !== false ? StatusBar ? /*#__PURE__*/jsx(StatusBar, _objectSpread2({
       content: statusBarResolved,
       dialogKey: dialogKey,
       dialogType: type,
       className: classNames(dialogistClasses.statusBar, slotProps === null || slotProps === void 0 || (_slotProps$statusBar = slotProps.statusBar) === null || _slotProps$statusBar === void 0 ? void 0 : _slotProps$statusBar.className)
-    }, slotProps === null || slotProps === void 0 ? void 0 : slotProps.statusBar)) : typeof statusBarRaw === "string" ? /*#__PURE__*/jsx(Box, {
-      className: classNames(dialogistClasses.statusBar, dialogistClasses.topCorners, slotProps === null || slotProps === void 0 || (_slotProps$statusBar2 = slotProps.statusBar) === null || _slotProps$statusBar2 === void 0 ? void 0 : _slotProps$statusBar2.className),
-      children: /*#__PURE__*/jsx(Typography, {
-        variant: "caption",
-        color: "var(--dialogist-primary-contrastText)",
-        children: statusBarRaw
-      })
-    }) : statusBarResolved : null;
+    }, slotProps === null || slotProps === void 0 ? void 0 : slotProps.statusBar)) : /*#__PURE__*/jsx(HeadlessStatusBar, _objectSpread2({
+      content: statusBarResolved,
+      dialogKey: dialogKey,
+      dialogType: type,
+      className: classNames(dialogistClasses.statusBar, typeof statusBarRaw === "string" ? dialogistClasses.topCorners : undefined, slotProps === null || slotProps === void 0 || (_slotProps$statusBar2 = slotProps.statusBar) === null || _slotProps$statusBar2 === void 0 ? void 0 : _slotProps$statusBar2.className)
+    }, slotProps === null || slotProps === void 0 ? void 0 : slotProps.statusBar)) : null;
     var footerResolved = footerRaw != null && footerRaw !== false ? resolveDialogPartContent(footerRaw) : null;
     var footer = footerRaw != null && footerRaw !== false ? Footer ? /*#__PURE__*/jsx(Footer, _objectSpread2({
       content: footerResolved,
       dialogKey: dialogKey,
       className: classNames(dialogistClasses.footer, slotProps === null || slotProps === void 0 || (_slotProps$footer = slotProps.footer) === null || _slotProps$footer === void 0 ? void 0 : _slotProps$footer.className)
-    }, slotProps === null || slotProps === void 0 ? void 0 : slotProps.footer)) : typeof footerRaw === "string" ? /*#__PURE__*/jsx(Box, {
-      className: classNames(dialogistClasses.footer, dialogistClasses.bottomCorners, slotProps === null || slotProps === void 0 || (_slotProps$footer2 = slotProps.footer) === null || _slotProps$footer2 === void 0 ? void 0 : _slotProps$footer2.className),
-      children: /*#__PURE__*/jsx(Typography, {
-        variant: "caption",
-        color: "var(--dialogist-footer-text)",
-        children: footerRaw
-      })
-    }) : footerResolved : null;
+    }, slotProps === null || slotProps === void 0 ? void 0 : slotProps.footer)) : /*#__PURE__*/jsx(HeadlessFooter, _objectSpread2({
+      content: footerResolved,
+      dialogKey: dialogKey,
+      className: classNames(dialogistClasses.footer, typeof footerRaw === "string" ? dialogistClasses.bottomCorners : undefined, slotProps === null || slotProps === void 0 || (_slotProps$footer2 = slotProps.footer) === null || _slotProps$footer2 === void 0 ? void 0 : _slotProps$footer2.className)
+    }, slotProps === null || slotProps === void 0 ? void 0 : slotProps.footer)) : null;
 
     // Unified actions path: derive from config (explicit actions or built-in actions)
     var effectiveActions = deriveEffectiveActions(config, dialogKey, dialog.internalId, onClose);
@@ -360,6 +255,15 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref5) {
     } else {
       contentSlot = resolveDialogPartContent(content, {});
     }
+    var paperStyle = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({
+      borderRadius: "var(--dialogist-border-radius)"
+    }, config.width !== undefined && {
+      width: typeof config.width === "number" ? "".concat(config.width, "px") : config.width
+    }), config.minWidth !== undefined && {
+      minWidth: typeof config.minWidth === "number" ? "".concat(config.minWidth, "px") : config.minWidth
+    }), config.maxWidth !== undefined && {
+      maxWidth: typeof config.maxWidth === "number" ? "".concat(config.maxWidth, "px") : config.maxWidth
+    }), config.borderRadius !== undefined && _defineProperty({}, "--dialogist-border-radius", typeof config.borderRadius === "number" ? "".concat(config.borderRadius, "px") : config.borderRadius));
     return /*#__PURE__*/jsx(Base, _objectSpread2(_objectSpread2({
       id: baseDomId,
       open: true,
@@ -373,17 +277,7 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref5) {
       slotProps: _objectSpread2({
         paper: _objectSpread2({
           ref: paperRef,
-          sx: _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({
-            borderRadius: "var(--dialogist-border-radius)"
-          }, config.width !== undefined && {
-            width: typeof config.width === "number" ? "".concat(config.width, "px") : config.width
-          }), config.minWidth !== undefined && {
-            minWidth: typeof config.minWidth === "number" ? "".concat(config.minWidth, "px") : config.minWidth
-          }), config.maxWidth !== undefined && {
-            maxWidth: config.maxWidth
-          }), config.borderRadius !== undefined && {
-            "--dialogist-border-radius": typeof config.borderRadius === "number" ? "".concat(config.borderRadius, "px") : config.borderRadius
-          })
+          style: paperStyle
         }, slotProps === null || slotProps === void 0 || (_slotProps$base2 = slotProps.base) === null || _slotProps$base2 === void 0 || (_slotProps$base2 = _slotProps$base2.slotProps) === null || _slotProps$base2 === void 0 ? void 0 : _slotProps$base2.paper)
       }, slotProps === null || slotProps === void 0 || (_slotProps$base3 = slotProps.base) === null || _slotProps$base3 === void 0 ? void 0 : _slotProps$base3.slotProps),
       hideBackdrop: suppressBackdrop,
@@ -441,11 +335,11 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref5) {
           }),
           children: contentSlot
         }), effectiveActions.length > 0 && /*#__PURE__*/jsx(ActionsContainer, _objectSpread2(_objectSpread2({
-          sx: _objectSpread2(_objectSpread2(_objectSpread2({}, ((_config$actionsStyle = config.actionsStyle) === null || _config$actionsStyle === void 0 ? void 0 : _config$actionsStyle.align) && {
+          style: _objectSpread2(_objectSpread2(_objectSpread2({}, ((_config$actionsStyle = config.actionsStyle) === null || _config$actionsStyle === void 0 ? void 0 : _config$actionsStyle.align) && {
             "--dialogist-actionsContainer-justify": ACTIONS_ALIGN_TO_CSS[config.actionsStyle.align]
           }), ((_config$actionsStyle2 = config.actionsStyle) === null || _config$actionsStyle2 === void 0 ? void 0 : _config$actionsStyle2.gap) !== undefined && (slots === null || slots === void 0 ? void 0 : slots.Actions) && {
-            gap: config.actionsStyle.gap
-          }), slotProps === null || slotProps === void 0 || (_slotProps$actionsCon2 = slotProps.actionsContainer) === null || _slotProps$actionsCon2 === void 0 ? void 0 : _slotProps$actionsCon2.sx)
+            gap: adapter.resolveSpacing(config.actionsStyle.gap, 1)
+          }), (_style = slotProps === null || slotProps === void 0 || (_slotProps$actionsCon = slotProps.actionsContainer) === null || _slotProps$actionsCon === void 0 ? void 0 : _slotProps$actionsCon.style) !== null && _style !== void 0 ? _style : {})
         }, slotProps === null || slotProps === void 0 ? void 0 : slotProps.actionsContainer), {}, {
           children: /*#__PURE__*/jsx(Actions, _objectSpread2({
             actions: effectiveActions.flat(),
@@ -456,19 +350,19 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref5) {
         })), footer]
       })
     }));
-  }, [type, title, content, props, config, onClose, handleDialogSurfaceClose, dialog, overflow, statusBarRaw, footerRaw, config.width, config.minWidth, config.maxWidth, config.borderRadius, dialogKey, slots, slotProps, Base, Title, Content, ActionsContainer, StatusBar, Footer, Actions, suppressBackdrop]);
+  }, [type, title, content, props, config, onClose, handleDialogSurfaceClose, dialog, overflow, statusBarRaw, footerRaw, config.width, config.minWidth, config.maxWidth, config.borderRadius, dialogKey, slots, slotProps, Base, Title, Content, ActionsContainer, StatusBar, Footer, Actions, suppressBackdrop, adapter]);
   return dialogContent;
 });
 StableDialogRenderer.displayName = "StableDialogRenderer";
 
 // Stable scaffolding component that uses portals
-var DialogScaffolding = /*#__PURE__*/memo(function (_ref9) {
-  var dialogs = _ref9.dialogs,
-    onClose = _ref9.onClose,
-    DialogComponent = _ref9.DialogComponent,
-    overflow = _ref9.overflow,
-    slots = _ref9.slots,
-    slotProps = _ref9.slotProps;
+var DialogScaffolding = /*#__PURE__*/memo(function (_ref6) {
+  var dialogs = _ref6.dialogs,
+    onClose = _ref6.onClose,
+    DialogComponent = _ref6.DialogComponent,
+    overflow = _ref6.overflow,
+    slots = _ref6.slots,
+    slotProps = _ref6.slotProps;
   // Only render if we have dialogs and document is available
   if (typeof document === "undefined" || dialogs.length === 0) {
     return null;

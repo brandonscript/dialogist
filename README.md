@@ -19,7 +19,21 @@
 
 ## What is Dialogist?
 
-Dialogist is a **centralized dialog manager** for React apps: one provider, hooks from anywhere, no prop drilling. It's built with a style/component-agnostic core (plus <a href="https://mui.com/material-ui/" target="_blank" rel="noopener noreferrer">MUI</a>-friendly defaults), and uses slot-based updates so titles, content, actions, and the dialog backplane can refresh independently without re-rendering the entire component tree.
+Dialogist is a **centralized dialog manager** for React apps: one provider, hooks from anywhere, no prop drilling. It's built with a style/component-agnostic core, ships first-class adapters for several popular UI libraries, and uses slot-based updates so titles, content, actions, and the dialog backplane can refresh independently without re-rendering the entire component tree.
+
+### Choose your UI library
+
+The same dialog logic can render through whichever UI library you're already using. Pick one — or none, and use the headless DOM defaults — and `import` its adapter under a subpath:
+
+| Adapter        | Import                                               | Peer dependencies                                              |
+| -------------- | ---------------------------------------------------- | -------------------------------------------------------------- |
+| Headless DOM   | _(default — no import needed)_                       | None beyond `react`/`react-dom`                                |
+| MUI            | `import { muiSlots } from "dialogist/mui"`           | `@mui/material` ^7, `@emotion/react`, `@emotion/styled`        |
+| Base UI        | `import { baseUiSlots } from "dialogist/base-ui"`    | `@base-ui-components/react` ^1.0.0-rc.0                        |
+| shadcn         | `import { shadcnSlots } from "dialogist/shadcn"`     | `@base-ui-components/react`, `tailwindcss` + `tailwindcss-animate` |
+| Tailwind       | `import { tailwindSlots } from "dialogist/tailwind"` | `tailwindcss` (with the included preset)                       |
+
+All peer dependencies are **optional** — you only install the libraries for the adapter(s) you actually use. See the [Adapters guide](./docs/adapters.md) for setup snippets and migration notes per adapter.
 
 ## Screenshots
 
@@ -44,9 +58,9 @@ npm install dialogist
 
 **Package version:** 1.0.0
 
-Peer dependencies: `react` `>=18.0.0` and `react-dom` `>=18.0.0`
+Required peer dependencies: `react` `>=18.0.0` and `react-dom` `>=18.0.0`.
 
-If you are using MUI and its theming system (recommended), add peer dependencies: `@mui/material` v7+, Emotion (`@emotion/react`, `@emotion/styled`).
+All UI-library peers (`@mui/material`, `@emotion/react`, `@emotion/styled`, `@base-ui-components/react`, `tailwindcss`) are **optional** — install only the ones for the adapter you choose. See [Adapters](./docs/adapters.md) for per-adapter setup.
 
 ## Quick start
 
