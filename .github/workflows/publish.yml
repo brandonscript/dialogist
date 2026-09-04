@@ -12,7 +12,7 @@ jobs:
     # OIDC trusted‑publisher policy gives this job a short‑lived npm token.
     permissions:
       contents: read
-      id-token: write      # required for OIDC token exchange
+      id-token: ***      # required for OIDC token exchange
       packages: write      # required for npm publish
 
     # Use the environment we created in the repository settings (`npm`).
@@ -39,7 +39,7 @@ jobs:
           fetch-depth: 0
 
       # -----------------------------------------------------------------
-      # 2️⃣ Set up Node (no npm token stored in the repo)
+      # 2️⃣ Set up Node (registry-url tells npm to use npmjs.org)
       # -----------------------------------------------------------------
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -48,25 +48,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       # -----------------------------------------------------------------
-      # 3️⃣ Authenticate to npm via OIDC — exchange the GitHub OIDC token for
-      #    a short‑lived npm publish token.
-      # -----------------------------------------------------------------
-      - name: Authenticate with npm via OIDC
-        run: |
-          # Create a temporary npm token using OIDC, then store it so `npm publish`
-          # can use it. The OIDC trusted publisher policy must be configured in
-          # GitHub → Org Settings → OIDC for this to work.
-          NPM_TOKEN=$(npm token create \
-            --auth-type oidc \
-            --registry https://registry.npmjs.org \
-            --json \
-            --read-only false) 2>&1 || true
-          echo "::set-output name=NPM_TOKEN::${NPM_TOKEN}"
-          npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
-        id: npm-oidc
-
-      # -----------------------------------------------------------------
-      # 4️⃣ Install dependencies (clean install) and build the package
+      # 3️⃣ Install dependencies (clean install) and build the package
       # -----------------------------------------------------------------
       - name: Install dependencies
         run: npm ci --prefer-offline
@@ -75,7 +57,7 @@ jobs:
         run: npm run build
 
       # -----------------------------------------------------------------
-      # 5️⃣ Verify the tag version matches the version declared in package.json
+      # 4️⃣ Verify the tag version matches the version declared in package.json
       # -----------------------------------------------------------------
       - name: Verify tag matches package version
         env:
@@ -90,7 +72,8 @@ jobs:
           echo "✅ Tag matches package version $PKG_VERSION"
 
       # -----------------------------------------------------------------
-      # 6️⃣ Publish to npm (uses the OIDC‑derived token automatically)
+      # 5️⃣ Publish to npm using OIDC auth (npm v10+ supports this natively
+      #    when the trusted publisher policy is configured)
       # -----------------------------------------------------------------
       - name: Publish to npm
-        run: npm publish --access public
+        run: npm publish --auth-type=oidc --access public
