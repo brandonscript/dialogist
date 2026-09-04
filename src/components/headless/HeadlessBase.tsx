@@ -10,6 +10,7 @@ import {
   useLayoutEffect,
   useRef,
 } from "react";
+import { createPortal } from "react-dom";
 
 import { dialogistClasses } from "../../classes";
 import type { BaseDialogProps } from "../../types";
@@ -123,6 +124,7 @@ const HEADLESS_PAPER_BASE_STYLE: CSSProperties = {
 export const HeadlessBase = ({
   children,
   className,
+  container,
   hideBackdrop,
   onClose,
   open,
@@ -176,7 +178,7 @@ export const HeadlessBase = ({
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.stopPropagation();
-        onClose();
+        onClose("escape");
         return;
       }
       if (disableEnforceFocus) return;
@@ -201,9 +203,15 @@ export const HeadlessBase = ({
 
   if (!open) return null;
 
+  const resolvedContainer = typeof container === "function" ? container() : container;
+  const isWindowed = !!resolvedContainer;
+
   const onBackdropClick = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if (event.target !== event.currentTarget) return;
-    onClose();
+    // Close when the click lands anywhere in the backdrop area (the outer container or the
+    // visual backdrop layer), but NOT when it lands inside the dialog paper.
+    const paper = paperRef.current;
+    if (paper && paper.contains(event.target as Node)) return;
+    onClose("backdrop");
   };
 
   const paperSlotProps = (slotProps?.paper ?? {}) as {
@@ -225,16 +233,23 @@ export const HeadlessBase = ({
     ...paperSlotProps.style,
   };
 
+  // When portaling into a sandbox container use position:absolute so the dialog stays
+  // visually contained within that element. In fullscreen (no container) keep
+  // position:fixed so it covers the full viewport.
+  const outerStyle: CSSProperties = isWindowed
+    ? { ...BACKDROP_BASE_STYLE, position: "absolute" }
+    : BACKDROP_BASE_STYLE;
+
   const backdropLayerStyle: CSSProperties = hideBackdrop
-    ? { ...BACKDROP_LAYER_STYLE, display: "none" }
-    : { ...BACKDROP_LAYER_STYLE, ...backdropSlotProps.style };
+    ? { ...BACKDROP_LAYER_STYLE, display: "none", position: isWindowed ? "absolute" : "fixed" }
+    : { ...BACKDROP_LAYER_STYLE, position: isWindowed ? "absolute" : "fixed", ...backdropSlotProps.style };
 
   const containerProps = rest as Record<string, unknown>;
 
-  return (
+  const content = (
     <div
       role="presentation"
-      style={BACKDROP_BASE_STYLE}
+      style={outerStyle}
       onClick={onBackdropClick}
       data-dialogist-headless-base="true"
     >
@@ -258,6 +273,8 @@ export const HeadlessBase = ({
       </div>
     </div>
   );
+
+  return isWindowed && resolvedContainer ? createPortal(content, resolvedContainer) : content;
 };
 
 HeadlessBase.displayName = "HeadlessBase";

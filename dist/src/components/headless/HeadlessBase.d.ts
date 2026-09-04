@@ -8,6 +8,6 @@ import type { BaseDialogProps } from "../../types";
  * mounted via `DialogProvider.slots`.
  */
 export declare const HeadlessBase: {
-    ({ children, className, hideBackdrop, onClose, open, slotProps, id, overflow, disableAutoFocus, disableEnforceFocus, disableRestoreFocus, borderRadius, ...rest }: BaseDialogProps): import("react/jsx-runtime").JSX.Element | null;
+    ({ children, className, container, hideBackdrop, onClose, open, slotProps, id, overflow, disableAutoFocus, disableEnforceFocus, disableRestoreFocus, borderRadius, ...rest }: BaseDialogProps): import("react/jsx-runtime").JSX.Element | null;
     displayName: string;
 };

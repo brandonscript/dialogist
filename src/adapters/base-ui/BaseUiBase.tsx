@@ -7,11 +7,14 @@ import { dialogistClasses } from "../../classes";
 import type { BaseDialogProps } from "../../types";
 import { classNames } from "../../utils/classNames";
 
-const POPUP_BASE_STYLE: CSSProperties = {
-  position: "fixed",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+/**
+ * The popup participates as a normal flex item inside the centering wrapper
+ * (mirrors HeadlessBase's paper). The `flex: 1 1 auto; minHeight: 0` on
+ * DialogScaffolding's inner div (not `height: 100%`) prevents the circular
+ * height dependency that arises when a flex container's cross-size is definite.
+ */
+const POPUP_STYLE: CSSProperties = {
+  position: "relative",
   display: "flex",
   flexDirection: "column",
   background: "var(--dialogist-bg-paper, #ffffff)",
@@ -20,8 +23,23 @@ const POPUP_BASE_STYLE: CSSProperties = {
   maxHeight: "calc(100% - 64px)",
   maxWidth: "min(90vw, 600px)",
   outline: "none",
-  zIndex: 1301,
 };
+
+/**
+ * Full-area flex-centering wrapper — identical in structure to HeadlessBase's outer
+ * div. Filling the container with `inset: 0` gives the popup the same available
+ * width as HeadlessBase so text metrics match across adapters.
+ */
+const makeCenterWrapperStyle = (isWindowed: boolean): CSSProperties => ({
+  position: isWindowed ? "absolute" : "fixed",
+  inset: 0,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 16,
+  overflow: "auto",
+  zIndex: 1301,
+});
 
 const BACKDROP_STYLE: CSSProperties = {
   position: "fixed",
@@ -39,6 +57,7 @@ const BACKDROP_STYLE: CSSProperties = {
 export const BaseUiBase = ({
   children,
   className,
+  container,
   hideBackdrop,
   onClose,
   open,
@@ -52,8 +71,11 @@ export const BaseUiBase = ({
   ...rest
 }: BaseDialogProps) => {
   const handleOpenChange = useCallback(
-    (nextOpen: boolean) => {
-      if (!nextOpen) onClose();
+    (nextOpen: boolean, eventDetails?: { reason?: string }) => {
+      if (!nextOpen) {
+        const reason = eventDetails?.reason === "escape-key" ? "escape" : eventDetails?.reason === "outside-press" ? "backdrop" : undefined;
+        onClose(reason);
+      }
     },
     [onClose],
   );
@@ -68,51 +90,68 @@ export const BaseUiBase = ({
     className?: string;
   };
 
+  const resolvedContainer = typeof container === "function" ? container() : container;
+  const isWindowed = !!resolvedContainer;
+
+  const borderRadiusProp: CSSProperties =
+    borderRadius !== undefined
+      ? ({
+          "--dialogist-border-radius": typeof borderRadius === "number" ? `${borderRadius}px` : borderRadius,
+        } as CSSProperties)
+      : {};
+
   const popupStyle: CSSProperties = {
-    ...POPUP_BASE_STYLE,
+    ...POPUP_STYLE,
     overflow: overflow ?? "hidden",
-    ...(borderRadius !== undefined && {
-      "--dialogist-border-radius": typeof borderRadius === "number" ? `${borderRadius}px` : borderRadius,
-    } as CSSProperties),
+    ...borderRadiusProp,
     ...paperSlotProps.style,
   };
 
+  const backdropPositionOverride: CSSProperties = isWindowed ? { position: "absolute" } : {};
   const backdropStyle: CSSProperties = hideBackdrop
-    ? { ...BACKDROP_STYLE, display: "none" }
-    : { ...BACKDROP_STYLE, ...backdropSlotProps.style };
+    ? { ...BACKDROP_STYLE, ...backdropPositionOverride, display: "none" }
+    : { ...BACKDROP_STYLE, ...backdropPositionOverride, ...backdropSlotProps.style };
 
   // Honor the existing focus-flag contract by mapping to Base UI's `modal` and
   // popup `initialFocus`/`finalFocus`.
-  const modal: boolean | "trap-focus" = disableEnforceFocus ? "trap-focus" : true;
+  // "trap-focus" traps keyboard focus inside the dialog without blocking pointer events on external
+  // elements — matching MUI Dialog's default behaviour. modal={true} would additionally set
+  // pointer-events:none / inert on everything outside, preventing clicks on e.g. toggles that live
+  // outside the popup while the dialog is open (breaks the canClose demo and similar patterns).
+  const modal: boolean | "trap-focus" = disableEnforceFocus ? false : "trap-focus";
   const initialFocus = disableAutoFocus ? false : undefined;
   const finalFocus = disableRestoreFocus ? false : undefined;
 
   const containerProps = rest as Record<string, unknown>;
 
+  const popup = (
+    <Dialog.Popup
+      ref={paperSlotProps.ref}
+      id={id}
+      aria-labelledby={containerProps["aria-labelledby"] as string | undefined}
+      aria-describedby={containerProps["aria-describedby"] as string | undefined}
+      className={classNames(
+        dialogistClasses.base,
+        dialogistClasses.rootPaper,
+        className,
+        paperSlotProps.className,
+      )}
+      style={popupStyle}
+      initialFocus={initialFocus}
+      finalFocus={finalFocus}
+    >
+      {children}
+    </Dialog.Popup>
+  );
+
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange} modal={modal}>
-      <Dialog.Portal keepMounted={false}>
+      <Dialog.Portal keepMounted={false} container={(resolvedContainer as HTMLElement | null) ?? undefined}>
         <Dialog.Backdrop
           className={classNames(dialogistClasses.backdrop, backdropSlotProps.className)}
           style={backdropStyle}
         />
-        <Dialog.Popup
-          ref={paperSlotProps.ref}
-          id={id}
-          aria-labelledby={containerProps["aria-labelledby"] as string | undefined}
-          aria-describedby={containerProps["aria-describedby"] as string | undefined}
-          className={classNames(
-            dialogistClasses.base,
-            dialogistClasses.rootPaper,
-            className,
-            paperSlotProps.className,
-          )}
-          style={popupStyle}
-          initialFocus={initialFocus}
-          finalFocus={finalFocus}
-        >
-          {children}
-        </Dialog.Popup>
+        <div style={makeCenterWrapperStyle(isWindowed)}>{popup}</div>
       </Dialog.Portal>
     </Dialog.Root>
   );

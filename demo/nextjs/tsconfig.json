@@ -30,8 +30,14 @@
       "@mui/utils": ["./node_modules/@mui/utils"],
       "@mui/utils/*": ["./node_modules/@mui/utils/*"],
       "deepmerge-ts": ["./node_modules/deepmerge-ts"],
+      "react": ["./node_modules/@types/react"],
+      "react-dom": ["./node_modules/@types/react-dom"],
       "#dialogist/*": ["../../src/*"],
       "dialogist/classes": ["../../src/classes.ts"],
+      "dialogist/mui": ["../../src/adapters/mui/index.ts"],
+      "dialogist/base-ui": ["../../src/adapters/base-ui/index.ts"],
+      "dialogist/shadcn": ["../../src/adapters/shadcn/index.ts"],
+      "dialogist/tailwind": ["../../src/adapters/tailwind/index.ts"],
       "dialogist": ["../../src/index.ts"]
     }
   },

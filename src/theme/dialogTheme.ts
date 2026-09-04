@@ -15,6 +15,14 @@ export const dialogistStyles = {
     from: { opacity: 0 },
     to: { opacity: 1 },
   },
+  "@keyframes dialogistBackdropFadeIn": {
+    from: { opacity: 0 },
+  },
+  // Set backdrop-duration at :root so it cascades to backdrop elements that live
+  // outside .Dialogist-base (non-MUI adapters use portals that escape the base element).
+  ":root": {
+    "--dialogist-backdrop-duration": "225ms",
+  },
   [`.${dialogistClasses.base}`]: {
     overflow: "hidden",
     "--dialogist-border-radius": "12px",
@@ -30,6 +38,7 @@ export const dialogistStyles = {
     // Default color tokens (MUI defaults as static fallbacks)
     "--dialogist-primary-main": "#1976d2",
     "--dialogist-primary-contrastText": "#ffffff",
+    "--dialogist-primary-dark": "color-mix(in oklch, var(--dialogist-primary-main) 50%, black)",
     "--dialogist-secondary-main": "#9c27b0",
     "--dialogist-secondary-contrastText": "#ffffff",
     "--dialogist-text-primary": "rgba(0, 0, 0, 0.87)",
@@ -116,6 +125,7 @@ export const dialogistStyles = {
       textAlign: "var(--dialogist-statusBar-align)",
     },
     [`& .${dialogistClasses.title}`]: {
+      margin: 0,
       borderRadius: "var(--dialogist-border-radius)",
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
@@ -198,6 +208,7 @@ export const dialogistStyles = {
       textAlign: "var(--dialogist-footer-align)",
       padding: "calc(var(--dialogist-spacing) / 4) calc(var(--dialogist-spacing) / 2)",
       borderTop: "1px solid color-mix(in srgb, var(--dialogist-text-primary) 10%, transparent)",
+      lineHeight: 1.55,
     },
 
     // Custom component styles (structural and radii) moved inside root
@@ -255,11 +266,20 @@ export const dialogistStyles = {
       animation: "dialogistFlowBackAppear var(--dialogist-flow-button-appear, 100ms ease-out)",
     },
 
-    // Backdrop
+    // Backdrop color (all adapters — MUI's backdrop is a descendant of .Dialogist-base;
+    // non-MUI adapter backdrops are siblings, handled via global selectors below)
     "--dialogist-backdrop-color": "rgba(0, 0, 0, 0.5)",
+    // Also define on .Dialogist-base so MUI's backdrop (a descendant) inherits it.
+    "--dialogist-backdrop-duration": "var(--dialogist-backdrop-duration, 225ms)",
     [`& .MuiBackdrop-root, & .${dialogistClasses.backdrop}, & .${dialogistClasses.customBackdrop}`]: {
       backgroundColor: "var(--dialogist-backdrop-color)",
       backdropFilter: "none",
+    },
+    // MUI backdrop: disable keyframe animation (Fade handles opacity) and let the CSS
+    // variable override Fade's inline transition-duration.
+    [`& .MuiBackdrop-root.${dialogistClasses.backdrop}`]: {
+      animation: "none",
+      transitionDuration: "var(--dialogist-backdrop-duration, 225ms) !important" as string,
     },
 
     // Conditional corner rules using :has()
@@ -279,6 +299,20 @@ export const dialogistStyles = {
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
     },
+  },
+
+  // ── Global backdrop animation ────────────────────────────────────────────────
+  // Non-MUI adapters render the backdrop outside .Dialogist-base (via portals),
+  // so these selectors must be at the global level rather than nested.
+
+  // Fade-in on mount + smooth opacity transition for exit (Base UI data-closed state).
+  [`.${dialogistClasses.backdrop}:not(.MuiBackdrop-root)`]: {
+    animation: "dialogistBackdropFadeIn var(--dialogist-backdrop-duration, 225ms) ease-out both",
+    transition: "opacity var(--dialogist-backdrop-duration, 225ms) ease-in-out",
+  },
+  // Base UI sets data-closed on the backdrop while it's animating out.
+  [`.${dialogistClasses.backdrop}[data-closed]`]: {
+    opacity: 0,
   },
 } as const;
 

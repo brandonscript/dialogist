@@ -1,6 +1,6 @@
 {
   "name": "dialogist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A centralized dialog manager system for React applications",
   "keywords": [
     "react",
@@ -11,12 +11,12 @@
     "dialog-manager"
   ],
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
     },
     "./classes": {
       "types": "./dist/classes.d.ts",
@@ -88,6 +88,7 @@
     "@emotion/jest": "^11.13.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.3.4",
     "@humanwhocodes/module-importer": "^1.0.1",
     "@playwright/test": "^1.53.2",
     "@rollup/plugin-alias": "^5.1.1",

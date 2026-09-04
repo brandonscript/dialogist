@@ -5,17 +5,21 @@ import { dialogistClasses } from '../../classes.js';
 import { classNames } from '../../utils/classNames.js';
 import { jsx } from 'react/jsx-runtime';
 
-var _excluded = ["className", "slotProps", "hideBackdrop", "container"];
+var _excluded = ["className", "slotProps", "hideBackdrop", "container", "onClose"];
 var MuiBase = styled(function (_ref) {
   var className = _ref.className,
     slotProps = _ref.slotProps,
     hideBackdrop = _ref.hideBackdrop,
     container = _ref.container,
+    _onClose = _ref.onClose,
     props = _objectWithoutProperties(_ref, _excluded);
   return /*#__PURE__*/jsx(Dialog, _objectSpread2(_objectSpread2({
     className: classNames(dialogistClasses.base, className)
   }, props), {}, {
     container: container,
+    onClose: function onClose(_event, reason) {
+      return _onClose(reason === "escapeKeyDown" ? "escape" : "backdrop");
+    },
     disableAutoFocus: props.disableAutoFocus,
     disableEnforceFocus: props.disableEnforceFocus,
     disableRestoreFocus: props.disableRestoreFocus,

@@ -113,7 +113,7 @@ export const TailwindActions = ({ actionGroups, dialogKey, actionsStyle }: Actio
   const hasMultipleGroups = actionGroups.length > 1;
   const hasSingleGroup = actionGroups.length === 1;
   const justifyFromAlign = actionsStyle?.align ? ACTIONS_ALIGN_TO_CSS[actionsStyle.align] : undefined;
-  const justifyContent = justifyFromAlign ?? "flex-end";
+  const justifyContent = justifyFromAlign ?? "center";
 
   const groupBoxes = actionGroups.map((group) => (
     <div

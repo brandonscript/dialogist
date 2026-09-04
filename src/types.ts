@@ -233,7 +233,12 @@ export interface DialogBackdropSlotProps {
 export interface BaseDialogProps
   extends React.PropsWithChildren<{
     open: boolean;
-    onClose: () => void;
+    /**
+     * Called by the Base component when the dialog requests to close.
+     * Non-MUI adapters may pass an optional reason string ("escape" | "backdrop")
+     * so the Dialogist core can surface the correct `DialogCloseReason`.
+     */
+    onClose: (reason?: "escape" | "backdrop") => void;
     overflow?: "visible" | "hidden";
     /** Portal target for adapters that support one (Base UI / MUI). Headless ignores. */
     container?: Element | (() => Element | null) | null;

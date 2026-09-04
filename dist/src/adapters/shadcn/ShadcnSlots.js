@@ -110,7 +110,7 @@ var ShadcnActions = function ShadcnActions(_ref6) {
   var hasMultipleGroups = actionGroups.length > 1;
   var hasSingleGroup = actionGroups.length === 1;
   var justifyFromAlign = actionsStyle !== null && actionsStyle !== void 0 && actionsStyle.align ? ACTIONS_ALIGN_TO_CSS[actionsStyle.align] : undefined;
-  var justifyContent = justifyFromAlign !== null && justifyFromAlign !== void 0 ? justifyFromAlign : "flex-end";
+  var justifyContent = justifyFromAlign !== null && justifyFromAlign !== void 0 ? justifyFromAlign : "center";
   var groupBoxes = actionGroups.map(function (group) {
     return /*#__PURE__*/jsx("div", {
       className: classNames(dialogistClasses.actionsGroup, "flex gap-2"),

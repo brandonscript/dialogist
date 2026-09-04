@@ -49,5 +49,5 @@ var tailwindSlots = {
   Footer: TailwindFooter
 };
 
-export { TailwindActions, TailwindActionsContainer, TailwindContent, TailwindFooter, TailwindStatusBar, TailwindTitle, tailwindSlots };
+export { HeadlessBase, TailwindActions, TailwindActionsContainer, TailwindContent, TailwindFooter, TailwindStatusBar, TailwindTitle, tailwindSlots };
 //# sourceMappingURL=index.js.map

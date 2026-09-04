@@ -73,7 +73,7 @@ test.describe("Demo app shell", () => {
 test.describe("Demo design tokens (windowed)", () => {
   test("Alert card primary button matches theme", async ({ page }) => {
     await page.addInitScript(DemoPage.windowedStorageInitScript());
-    await page.goto("/getting-started/alert-dialog", { waitUntil: "networkidle" });
+    await page.goto("/the-basics/alert-dialog", { waitUntil: "networkidle" });
     await expect(page.locator("[data-dialog-mode]")).toHaveAttribute("data-dialog-mode", "windowed");
 
     await page.getByRole("heading", { name: "Alert dialog", exact: true }).scrollIntoViewIfNeeded();

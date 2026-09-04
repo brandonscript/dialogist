@@ -17,6 +17,7 @@ export declare const dialogistStyles: {
         readonly to: {
             readonly opacity: 1;
         };
+        readonly "--dialogist-backdrop-duration"?: undefined;
         readonly overflow?: undefined;
         readonly "--dialogist-border-radius"?: undefined;
         readonly borderRadius?: undefined;
@@ -29,6 +30,7 @@ export declare const dialogistStyles: {
         readonly "--dialogist-max-width-xl"?: undefined;
         readonly "--dialogist-primary-main"?: undefined;
         readonly "--dialogist-primary-contrastText"?: undefined;
+        readonly "--dialogist-primary-dark"?: undefined;
         readonly "--dialogist-secondary-main"?: undefined;
         readonly "--dialogist-secondary-contrastText"?: undefined;
         readonly "--dialogist-text-primary"?: undefined;
@@ -76,8 +78,147 @@ export declare const dialogistStyles: {
         readonly "--dialogist-footer-align"?: undefined;
         readonly "--dialogist-footer-height"?: undefined;
         readonly "--dialogist-backdrop-color"?: undefined;
+        readonly animation?: undefined;
+        readonly transition?: undefined;
+        readonly opacity?: undefined;
     } | {
-        readonly [x: string]: "hidden" | "12px" | "var(--dialogist-border-radius)" | "32px" | "var(--dialogist-spacing)" | "min(96vw, 320px)" | "min(90vw, 448px)" | "540px" | "#1976d2" | "#ffffff" | "#9c27b0" | "rgba(0, 0, 0, 0.87)" | "rgba(0, 0, 0, 0.6)" | "#f5f5f5" | "var(--dialogist-primary-main)" | "var(--font-sans, \"Roboto\",\"Helvetica\",\"Arial\",sans-serif)" | 600 | "var(--dialogist-text-primary)" | "0.75rem" | "left" | "1.25rem" | "center" | 400 | "0.875rem" | "var(--dialogist-text-secondary)" | "var(--dialogist-content-align)" | "block" | "column" | "stretch" | "flex-start" | "auto" | "none" | "calc(var(--dialogist-spacing) / 4)" | "16px" | "100ms ease-out" | "rgba(0, 0, 0, 0.5)" | {
+        readonly from: {
+            readonly opacity: 0;
+        };
+        readonly to?: undefined;
+        readonly "--dialogist-backdrop-duration"?: undefined;
+        readonly overflow?: undefined;
+        readonly "--dialogist-border-radius"?: undefined;
+        readonly borderRadius?: undefined;
+        readonly "--dialogist-spacing"?: undefined;
+        readonly padding?: undefined;
+        readonly "--dialogist-max-width-xs"?: undefined;
+        readonly "--dialogist-max-width-sm"?: undefined;
+        readonly "--dialogist-max-width-md"?: undefined;
+        readonly "--dialogist-max-width-lg"?: undefined;
+        readonly "--dialogist-max-width-xl"?: undefined;
+        readonly "--dialogist-primary-main"?: undefined;
+        readonly "--dialogist-primary-contrastText"?: undefined;
+        readonly "--dialogist-primary-dark"?: undefined;
+        readonly "--dialogist-secondary-main"?: undefined;
+        readonly "--dialogist-secondary-contrastText"?: undefined;
+        readonly "--dialogist-text-primary"?: undefined;
+        readonly "--dialogist-text-secondary"?: undefined;
+        readonly "--dialogist-bg-paper"?: undefined;
+        readonly "--dialogist-bg-secondary"?: undefined;
+        readonly "--dialogist-bg-statusBar"?: undefined;
+        readonly "--dialogist-bg-footer"?: undefined;
+        readonly "--dialogist-font-family"?: undefined;
+        readonly "--dialogist-statusBar-font-weight"?: undefined;
+        readonly "--dialogist-statusBar-text"?: undefined;
+        readonly "--dialogist-statusBar-font-size"?: undefined;
+        readonly "--dialogist-statusBar-align"?: undefined;
+        readonly "--dialogist-statusBar-height"?: undefined;
+        readonly "--dialogist-title-font-weight"?: undefined;
+        readonly "--dialogist-title-text"?: undefined;
+        readonly "--dialogist-title-font-size"?: undefined;
+        readonly "--dialogist-title-align"?: undefined;
+        readonly "--dialogist-content-font-weight"?: undefined;
+        readonly "--dialogist-content-font-size"?: undefined;
+        readonly "--dialogist-content-text"?: undefined;
+        readonly "--dialogist-content-align"?: undefined;
+        readonly "--dialogist-content-text-align"?: undefined;
+        readonly "--dialogist-content-display"?: undefined;
+        readonly "--dialogist-content-flex-direction"?: undefined;
+        readonly "--dialogist-content-align-items"?: undefined;
+        readonly "--dialogist-content-justify"?: undefined;
+        readonly "--dialogist-content-min-width"?: undefined;
+        readonly "--dialogist-content-max-width"?: undefined;
+        readonly "--dialogist-content-min-height"?: undefined;
+        readonly "--dialogist-content-max-height"?: undefined;
+        readonly "--dialogist-actionsContainer-justify"?: undefined;
+        /** Between-group gap on `.Dialogist-actionsRow` (set per dialog via inline style). */
+        readonly "--dialogist-actionsRow-gap"?: undefined;
+        readonly "--dialogist-actionsRow-justify"?: undefined;
+        /** Intra-cluster gap on `.Dialogist-actionsGroup` (set per dialog via inline style). */
+        readonly "--dialogist-actionsGroup-gap"?: undefined;
+        readonly "--dialogist-actionsGroup-justify"?: undefined;
+        /** Default horizontal gap between action clusters (custom actions container / default actions row). */
+        readonly "--dialogist-actions-gap"?: undefined;
+        readonly "--dialogist-flow-button-appear"?: undefined;
+        readonly "--dialogist-footer-font-weight"?: undefined;
+        readonly "--dialogist-footer-text"?: undefined;
+        readonly "--dialogist-footer-font-size"?: undefined;
+        readonly "--dialogist-footer-align"?: undefined;
+        readonly "--dialogist-footer-height"?: undefined;
+        readonly "--dialogist-backdrop-color"?: undefined;
+        readonly animation?: undefined;
+        readonly transition?: undefined;
+        readonly opacity?: undefined;
+    } | {
+        readonly "--dialogist-backdrop-duration": "225ms";
+        readonly from?: undefined;
+        readonly to?: undefined;
+        readonly overflow?: undefined;
+        readonly "--dialogist-border-radius"?: undefined;
+        readonly borderRadius?: undefined;
+        readonly "--dialogist-spacing"?: undefined;
+        readonly padding?: undefined;
+        readonly "--dialogist-max-width-xs"?: undefined;
+        readonly "--dialogist-max-width-sm"?: undefined;
+        readonly "--dialogist-max-width-md"?: undefined;
+        readonly "--dialogist-max-width-lg"?: undefined;
+        readonly "--dialogist-max-width-xl"?: undefined;
+        readonly "--dialogist-primary-main"?: undefined;
+        readonly "--dialogist-primary-contrastText"?: undefined;
+        readonly "--dialogist-primary-dark"?: undefined;
+        readonly "--dialogist-secondary-main"?: undefined;
+        readonly "--dialogist-secondary-contrastText"?: undefined;
+        readonly "--dialogist-text-primary"?: undefined;
+        readonly "--dialogist-text-secondary"?: undefined;
+        readonly "--dialogist-bg-paper"?: undefined;
+        readonly "--dialogist-bg-secondary"?: undefined;
+        readonly "--dialogist-bg-statusBar"?: undefined;
+        readonly "--dialogist-bg-footer"?: undefined;
+        readonly "--dialogist-font-family"?: undefined;
+        readonly "--dialogist-statusBar-font-weight"?: undefined;
+        readonly "--dialogist-statusBar-text"?: undefined;
+        readonly "--dialogist-statusBar-font-size"?: undefined;
+        readonly "--dialogist-statusBar-align"?: undefined;
+        readonly "--dialogist-statusBar-height"?: undefined;
+        readonly "--dialogist-title-font-weight"?: undefined;
+        readonly "--dialogist-title-text"?: undefined;
+        readonly "--dialogist-title-font-size"?: undefined;
+        readonly "--dialogist-title-align"?: undefined;
+        readonly "--dialogist-content-font-weight"?: undefined;
+        readonly "--dialogist-content-font-size"?: undefined;
+        readonly "--dialogist-content-text"?: undefined;
+        readonly "--dialogist-content-align"?: undefined;
+        readonly "--dialogist-content-text-align"?: undefined;
+        readonly "--dialogist-content-display"?: undefined;
+        readonly "--dialogist-content-flex-direction"?: undefined;
+        readonly "--dialogist-content-align-items"?: undefined;
+        readonly "--dialogist-content-justify"?: undefined;
+        readonly "--dialogist-content-min-width"?: undefined;
+        readonly "--dialogist-content-max-width"?: undefined;
+        readonly "--dialogist-content-min-height"?: undefined;
+        readonly "--dialogist-content-max-height"?: undefined;
+        readonly "--dialogist-actionsContainer-justify"?: undefined;
+        /** Between-group gap on `.Dialogist-actionsRow` (set per dialog via inline style). */
+        readonly "--dialogist-actionsRow-gap"?: undefined;
+        readonly "--dialogist-actionsRow-justify"?: undefined;
+        /** Intra-cluster gap on `.Dialogist-actionsGroup` (set per dialog via inline style). */
+        readonly "--dialogist-actionsGroup-gap"?: undefined;
+        readonly "--dialogist-actionsGroup-justify"?: undefined;
+        /** Default horizontal gap between action clusters (custom actions container / default actions row). */
+        readonly "--dialogist-actions-gap"?: undefined;
+        readonly "--dialogist-flow-button-appear"?: undefined;
+        readonly "--dialogist-footer-font-weight"?: undefined;
+        readonly "--dialogist-footer-text"?: undefined;
+        readonly "--dialogist-footer-font-size"?: undefined;
+        readonly "--dialogist-footer-align"?: undefined;
+        readonly "--dialogist-footer-height"?: undefined;
+        readonly "--dialogist-backdrop-color"?: undefined;
+        readonly animation?: undefined;
+        readonly transition?: undefined;
+        readonly opacity?: undefined;
+    } | {
+        readonly [x: string]: "hidden" | "12px" | "var(--dialogist-border-radius)" | "32px" | "var(--dialogist-spacing)" | "min(96vw, 320px)" | "min(90vw, 448px)" | "540px" | "#1976d2" | "#ffffff" | "color-mix(in oklch, var(--dialogist-primary-main) 50%, black)" | "#9c27b0" | "rgba(0, 0, 0, 0.87)" | "rgba(0, 0, 0, 0.6)" | "#f5f5f5" | "var(--dialogist-primary-main)" | "var(--font-sans, \"Roboto\",\"Helvetica\",\"Arial\",sans-serif)" | 600 | "var(--dialogist-text-primary)" | "0.75rem" | "left" | "1.25rem" | "center" | 400 | "0.875rem" | "var(--dialogist-text-secondary)" | "var(--dialogist-content-align)" | "block" | "column" | "stretch" | "flex-start" | "auto" | "none" | "calc(var(--dialogist-spacing) / 4)" | "16px" | "100ms ease-out" | "rgba(0, 0, 0, 0.5)" | "var(--dialogist-backdrop-duration, 225ms)" | {
             readonly borderRadius: "var(--dialogist-border-radius)";
             readonly "& [class*='Dialogist']": {
                 readonly fontFamily: "var(--dialogist-font-family)";
@@ -93,6 +234,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -107,10 +249,12 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly backgroundColor: "transparent";
             readonly borderRadius?: undefined;
@@ -125,6 +269,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -139,10 +284,12 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly backgroundColor: "var(--dialogist-bg-statusBar)";
             readonly borderRadius: "var(--dialogist-border-radius) var(--dialogist-border-radius) 0 0";
@@ -157,6 +304,7 @@ export declare const dialogistStyles: {
             readonly fontWeight: "var(--dialogist-statusBar-font-weight)";
             readonly textAlign: "var(--dialogist-statusBar-align)";
             readonly "& [class*='Dialogist']"?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -171,11 +319,14 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
+            readonly margin: 0;
             readonly borderRadius: "var(--dialogist-border-radius)";
             readonly borderBottomLeftRadius: 0;
             readonly borderBottomRightRadius: 0;
@@ -203,10 +354,12 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly borderRadius: 0;
             readonly borderTopLeftRadius: 0;
@@ -231,14 +384,17 @@ export declare const dialogistStyles: {
             readonly padding: "calc(var(--dialogist-spacing) / 2) calc(var(--dialogist-spacing) * 0.75) calc(var(--dialogist-spacing) / 4)";
             readonly "& [class*='Dialogist']"?: undefined;
             readonly position?: undefined;
+            readonly margin?: undefined;
             readonly paddingBottom?: undefined;
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly textAlign: "inherit";
             readonly width: "100%";
@@ -254,6 +410,7 @@ export declare const dialogistStyles: {
             readonly justifyContent?: undefined;
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -267,10 +424,12 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly borderRadius: "0 0 var(--dialogist-border-radius) var(--dialogist-border-radius)";
             readonly borderTopLeftRadius: 0;
@@ -290,6 +449,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly alignSelf?: undefined;
@@ -299,10 +459,12 @@ export declare const dialogistStyles: {
             readonly maxHeight?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly display: "flex";
             readonly flexDirection: "row";
@@ -321,6 +483,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -331,10 +494,12 @@ export declare const dialogistStyles: {
             readonly maxWidth?: undefined;
             readonly maxHeight?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly display: "flex";
             readonly alignItems: "center";
@@ -350,6 +515,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -363,10 +529,12 @@ export declare const dialogistStyles: {
             readonly maxHeight?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly width: "100%";
             readonly borderRadius?: undefined;
@@ -382,6 +550,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -395,10 +564,12 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly borderRadius: "0 0 var(--dialogist-border-radius) var(--dialogist-border-radius)";
             readonly color: "var(--dialogist-footer-text)";
@@ -408,12 +579,14 @@ export declare const dialogistStyles: {
             readonly textAlign: "var(--dialogist-footer-align)";
             readonly padding: "calc(var(--dialogist-spacing) / 4) calc(var(--dialogist-spacing) / 2)";
             readonly borderTop: "1px solid color-mix(in srgb, var(--dialogist-text-primary) 10%, transparent)";
+            readonly lineHeight: 1.55;
             readonly "& [class*='Dialogist']"?: undefined;
             readonly minHeight?: undefined;
             readonly position?: undefined;
             readonly display?: undefined;
             readonly alignItems?: undefined;
             readonly justifyContent?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -431,6 +604,7 @@ export declare const dialogistStyles: {
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly display: "flex";
             readonly flexDirection: "row";
@@ -447,6 +621,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -459,10 +634,12 @@ export declare const dialogistStyles: {
             readonly maxHeight?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly display: "flex";
             readonly flexDirection: "row";
@@ -479,6 +656,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -491,10 +669,12 @@ export declare const dialogistStyles: {
             readonly maxHeight?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly borderRadius: "var(--dialogist-border-radius)";
             readonly "& [class*='Dialogist']"?: undefined;
@@ -509,6 +689,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -523,10 +704,12 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly borderRadius: "var(--dialogist-border-radius) var(--dialogist-border-radius) 0 0";
             readonly "& [class*='Dialogist']"?: undefined;
@@ -541,6 +724,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -555,10 +739,12 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly borderRadius: 0;
             readonly color: "var(--dialogist-content-text)";
@@ -573,6 +759,7 @@ export declare const dialogistStyles: {
             readonly display?: undefined;
             readonly alignItems?: undefined;
             readonly justifyContent?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -587,10 +774,12 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly borderRadius: "var(--dialogist-border-radius) var(--dialogist-border-radius) 0 0";
             readonly "--dialogist-bg-statusBar": "transparent";
@@ -606,6 +795,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -620,9 +810,11 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly borderRadius: "0 0 var(--dialogist-border-radius) var(--dialogist-border-radius)";
             readonly "--dialogist-bg-footer": "transparent";
@@ -638,6 +830,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -652,9 +845,11 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly borderRadius: "0 0 var(--dialogist-border-radius) var(--dialogist-border-radius)";
             readonly "& [class*='Dialogist']"?: undefined;
@@ -669,6 +864,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -683,10 +879,12 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly animation: "dialogistFlowBackAppear var(--dialogist-flow-button-appear, 100ms ease-out)";
             readonly borderRadius?: undefined;
@@ -702,6 +900,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -716,9 +915,11 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly backgroundColor: "var(--dialogist-backdrop-color)";
             readonly backdropFilter: "none";
@@ -734,6 +935,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -748,9 +950,46 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
+            readonly transitionDuration?: undefined;
+        } | {
+            readonly animation: "none";
+            readonly transitionDuration: string;
+            readonly borderRadius?: undefined;
+            readonly "& [class*='Dialogist']"?: undefined;
+            readonly backgroundColor?: undefined;
+            readonly color?: undefined;
+            readonly minHeight?: undefined;
+            readonly padding?: undefined;
+            readonly position?: undefined;
+            readonly display?: undefined;
+            readonly alignItems?: undefined;
+            readonly justifyContent?: undefined;
+            readonly fontSize?: undefined;
+            readonly fontWeight?: undefined;
+            readonly textAlign?: undefined;
+            readonly margin?: undefined;
+            readonly borderBottomLeftRadius?: undefined;
+            readonly borderBottomRightRadius?: undefined;
+            readonly paddingBottom?: undefined;
+            readonly borderTopLeftRadius?: undefined;
+            readonly borderTopRightRadius?: undefined;
+            readonly flexDirection?: undefined;
+            readonly alignSelf?: undefined;
+            readonly width?: undefined;
+            readonly minWidth?: undefined;
+            readonly maxWidth?: undefined;
+            readonly maxHeight?: undefined;
+            readonly gap?: undefined;
+            readonly flexWrap?: undefined;
+            readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
+            readonly "--dialogist-bg-statusBar"?: undefined;
+            readonly "--dialogist-bg-footer"?: undefined;
+            readonly backdropFilter?: undefined;
         } | {
             readonly borderTopLeftRadius: 0;
             readonly borderTopRightRadius: 0;
@@ -767,6 +1006,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly borderBottomLeftRadius?: undefined;
             readonly borderBottomRightRadius?: undefined;
             readonly paddingBottom?: undefined;
@@ -779,10 +1019,12 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         } | {
             readonly borderBottomLeftRadius: 0;
             readonly borderBottomRightRadius: 0;
@@ -799,6 +1041,7 @@ export declare const dialogistStyles: {
             readonly fontSize?: undefined;
             readonly fontWeight?: undefined;
             readonly textAlign?: undefined;
+            readonly margin?: undefined;
             readonly paddingBottom?: undefined;
             readonly borderTopLeftRadius?: undefined;
             readonly borderTopRightRadius?: undefined;
@@ -811,10 +1054,12 @@ export declare const dialogistStyles: {
             readonly gap?: undefined;
             readonly flexWrap?: undefined;
             readonly borderTop?: undefined;
+            readonly lineHeight?: undefined;
             readonly "--dialogist-bg-statusBar"?: undefined;
             readonly "--dialogist-bg-footer"?: undefined;
             readonly animation?: undefined;
             readonly backdropFilter?: undefined;
+            readonly transitionDuration?: undefined;
         };
         readonly overflow: "hidden";
         readonly "--dialogist-border-radius": "12px";
@@ -828,6 +1073,7 @@ export declare const dialogistStyles: {
         readonly "--dialogist-max-width-xl": "540px";
         readonly "--dialogist-primary-main": "#1976d2";
         readonly "--dialogist-primary-contrastText": "#ffffff";
+        readonly "--dialogist-primary-dark": "color-mix(in oklch, var(--dialogist-primary-main) 50%, black)";
         readonly "--dialogist-secondary-main": "#9c27b0";
         readonly "--dialogist-secondary-contrastText": "#ffffff";
         readonly "--dialogist-text-primary": "rgba(0, 0, 0, 0.87)";
@@ -875,8 +1121,146 @@ export declare const dialogistStyles: {
         readonly "--dialogist-footer-align": "left";
         readonly "--dialogist-footer-height": "32px";
         readonly "--dialogist-backdrop-color": "rgba(0, 0, 0, 0.5)";
+        readonly "--dialogist-backdrop-duration": "var(--dialogist-backdrop-duration, 225ms)";
         readonly from?: undefined;
         readonly to?: undefined;
+        readonly animation?: undefined;
+        readonly transition?: undefined;
+        readonly opacity?: undefined;
+    } | {
+        readonly animation: "dialogistBackdropFadeIn var(--dialogist-backdrop-duration, 225ms) ease-out both";
+        readonly transition: "opacity var(--dialogist-backdrop-duration, 225ms) ease-in-out";
+        readonly from?: undefined;
+        readonly to?: undefined;
+        readonly "--dialogist-backdrop-duration"?: undefined;
+        readonly overflow?: undefined;
+        readonly "--dialogist-border-radius"?: undefined;
+        readonly borderRadius?: undefined;
+        readonly "--dialogist-spacing"?: undefined;
+        readonly padding?: undefined;
+        readonly "--dialogist-max-width-xs"?: undefined;
+        readonly "--dialogist-max-width-sm"?: undefined;
+        readonly "--dialogist-max-width-md"?: undefined;
+        readonly "--dialogist-max-width-lg"?: undefined;
+        readonly "--dialogist-max-width-xl"?: undefined;
+        readonly "--dialogist-primary-main"?: undefined;
+        readonly "--dialogist-primary-contrastText"?: undefined;
+        readonly "--dialogist-primary-dark"?: undefined;
+        readonly "--dialogist-secondary-main"?: undefined;
+        readonly "--dialogist-secondary-contrastText"?: undefined;
+        readonly "--dialogist-text-primary"?: undefined;
+        readonly "--dialogist-text-secondary"?: undefined;
+        readonly "--dialogist-bg-paper"?: undefined;
+        readonly "--dialogist-bg-secondary"?: undefined;
+        readonly "--dialogist-bg-statusBar"?: undefined;
+        readonly "--dialogist-bg-footer"?: undefined;
+        readonly "--dialogist-font-family"?: undefined;
+        readonly "--dialogist-statusBar-font-weight"?: undefined;
+        readonly "--dialogist-statusBar-text"?: undefined;
+        readonly "--dialogist-statusBar-font-size"?: undefined;
+        readonly "--dialogist-statusBar-align"?: undefined;
+        readonly "--dialogist-statusBar-height"?: undefined;
+        readonly "--dialogist-title-font-weight"?: undefined;
+        readonly "--dialogist-title-text"?: undefined;
+        readonly "--dialogist-title-font-size"?: undefined;
+        readonly "--dialogist-title-align"?: undefined;
+        readonly "--dialogist-content-font-weight"?: undefined;
+        readonly "--dialogist-content-font-size"?: undefined;
+        readonly "--dialogist-content-text"?: undefined;
+        readonly "--dialogist-content-align"?: undefined;
+        readonly "--dialogist-content-text-align"?: undefined;
+        readonly "--dialogist-content-display"?: undefined;
+        readonly "--dialogist-content-flex-direction"?: undefined;
+        readonly "--dialogist-content-align-items"?: undefined;
+        readonly "--dialogist-content-justify"?: undefined;
+        readonly "--dialogist-content-min-width"?: undefined;
+        readonly "--dialogist-content-max-width"?: undefined;
+        readonly "--dialogist-content-min-height"?: undefined;
+        readonly "--dialogist-content-max-height"?: undefined;
+        readonly "--dialogist-actionsContainer-justify"?: undefined;
+        /** Between-group gap on `.Dialogist-actionsRow` (set per dialog via inline style). */
+        readonly "--dialogist-actionsRow-gap"?: undefined;
+        readonly "--dialogist-actionsRow-justify"?: undefined;
+        /** Intra-cluster gap on `.Dialogist-actionsGroup` (set per dialog via inline style). */
+        readonly "--dialogist-actionsGroup-gap"?: undefined;
+        readonly "--dialogist-actionsGroup-justify"?: undefined;
+        /** Default horizontal gap between action clusters (custom actions container / default actions row). */
+        readonly "--dialogist-actions-gap"?: undefined;
+        readonly "--dialogist-flow-button-appear"?: undefined;
+        readonly "--dialogist-footer-font-weight"?: undefined;
+        readonly "--dialogist-footer-text"?: undefined;
+        readonly "--dialogist-footer-font-size"?: undefined;
+        readonly "--dialogist-footer-align"?: undefined;
+        readonly "--dialogist-footer-height"?: undefined;
+        readonly "--dialogist-backdrop-color"?: undefined;
+        readonly opacity?: undefined;
+    } | {
+        readonly opacity: 0;
+        readonly from?: undefined;
+        readonly to?: undefined;
+        readonly "--dialogist-backdrop-duration"?: undefined;
+        readonly overflow?: undefined;
+        readonly "--dialogist-border-radius"?: undefined;
+        readonly borderRadius?: undefined;
+        readonly "--dialogist-spacing"?: undefined;
+        readonly padding?: undefined;
+        readonly "--dialogist-max-width-xs"?: undefined;
+        readonly "--dialogist-max-width-sm"?: undefined;
+        readonly "--dialogist-max-width-md"?: undefined;
+        readonly "--dialogist-max-width-lg"?: undefined;
+        readonly "--dialogist-max-width-xl"?: undefined;
+        readonly "--dialogist-primary-main"?: undefined;
+        readonly "--dialogist-primary-contrastText"?: undefined;
+        readonly "--dialogist-primary-dark"?: undefined;
+        readonly "--dialogist-secondary-main"?: undefined;
+        readonly "--dialogist-secondary-contrastText"?: undefined;
+        readonly "--dialogist-text-primary"?: undefined;
+        readonly "--dialogist-text-secondary"?: undefined;
+        readonly "--dialogist-bg-paper"?: undefined;
+        readonly "--dialogist-bg-secondary"?: undefined;
+        readonly "--dialogist-bg-statusBar"?: undefined;
+        readonly "--dialogist-bg-footer"?: undefined;
+        readonly "--dialogist-font-family"?: undefined;
+        readonly "--dialogist-statusBar-font-weight"?: undefined;
+        readonly "--dialogist-statusBar-text"?: undefined;
+        readonly "--dialogist-statusBar-font-size"?: undefined;
+        readonly "--dialogist-statusBar-align"?: undefined;
+        readonly "--dialogist-statusBar-height"?: undefined;
+        readonly "--dialogist-title-font-weight"?: undefined;
+        readonly "--dialogist-title-text"?: undefined;
+        readonly "--dialogist-title-font-size"?: undefined;
+        readonly "--dialogist-title-align"?: undefined;
+        readonly "--dialogist-content-font-weight"?: undefined;
+        readonly "--dialogist-content-font-size"?: undefined;
+        readonly "--dialogist-content-text"?: undefined;
+        readonly "--dialogist-content-align"?: undefined;
+        readonly "--dialogist-content-text-align"?: undefined;
+        readonly "--dialogist-content-display"?: undefined;
+        readonly "--dialogist-content-flex-direction"?: undefined;
+        readonly "--dialogist-content-align-items"?: undefined;
+        readonly "--dialogist-content-justify"?: undefined;
+        readonly "--dialogist-content-min-width"?: undefined;
+        readonly "--dialogist-content-max-width"?: undefined;
+        readonly "--dialogist-content-min-height"?: undefined;
+        readonly "--dialogist-content-max-height"?: undefined;
+        readonly "--dialogist-actionsContainer-justify"?: undefined;
+        /** Between-group gap on `.Dialogist-actionsRow` (set per dialog via inline style). */
+        readonly "--dialogist-actionsRow-gap"?: undefined;
+        readonly "--dialogist-actionsRow-justify"?: undefined;
+        /** Intra-cluster gap on `.Dialogist-actionsGroup` (set per dialog via inline style). */
+        readonly "--dialogist-actionsGroup-gap"?: undefined;
+        readonly "--dialogist-actionsGroup-justify"?: undefined;
+        /** Default horizontal gap between action clusters (custom actions container / default actions row). */
+        readonly "--dialogist-actions-gap"?: undefined;
+        readonly "--dialogist-flow-button-appear"?: undefined;
+        readonly "--dialogist-footer-font-weight"?: undefined;
+        readonly "--dialogist-footer-text"?: undefined;
+        readonly "--dialogist-footer-font-size"?: undefined;
+        readonly "--dialogist-footer-align"?: undefined;
+        readonly "--dialogist-footer-height"?: undefined;
+        readonly "--dialogist-backdrop-color"?: undefined;
+        readonly animation?: undefined;
+        readonly transition?: undefined;
     };
     readonly "@keyframes dialogistFlowBackAppear": {
         readonly from: {
@@ -885,6 +1269,14 @@ export declare const dialogistStyles: {
         readonly to: {
             readonly opacity: 1;
         };
+    };
+    readonly "@keyframes dialogistBackdropFadeIn": {
+        readonly from: {
+            readonly opacity: 0;
+        };
+    };
+    readonly ":root": {
+        readonly "--dialogist-backdrop-duration": "225ms";
     };
 };
 /** Helper used by adapters to pluck nested style blocks from {@link dialogistStyles}. */

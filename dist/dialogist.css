@@ -7,6 +7,14 @@
     opacity: 1;
   }
 }
+@keyframes dialogistBackdropFadeIn {
+  from {
+    opacity: 0;
+  }
+}
+:root {
+  --dialogist-backdrop-duration: 225ms;
+}
 .Dialogist-base {
   overflow: hidden;
   --dialogist-border-radius: 12px;
@@ -20,6 +28,7 @@
   --dialogist-max-width-xl: 540px;
   --dialogist-primary-main: #1976d2;
   --dialogist-primary-contrastText: #ffffff;
+  --dialogist-primary-dark: color-mix(in oklch, var(--dialogist-primary-main) 50%, black);
   --dialogist-secondary-main: #9c27b0;
   --dialogist-secondary-contrastText: #ffffff;
   --dialogist-text-primary: rgba(0, 0, 0, 0.87);
@@ -64,6 +73,7 @@
   --dialogist-footer-align: left;
   --dialogist-footer-height: 32px;
   --dialogist-backdrop-color: rgba(0, 0, 0, 0.5);
+  --dialogist-backdrop-duration: var(--dialogist-backdrop-duration, 225ms);
 }
 .Dialogist-base .Dialogist-rootPaper {
   border-radius: var(--dialogist-border-radius);
@@ -89,6 +99,7 @@
   text-align: var(--dialogist-statusBar-align);
 }
 .Dialogist-base .Dialogist-title {
+  margin: 0;
   border-radius: var(--dialogist-border-radius);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -167,6 +178,7 @@
   text-align: var(--dialogist-footer-align);
   padding: calc(var(--dialogist-spacing) / 4) calc(var(--dialogist-spacing) / 2);
   border-top: 1px solid color-mix(in srgb, var(--dialogist-text-primary) 10%, transparent);
+  line-height: 1.55;
 }
 .Dialogist-base .DialogistCustom-actionsContainer {
   display: flex;
@@ -221,6 +233,10 @@
   background-color: var(--dialogist-backdrop-color);
   backdrop-filter: none;
 }
+.Dialogist-base .MuiBackdrop-root.Dialogist-backdrop {
+  animation: none;
+  transition-duration: var(--dialogist-backdrop-duration, 225ms) !important;
+}
 .Dialogist-base:has(.Dialogist-statusBar) .Dialogist-title {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -236,4 +252,11 @@
 .Dialogist-base:has(.DialogistCustom-footer) .Dialogist-actionsContainer {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+.Dialogist-backdrop:not(.MuiBackdrop-root) {
+  animation: dialogistBackdropFadeIn var(--dialogist-backdrop-duration, 225ms) ease-out both;
+  transition: opacity var(--dialogist-backdrop-duration, 225ms) ease-in-out;
+}
+.Dialogist-backdrop[data-closed] {
+  opacity: 0;
 }

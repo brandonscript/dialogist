@@ -6,6 +6,6 @@ import type { BaseDialogProps } from "../../types";
  * machine. Forwards `slotProps.paper.ref` for the FLIP resize animation.
  */
 export declare const BaseUiBase: {
-    ({ children, className, hideBackdrop, onClose, open, slotProps, id, overflow, borderRadius, disableAutoFocus, disableRestoreFocus, disableEnforceFocus, ...rest }: BaseDialogProps): import("react/jsx-runtime").JSX.Element;
+    ({ children, className, container, hideBackdrop, onClose, open, slotProps, id, overflow, borderRadius, disableAutoFocus, disableRestoreFocus, disableEnforceFocus, ...rest }: BaseDialogProps): import("react/jsx-runtime").JSX.Element;
     displayName: string;
 };

@@ -1,4 +1,5 @@
-import { HeadlessFooter, HeadlessStatusBar, HeadlessActions, HeadlessActionsContainer } from '../../components/headless/headlessDefaults.js';
+import { HeadlessFooter, HeadlessStatusBar, HeadlessActionsContainer } from '../../components/headless/headlessDefaults.js';
+import { BaseUiActions } from './BaseUiActions.js';
 import { BaseUiBase } from './BaseUiBase.js';
 import { BaseUiContent, BaseUiTitle } from './BaseUiSlots.js';
 
@@ -31,10 +32,10 @@ var baseUiSlots = {
   Title: BaseUiTitle,
   Content: BaseUiContent,
   ActionsContainer: HeadlessActionsContainer,
-  Actions: HeadlessActions,
+  Actions: BaseUiActions,
   StatusBar: HeadlessStatusBar,
   Footer: HeadlessFooter
 };
 
-export { BaseUiBase, BaseUiContent, BaseUiTitle, baseUiSlots };
+export { BaseUiActions, BaseUiBase, BaseUiContent, BaseUiTitle, baseUiSlots };
 //# sourceMappingURL=index.js.map

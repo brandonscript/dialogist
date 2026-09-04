@@ -41,6 +41,8 @@ import {
   TailwindTitle,
 } from "./TailwindSlots";
 
+export { HeadlessBase } from "../../components/headless/HeadlessBase";
+
 export {
   TailwindActions,
   TailwindActionsContainer,

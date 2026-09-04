@@ -417,11 +417,7 @@ const baseTheme: ThemeOptions = {
         }),
       },
     },
-    MuiDialog: {
-      defaultProps: {
-        transitionDuration: { enter: 380, exit: 280 },
-      },
-    },
+    MuiDialog: {},
     MuiDialogTitle: {
       styleOverrides: {
         root: {

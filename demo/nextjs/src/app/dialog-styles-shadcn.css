@@ -1,0 +1,156 @@
+/*
+ * Demo overrides for the shadcn (Base UI) adapter.
+ *
+ * The shadcn adapter ships with shadcn-convention defaults:
+ *   - Contained buttons: bg-primary, h-10, px-4 py-2
+ *   - Outlined buttons: border-input, bg-background, h-10, px-4 py-2
+ *   - Title: SHADCN_TITLE_CLASS (text-lg, font-semibold, leading-none, tracking-tight)
+ *
+ * These overrides bring the adapter's look into alignment with the demo's MUI theme.
+ *
+ * ──────────────────────────────────────────────────────────────────────────────
+ * HOW TO COPY THIS INTO YOUR OWN APP
+ * ──────────────────────────────────────────────────────────────────────────────
+ * In your shadcn/tailwind app, paste these rules into your global stylesheet.
+ * Remove the `[data-dialogist-adapter="shadcn"]` scope, or replace it with a
+ * more specific selector if you prefer.
+ * Adjust token values (`h-10` → your app's button height, etc.) to suit your
+ * design system. The `bg-primary / text-primary-foreground` tokens already
+ * inherit from your shadcn theme variables, so those likely need no changes.
+ * ──────────────────────────────────────────────────────────────────────────────
+ */
+@reference "tailwindcss";
+
+/*
+ * ── Paper / dialog container ─────────────────────────────────────────────────
+ *
+ * SHADCN_POPUP_CLASS includes `p-6` (24px) + `gap-4` (16px gap) + `w-full`.
+ * dialogistStyles adds another padding: 32px on .Dialogist-base.
+ * We remove both so slot components provide the only padding (same as MUI).
+ * We also set width: auto so the popup is content-driven (not full-sandbox-width).
+ * All selectors use (0,2,0) specificity to beat dialogistStyles (0,1,0).
+ */
+[data-dialogist-adapter="shadcn"] .Dialogist-base {
+  /* Demo MUI theme palette */
+  --dialogist-primary-main: #ABDCD8;
+  --dialogist-primary-contrastText: #334241;
+  /* Dark shade computed to match MUI's outlined-button textColor algorithm:
+     iteratively darken+desaturate primary until luminance ≤ 0.3 → rgb(128,144,144) */
+  --dialogist-primary-dark: rgb(128, 144, 144);
+  --dialogist-text-primary: #2A2A2E;
+  --dialogist-text-secondary: #737375;
+  --dialogist-bg-paper: #ffffff;
+  --dialogist-bg-secondary: #f5f5f5;
+  --dialogist-title-text: #2A2A2E;
+  --dialogist-content-text: #737375;
+
+  /* Typography — inherits --dialogist-font-family from dialogistStyles (var(--font-sans) → Lexend)
+     to match MUI's font rendering. Title/content sizes match demoTheme h6 and body2. */
+  --dialogist-title-font-size: 1rem;
+  --dialogist-title-font-weight: 650;
+  --dialogist-content-font-size: 0.875rem;
+
+  /* Geometry */
+  --dialogist-border-radius: 10px;
+
+  /* Remove SHADCN_POPUP_CLASS's w-full (width: 100%) and max-w-lg (32rem = 512px) */
+  width: auto;
+  max-width: min(90vw, 600px);
+  /* Remove SHADCN_POPUP_CLASS's border (1px solid currentColor) */
+  border: none;
+  /* Remove SHADCN_POPUP_CLASS's p-6 (24px) and dialogistStyles' 32px padding */
+  padding: 0;
+  /* Remove SHADCN_POPUP_CLASS's gap-4 (16px) between grid children */
+  gap: 0;
+}
+
+/* ── Title ───────────────────────────────────────────────────────────────────── */
+
+/* Override shadcn's text-lg (1.125rem) / font-semibold / leading-none with
+   the demo MUI theme's title typography. */
+[data-dialogist-adapter="shadcn"] .Dialogist-title {
+  font-size: var(--dialogist-title-font-size);
+  font-weight: var(--dialogist-title-font-weight);
+  font-family: var(--dialogist-font-family);
+  color: var(--dialogist-title-text, var(--dialogist-text-primary));
+  background-color: var(--dialogist-bg-paper);
+  line-height: 1.35;
+  letter-spacing: normal;
+}
+
+/* ── Content ─────────────────────────────────────────────────────────────────── */
+
+/* Override shadcn's text-sm / text-muted-foreground with demo theme values. */
+[data-dialogist-adapter="shadcn"] .Dialogist-content {
+  font-size: var(--dialogist-content-font-size);
+  font-family: var(--dialogist-font-family);
+  /* Match MUI theme's body2.lineHeight (1.5) so single-line text has the same height. */
+  line-height: 1.55;
+  color: var(--dialogist-content-text, var(--dialogist-text-secondary));
+  background-color: var(--dialogist-bg-paper);
+}
+
+/* ── Actions container ───────────────────────────────────────────────────────── */
+[data-dialogist-adapter="shadcn"] .Dialogist-actionsContainer {
+  background-color: var(--dialogist-bg-paper);
+}
+
+/* ── Contained (primary) buttons — match MUI demo theme size="small" ────────── */
+/* height: 32px, padding: 0 12px, font-size: 0.85rem — same as MUI's small variant. */
+[data-dialogist-adapter="shadcn"] .Dialogist-actionsContainer button.bg-primary {
+  background-color: var(--dialogist-primary-main);
+  color: var(--dialogist-primary-contrastText);
+  font-family: var(--dialogist-font-family);
+  font-size: 0.85rem;
+  font-weight: 450;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  height: 32px;
+  padding: 0 12px;
+  min-width: 60px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0px 0.7px 1.4px -0.7px rgba(0,0,0,0.025), 0px 1.4px 1.4px -1.4px rgba(0,0,0,0.04), 0px 0.7px 3.5px 0px rgba(0,0,0,0.03);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+}
+
+[data-dialogist-adapter="shadcn"] .Dialogist-actionsContainer button.bg-primary:hover {
+  background-color: color-mix(in srgb, var(--dialogist-primary-main) 90%, white);
+}
+
+/* ── Outlined buttons ────────────────────────────────────────────────────────── */
+/* Color uses --dialogist-primary-dark (a darker accessible shade) rather than the
+   raw primary which is too light for readable text/borders on a white background. */
+[data-dialogist-adapter="shadcn"] .Dialogist-actionsContainer button.border-input {
+  background-color: color-mix(in srgb, var(--dialogist-primary-main) 3%, transparent);
+  color: var(--dialogist-primary-dark);
+  border: 1px solid var(--dialogist-primary-dark);
+  font-family: var(--dialogist-font-family);
+  font-size: 0.85rem;
+  font-weight: 450;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  height: 32px;
+  padding: 0 12px;
+  min-width: 60px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: 0px 0.7px 1.4px -0.7px rgba(0,0,0,0.025), 0px 1.4px 1.4px -1.4px rgba(0,0,0,0.04), 0px 0.7px 3.5px 0px rgba(0,0,0,0.03);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+[data-dialogist-adapter="shadcn"] .Dialogist-actionsContainer button.border-input:hover {
+  background-color: color-mix(in srgb, var(--dialogist-primary-main) 8%, transparent);
+}

@@ -21,15 +21,16 @@
  * Peer dependency: `@base-ui-components/react@^1.0.0-rc.0`.
  */
 import {
-  HeadlessActions,
   HeadlessActionsContainer,
   HeadlessFooter,
   HeadlessStatusBar,
 } from "../../components/headless/headlessDefaults";
 import type { DialogComponents } from "../../types";
+import { BaseUiActions } from "./BaseUiActions";
 import { BaseUiBase } from "./BaseUiBase";
 import { BaseUiContent, BaseUiTitle } from "./BaseUiSlots";
 
+export { BaseUiActions } from "./BaseUiActions";
 export { BaseUiBase } from "./BaseUiBase";
 export { BaseUiContent, BaseUiTitle } from "./BaseUiSlots";
 
@@ -39,7 +40,7 @@ export const baseUiSlots: DialogComponents = {
   Title: BaseUiTitle,
   Content: BaseUiContent,
   ActionsContainer: HeadlessActionsContainer,
-  Actions: HeadlessActions,
+  Actions: BaseUiActions,
   StatusBar: HeadlessStatusBar,
   Footer: HeadlessFooter,
 };

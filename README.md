@@ -56,7 +56,7 @@ All peer dependencies are **optional** — you only install the libraries for th
 npm install dialogist
 ```
 
-**Package version:** 1.0.0
+**Package version:** 1.0.1
 
 Required peer dependencies: `react` `>=18.0.0` and `react-dom` `>=18.0.0`.
 
@@ -153,6 +153,87 @@ If you contribute to this project, you agree to adhere to the
    git push origin main --follow-tags
    gh release create vX.Y.Z --title "vX.Y.Z" --generate-notes
    ```
+
+### Automated publishing with GitHub Actions
+
+The repository includes a CI workflow that automatically builds and publishes a new npm release whenever a tag that matches the pattern `v*` is pushed. The workflow performs the same safety checks that you would run locally:
+
+* Ensures the tag version matches the `package.json` version.
+* Runs the full build (`npm run build`).
+* Publishes the package to npm using a secret `NPM_TOKEN`.
+
+**How it works**
+
+1. Create a new version locally (e.g. `npm version patch`).
+2. Push the commit **and** the generated tag to GitHub:
+
+   ```bash
+   git push && git push --tags
+   ```
+
+3. GitHub Actions picks up the tag, runs the `publish.yml` workflow, and publishes the package.
+
+**Required secret**
+
+* `NPM_TOKEN` – an automation token with publish rights for the `dialogist` npm package. Add it in **Repository Settings → Secrets and variables → Actions → New repository secret**.
+
+The workflow file lives at `.github/workflows/publish.yml` and looks like this:
+
+```yaml
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - 'v*'          # any tag starting with "v"
+
+jobs:
+  npm-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Authenticate with npm
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
+
+      - name: Verify tag matches package version
+        env:
+          GIT_TAG: ${{ github.ref_name }}
+        run: |
+          TAG_VERSION="${GIT_TAG#v}"
+          PKG_VERSION="$(node -p "require('./package.json').version")"
+          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+            echo "❌ Tag $GIT_TAG does not match package.json version $PKG_VERSION"
+            exit 1
+          fi
+          echo "✅ Tag matches package version $PKG_VERSION"
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+```
+
+With this in place, you no longer need to run `npm run release` manually – pushing a correctly‑named tag is enough.
 
 ## Fair AI and LLM usage
 

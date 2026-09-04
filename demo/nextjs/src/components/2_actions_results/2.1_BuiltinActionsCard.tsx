@@ -83,7 +83,7 @@ export const BuiltinActionsCard = Object.assign(
           </DemoParagraph>
           <CodeBlock>{LABELS_SNIPPET}</CodeBlock>
           <DemoSectionHeading subtitle={"Try it out"} />
-          <FlexBox row gap={1} flexWrap="wrap">
+          <FlexBox row gap={1} rowGap={2} flexWrap="wrap">
             <TextField
               size="small"
               label="Cancel label"

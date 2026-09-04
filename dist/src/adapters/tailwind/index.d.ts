@@ -1,4 +1,5 @@
 import type { DialogComponents } from "../../types";
+export { HeadlessBase } from "../../components/headless/HeadlessBase";
 export { TailwindActions, TailwindActionsContainer, TailwindContent, TailwindFooter, TailwindStatusBar, TailwindTitle, } from "./TailwindSlots";
 /**
  * Default `slots` bundle. Uses the framework-agnostic `HeadlessBase` for the dialog

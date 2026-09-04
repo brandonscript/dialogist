@@ -1,11 +1,40 @@
-import { expect } from "@playwright/test";
-import { test } from "../helpers/windowed-fixture";
+import {
+  dismissViaAction,
+  expectDialogStructure,
+  expectResultDisplay,
+  forEachAdapter,
+} from "../helpers/card-test-helpers";
 
-test("layout-and-presentation/using-custom-components", async ({ page, demoPage: d }) => {
-  await d.gotoCard("layout-and-presentation", "using-custom-components");
-  await d.expectWindowed();
-  await d.expectCardVisible("Using custom components");
-  await d.clickButtonInCard("layout-and-presentation", "using-custom-components", "Show custom components dialog");
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await d.dismissDialog(/Cancel|Close/i);
+const SECTION = "layout-and-presentation";
+const CARD = "using-custom-components";
+const CARD_TITLE = "Using custom components";
+
+forEachAdapter("confirm path shows status bar, footer, and success result", SECTION, CARD, CARD_TITLE, async ({ page, d }) => {
+  const card = d.cardRoot(SECTION, CARD);
+
+  await card.getByRole("button", { name: "Show custom components dialog" }).click();
+  await expectDialogStructure(page, {
+    title: "Using custom components",
+    hasStatusBar: true,
+    hasFooter: true,
+    actionLabels: ["Cancel", "Confirm"],
+  });
+
+  await dismissViaAction(page, "Confirm");
+  await expectResultDisplay(card, "Confirm", "success");
+});
+
+forEachAdapter("cancel path resolves with error result", SECTION, CARD, CARD_TITLE, async ({ page, d }) => {
+  const card = d.cardRoot(SECTION, CARD);
+
+  await card.getByRole("button", { name: "Show custom components dialog" }).click();
+  await expectDialogStructure(page, {
+    title: "Using custom components",
+    hasStatusBar: true,
+    hasFooter: true,
+    actionLabels: ["Cancel", "Confirm"],
+  });
+
+  await dismissViaAction(page, "Cancel");
+  await expectResultDisplay(card, "Cancel", "error");
 });

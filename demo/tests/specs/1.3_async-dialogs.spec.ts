@@ -1,11 +1,37 @@
-import { expect } from "@playwright/test";
-import { test } from "../helpers/windowed-fixture";
+import {
+  dismissViaAction,
+  expectDialogStructure,
+  expectResultDisplay,
+  forEachAdapter,
+} from "../helpers/card-test-helpers";
 
-test("getting-started/async-dialogs", async ({ page, demoPage: d }) => {
-  await d.gotoCard("getting-started", "async-dialogs");
-  await d.expectWindowed();
-  await d.expectCardVisible("Async dialogs");
-  await d.clickButtonInCard("getting-started", "async-dialogs", "Show async dialog");
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await d.dismissDialog(/No, cancel|Cancel/i);
+const SECTION = "the-basics";
+const CARD = "async-dialogs";
+const CARD_TITLE = "Async dialogs";
+
+forEachAdapter("cancel path resolves with error result", SECTION, CARD, CARD_TITLE, async ({ page, d }) => {
+  const card = d.cardRoot(SECTION, CARD);
+
+  await card.getByRole("button", { name: "Show async dialog" }).click();
+  await expectDialogStructure(page, {
+    title: "Async confirmation",
+    message: /Do you want to proceed/i,
+    actionLabels: ["No, cancel", "Yes, proceed"],
+  });
+
+  await dismissViaAction(page, "No, cancel");
+  await expectResultDisplay(card, "No, cancel", "error");
+});
+
+forEachAdapter("confirm path resolves with success result", SECTION, CARD, CARD_TITLE, async ({ page, d }) => {
+  const card = d.cardRoot(SECTION, CARD);
+
+  await card.getByRole("button", { name: "Show async dialog" }).click();
+  await expectDialogStructure(page, {
+    title: "Async confirmation",
+    actionLabels: ["No, cancel", "Yes, proceed"],
+  });
+
+  await dismissViaAction(page, "Yes, proceed");
+  await expectResultDisplay(card, "Yes, proceed", "success");
 });

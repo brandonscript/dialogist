@@ -7,6 +7,6 @@ import type { BaseDialogProps } from "../../types";
  * Pair with `<DialogProvider slots={shadcnSlots}>` (see `dialogist/shadcn`).
  */
 export declare const ShadcnBase: {
-    ({ children, className, hideBackdrop, onClose, open, slotProps, id, overflow, borderRadius, disableAutoFocus, disableRestoreFocus, disableEnforceFocus, ...rest }: BaseDialogProps): import("react/jsx-runtime").JSX.Element;
+    ({ children, className, container, hideBackdrop, onClose, open, slotProps, id, overflow, borderRadius, disableAutoFocus, disableRestoreFocus, disableEnforceFocus, ...rest }: BaseDialogProps): import("react/jsx-runtime").JSX.Element;
     displayName: string;
 };

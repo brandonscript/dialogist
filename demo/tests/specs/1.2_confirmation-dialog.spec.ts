@@ -1,11 +1,37 @@
-import { expect } from "@playwright/test";
-import { test } from "../helpers/windowed-fixture";
+import {
+  dismissViaAction,
+  expectDialogStructure,
+  expectResultDisplay,
+  forEachAdapter,
+} from "../helpers/card-test-helpers";
 
-test("getting-started/confirmation-dialog", async ({ page, demoPage: d }) => {
-  await d.gotoCard("getting-started", "confirmation-dialog");
-  await d.expectWindowed();
-  await d.expectCardVisible("Confirmation dialog");
-  await d.clickButtonInCard("getting-started", "confirmation-dialog", "Show confirmation dialog");
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await d.dismissDialog(/Cancel|No/i);
+const SECTION = "the-basics";
+const CARD = "confirmation-dialog";
+const CARD_TITLE = "Confirmation dialog";
+
+forEachAdapter("cancel path resolves with error result", SECTION, CARD, CARD_TITLE, async ({ page, d }) => {
+  const card = d.cardRoot(SECTION, CARD);
+
+  await card.getByRole("button", { name: "Show confirmation dialog" }).click();
+  await expectDialogStructure(page, {
+    title: "Confirm action",
+    message: "Are you sure you want to proceed with this action?",
+    actionLabels: ["Cancel", "Yes, continue"],
+  });
+
+  await dismissViaAction(page, "Cancel");
+  await expectResultDisplay(card, "Cancel", "error");
+});
+
+forEachAdapter("confirm path resolves with success result", SECTION, CARD, CARD_TITLE, async ({ page, d }) => {
+  const card = d.cardRoot(SECTION, CARD);
+
+  await card.getByRole("button", { name: "Show confirmation dialog" }).click();
+  await expectDialogStructure(page, {
+    title: "Confirm action",
+    actionLabels: ["Cancel", "Yes, continue"],
+  });
+
+  await dismissViaAction(page, "Yes, continue");
+  await expectResultDisplay(card, "Yes, continue", "success");
 });

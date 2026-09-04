@@ -1,0 +1,51 @@
+/*
+ * Global stylesheet for the Dialogist Next.js demo.
+ *
+ * Tailwind v4 utilities are imported without the preflight (base reset) layer to avoid
+ * conflicts with MUI's CssBaseline which already handles browser normalization.
+ *
+ * The @theme block maps Tailwind's color tokens onto the Dialogist CSS variables that
+ * are set by dialogistExtendMuiTheme() — so shadcn/Tailwind adapter classes like
+ * `bg-primary`, `text-foreground`, `rounded-md` etc. resolve to the same palette as
+ * the active MUI theme.
+ */
+
+/* Utilities only — skip Tailwind's preflight reset to avoid conflicts with MUI */
+@import "tailwindcss/utilities";
+
+/*
+ * Tell Tailwind to scan the library's adapter source files so that utility classes used
+ * in TailwindSlots.tsx, ShadcnSlots.tsx, and BaseUiActions.tsx (e.g. bg-primary,
+ * rounded-md, border-input) are included in the generated CSS bundle.
+ */
+@source "../../../../src/adapters";
+
+/* shadcn enter/exit animations (data-[state=open]:animate-in etc.) */
+@plugin "tailwindcss-animate";
+
+/*
+ * Per-adapter demo overrides. Each file is scoped under [data-dialogist-adapter="X"]
+ * so that only the active adapter's rules apply. These files are also documentation:
+ * copy the relevant file into your own app to align Dialogist's dialogs with your
+ * design system.
+ */
+@import "./dialog-styles-base-ui.css";
+@import "./dialog-styles-shadcn.css";
+@import "./dialog-styles-tailwind.css";
+
+@theme {
+  --color-background: var(--dialogist-bg-paper);
+  --color-foreground: var(--dialogist-text-primary);
+  --color-primary: var(--dialogist-primary-main);
+  --color-primary-foreground: var(--dialogist-primary-contrastText);
+  --color-secondary: var(--dialogist-secondary-main);
+  --color-secondary-foreground: var(--dialogist-secondary-contrastText);
+  --color-muted: var(--dialogist-bg-secondary);
+  --color-muted-foreground: var(--dialogist-text-secondary);
+  --color-accent: var(--dialogist-bg-secondary);
+  --color-accent-foreground: var(--dialogist-text-primary);
+  --color-border: color-mix(in srgb, var(--dialogist-text-primary) 12%, transparent);
+  --color-input: color-mix(in srgb, var(--dialogist-text-primary) 20%, transparent);
+  --color-ring: var(--dialogist-primary-main);
+  --radius-dialogist: var(--dialogist-border-radius);
+}

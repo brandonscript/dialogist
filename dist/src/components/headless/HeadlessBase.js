@@ -1,12 +1,13 @@
 "use client";
 import { objectWithoutProperties as _objectWithoutProperties, objectSpread2 as _objectSpread2 } from '../../../_virtual/_rollupPluginBabelHelpers.js';
 import { useRef, useCallback, useLayoutEffect, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { dialogistClasses } from '../../classes.js';
 import { classNames } from '../../utils/classNames.js';
 import { focusFirstElement, handleFocusTrapKeyDown } from './focusTrap.js';
 import { jsxs, jsx } from 'react/jsx-runtime';
 
-var _excluded = ["children", "className", "hideBackdrop", "onClose", "open", "slotProps", "id", "overflow", "disableAutoFocus", "disableEnforceFocus", "disableRestoreFocus", "borderRadius"];
+var _excluded = ["children", "className", "container", "hideBackdrop", "onClose", "open", "slotProps", "id", "overflow", "disableAutoFocus", "disableEnforceFocus", "disableRestoreFocus", "borderRadius"];
 var SCROLL_LOCK_COUNTER_KEY = "__dialogistScrollLock__";
 var acquireScrollLock = function acquireScrollLock() {
   if (typeof document === "undefined") return;
@@ -92,6 +93,7 @@ var HeadlessBase = function HeadlessBase(_ref) {
   var _slotProps$paper2, _slotProps$paper3, _slotProps$backdrop;
   var children = _ref.children,
     className = _ref.className,
+    container = _ref.container,
     hideBackdrop = _ref.hideBackdrop,
     onClose = _ref.onClose,
     open = _ref.open,
@@ -139,7 +141,7 @@ var HeadlessBase = function HeadlessBase(_ref) {
     var onKeyDown = function onKeyDown(event) {
       if (event.key === "Escape") {
         event.stopPropagation();
-        onClose();
+        onClose("escape");
         return;
       }
       if (disableEnforceFocus) return;
@@ -163,9 +165,14 @@ var HeadlessBase = function HeadlessBase(_ref) {
     };
   }, [open, disableRestoreFocus]);
   if (!open) return null;
+  var resolvedContainer = typeof container === "function" ? container() : container;
+  var isWindowed = !!resolvedContainer;
   var onBackdropClick = function onBackdropClick(event) {
-    if (event.target !== event.currentTarget) return;
-    onClose();
+    // Close when the click lands anywhere in the backdrop area (the outer container or the
+    // visual backdrop layer), but NOT when it lands inside the dialog paper.
+    var paper = paperRef.current;
+    if (paper && paper.contains(event.target)) return;
+    onClose("backdrop");
   };
   var paperSlotProps = (_slotProps$paper3 = slotProps === null || slotProps === void 0 ? void 0 : slotProps.paper) !== null && _slotProps$paper3 !== void 0 ? _slotProps$paper3 : {};
   var backdropSlotProps = (_slotProps$backdrop = slotProps === null || slotProps === void 0 ? void 0 : slotProps.backdrop) !== null && _slotProps$backdrop !== void 0 ? _slotProps$backdrop : {};
@@ -174,13 +181,23 @@ var HeadlessBase = function HeadlessBase(_ref) {
   }, borderRadius !== undefined && {
     "--dialogist-border-radius": typeof borderRadius === "number" ? "".concat(borderRadius, "px") : borderRadius
   }), paperSlotProps.style);
+
+  // When portaling into a sandbox container use position:absolute so the dialog stays
+  // visually contained within that element. In fullscreen (no container) keep
+  // position:fixed so it covers the full viewport.
+  var outerStyle = isWindowed ? _objectSpread2(_objectSpread2({}, BACKDROP_BASE_STYLE), {}, {
+    position: "absolute"
+  }) : BACKDROP_BASE_STYLE;
   var backdropLayerStyle = hideBackdrop ? _objectSpread2(_objectSpread2({}, BACKDROP_LAYER_STYLE), {}, {
-    display: "none"
-  }) : _objectSpread2(_objectSpread2({}, BACKDROP_LAYER_STYLE), backdropSlotProps.style);
+    display: "none",
+    position: isWindowed ? "absolute" : "fixed"
+  }) : _objectSpread2(_objectSpread2({}, BACKDROP_LAYER_STYLE), {}, {
+    position: isWindowed ? "absolute" : "fixed"
+  }, backdropSlotProps.style);
   var containerProps = rest;
-  return /*#__PURE__*/jsxs("div", {
+  var content = /*#__PURE__*/jsxs("div", {
     role: "presentation",
-    style: BACKDROP_BASE_STYLE,
+    style: outerStyle,
     onClick: onBackdropClick,
     "data-dialogist-headless-base": "true",
     children: [/*#__PURE__*/jsx("div", {
@@ -200,6 +217,7 @@ var HeadlessBase = function HeadlessBase(_ref) {
       children: children
     })]
   });
+  return isWindowed && resolvedContainer ? /*#__PURE__*/createPortal(content, resolvedContainer) : content;
 };
 HeadlessBase.displayName = "HeadlessBase";
 

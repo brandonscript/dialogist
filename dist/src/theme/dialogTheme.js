@@ -13,7 +13,7 @@ var _$concat;
  *  - At build time by `scripts/build-styles.mjs` which serializes it to a CSS file
  *    consumers can `import "dialogist/styles.css"`.
  */
-var dialogistStyles = _defineProperty({
+var dialogistStyles = _defineProperty(_defineProperty(_defineProperty({
   "@keyframes dialogistFlowBackAppear": {
     from: {
       opacity: 0
@@ -21,6 +21,16 @@ var dialogistStyles = _defineProperty({
     to: {
       opacity: 1
     }
+  },
+  "@keyframes dialogistBackdropFadeIn": {
+    from: {
+      opacity: 0
+    }
+  },
+  // Set backdrop-duration at :root so it cascades to backdrop elements that live
+  // outside .Dialogist-base (non-MUI adapters use portals that escape the base element).
+  ":root": {
+    "--dialogist-backdrop-duration": "225ms"
   }
 }, ".".concat(dialogistClasses.base), (_$concat = {
   overflow: "hidden",
@@ -36,6 +46,7 @@ var dialogistStyles = _defineProperty({
   // Default color tokens (MUI defaults as static fallbacks)
   "--dialogist-primary-main": "#1976d2",
   "--dialogist-primary-contrastText": "#ffffff",
+  "--dialogist-primary-dark": "color-mix(in oklch, var(--dialogist-primary-main) 50%, black)",
   "--dialogist-secondary-main": "#9c27b0",
   "--dialogist-secondary-contrastText": "#ffffff",
   "--dialogist-text-primary": "rgba(0, 0, 0, 0.87)",
@@ -110,6 +121,7 @@ var dialogistStyles = _defineProperty({
   fontWeight: "var(--dialogist-statusBar-font-weight)",
   textAlign: "var(--dialogist-statusBar-align)"
 }), "& .".concat(dialogistClasses.title), {
+  margin: 0,
   borderRadius: "var(--dialogist-border-radius)",
   borderBottomLeftRadius: 0,
   borderBottomRightRadius: 0,
@@ -183,7 +195,8 @@ var dialogistStyles = _defineProperty({
   fontSize: "var(--dialogist-footer-font-size)",
   textAlign: "var(--dialogist-footer-align)",
   padding: "calc(var(--dialogist-spacing) / 4) calc(var(--dialogist-spacing) / 2)",
-  borderTop: "1px solid color-mix(in srgb, var(--dialogist-text-primary) 10%, transparent)"
+  borderTop: "1px solid color-mix(in srgb, var(--dialogist-text-primary) 10%, transparent)",
+  lineHeight: 1.55
 }), "& .".concat(dialogistClasses.customActionsContainer), {
   display: "flex",
   flexDirection: "row",
@@ -220,13 +233,16 @@ var dialogistStyles = _defineProperty({
   borderRadius: "var(--dialogist-border-radius) var(--dialogist-border-radius) 0 0"
 }), "& .".concat(dialogistClasses.bottomCorners), {
   borderRadius: "0 0 var(--dialogist-border-radius) var(--dialogist-border-radius)"
-}), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_$concat, "& .".concat(dialogistClasses.allCorners), {
+}), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_$concat, "& .".concat(dialogistClasses.allCorners), {
   borderRadius: "var(--dialogist-border-radius)"
 }), "& .".concat(dialogistClasses.flowBackAppear), {
   animation: "dialogistFlowBackAppear var(--dialogist-flow-button-appear, 100ms ease-out)"
-}), "--dialogist-backdrop-color", "rgba(0, 0, 0, 0.5)"), "& .MuiBackdrop-root, & .".concat(dialogistClasses.backdrop, ", & .").concat(dialogistClasses.customBackdrop), {
+}), "--dialogist-backdrop-color", "rgba(0, 0, 0, 0.5)"), "--dialogist-backdrop-duration", "var(--dialogist-backdrop-duration, 225ms)"), "& .MuiBackdrop-root, & .".concat(dialogistClasses.backdrop, ", & .").concat(dialogistClasses.customBackdrop), {
   backgroundColor: "var(--dialogist-backdrop-color)",
   backdropFilter: "none"
+}), "& .MuiBackdrop-root.".concat(dialogistClasses.backdrop), {
+  animation: "none",
+  transitionDuration: "var(--dialogist-backdrop-duration, 225ms) !important"
 }), ":has(.".concat(dialogistClasses.statusBar, ") .").concat(dialogistClasses.title), {
   borderTopLeftRadius: 0,
   borderTopRightRadius: 0
@@ -239,7 +255,12 @@ var dialogistStyles = _defineProperty({
 }), ":has(.".concat(dialogistClasses.customFooter, ") .").concat(dialogistClasses.actionsContainer), {
   borderBottomLeftRadius: 0,
   borderBottomRightRadius: 0
-})));
+}))), ".".concat(dialogistClasses.backdrop, ":not(.MuiBackdrop-root)"), {
+  animation: "dialogistBackdropFadeIn var(--dialogist-backdrop-duration, 225ms) ease-out both",
+  transition: "opacity var(--dialogist-backdrop-duration, 225ms) ease-in-out"
+}), ".".concat(dialogistClasses.backdrop, "[data-closed]"), {
+  opacity: 0
+});
 
 /** Helper used by adapters to pluck nested style blocks from {@link dialogistStyles}. */
 

@@ -1,0 +1,111 @@
+/*
+ * Demo overrides for the Base UI adapter.
+ *
+ * Base UI is a headless library — its components ship completely unstyled.
+ * The library adapter (`dialogist/base-ui`) provides minimal inline styles for
+ * accessibility and positioning, then defers to your stylesheet for everything
+ * else.
+ *
+ * Title and Content use Dialogist class names (.Dialogist-title / .Dialogist-content)
+ * and are already styled by Dialogist's built-in CSS injected by DialogProvider.
+ * These rules add the few remaining values that differ from the MUI look.
+ *
+ * For the Action BUTTONS: Base UI's `BaseUiActions` uses inline styles which
+ * cannot be overridden by CSS. The demo uses a custom `DemoBaseUiActions` slot
+ * component instead — see `ClientProviders.tsx` and `DemoBaseUiActions.tsx` for
+ * the implementation.
+ *
+ * ──────────────────────────────────────────────────────────────────────────────
+ * HOW TO COPY THIS INTO YOUR OWN APP
+ * ──────────────────────────────────────────────────────────────────────────────
+ * In your Base UI app, paste these rules into your global stylesheet.
+ * Remove the `[data-dialogist-adapter="base-ui"]` scope, or replace it with a
+ * more specific selector if needed.
+ * For buttons, create your own Actions slot component and register it via the
+ * `slots.Actions` prop on `DialogProvider` (see DemoBaseUiActions.tsx for the
+ * pattern).
+ * ──────────────────────────────────────────────────────────────────────────────
+ */
+
+/*
+ * ── Paper / dialog container ─────────────────────────────────────────────────
+ *
+ * dialogistStyles (.Dialogist-base) sets padding: 32px on the base element.
+ * For MUI, .Dialogist-base is the Dialog overlay (backdrop wrapper), so that
+ * padding is harmless. For headless adapters, .Dialogist-base IS the paper,
+ * so padding: 32px is applied to the dialog box itself, doubling up with the
+ * per-slot padding from dialogistStyles (title: 24px, content: 16px, etc.).
+ *
+ * This selector uses [data-dialogist-adapter] + .Dialogist-base for specificity
+ * (0,2,0), which beats dialogistStyles' single-class (0,1,0) rule and wins
+ * regardless of CSS injection order.
+ *
+ * We also inject the demo MUI theme's CSS variable values here so that
+ * --dialogist-primary-main and friends resolve to the teal palette (not the
+ * #1976d2 fallback from dialogistStyles).
+ */
+[data-dialogist-adapter="base-ui"] .Dialogist-base {
+  /* Demo MUI theme palette — matches what dialogistExtendMuiTheme() sets */
+  --dialogist-primary-main: #ABDCD8;
+  --dialogist-primary-contrastText: #334241;
+  /* Dark shade computed to match MUI's outlined-button textColor algorithm:
+     iteratively darken+desaturate primary until luminance ≤ 0.3 → rgb(128,144,144) */
+  --dialogist-primary-dark: rgb(128, 144, 144);
+  --dialogist-text-primary: #2A2A2E;
+  --dialogist-text-secondary: #737375;
+  --dialogist-bg-paper: #ffffff;
+  --dialogist-bg-secondary: #f5f5f5;
+  --dialogist-title-text: #2A2A2E;
+  --dialogist-content-text: #737375;
+
+  /* Typography — inherits --dialogist-font-family from dialogistStyles (var(--font-sans) → Lexend)
+     to match MUI's font rendering. Title/content sizes match demoTheme h6 and body2. */
+  --dialogist-title-font-size: 1rem;
+  --dialogist-title-font-weight: 650;
+  --dialogist-content-font-size: 0.875rem;
+
+  /* Geometry — matches MuiPaper borderRadius from demoTheme */
+  --dialogist-border-radius: 10px;
+
+  /* Remove the outer paper padding. dialogistStyles' padding: 32px is designed
+     for the MUI overlay element, not the paper. Slot components (title, content,
+     actionsContainer) each carry their own padding from dialogistStyles. */
+  padding: 0;
+}
+
+/* ── Title ───────────────────────────────────────────────────────────────────── */
+
+/* The title is already laid out by dialogistStyles. These rules fill the font
+   specifics that Base UI leaves unstyled. */
+[data-dialogist-adapter="base-ui"] .Dialogist-title {
+  color: var(--dialogist-title-text, var(--dialogist-text-primary));
+  background-color: var(--dialogist-bg-paper);
+  font-size: var(--dialogist-title-font-size);
+  font-weight: var(--dialogist-title-font-weight);
+  font-family: var(--dialogist-font-family);
+  /* Match MUI theme's h6.lineHeight (1.35). Lexend's "normal" is taller (~1.55). */
+  line-height: 1.35;
+}
+
+/* ── Content ─────────────────────────────────────────────────────────────────── */
+[data-dialogist-adapter="base-ui"] .Dialogist-content {
+  color: var(--dialogist-content-text, var(--dialogist-text-secondary));
+  background-color: var(--dialogist-bg-paper);
+  font-size: var(--dialogist-content-font-size);
+  font-family: var(--dialogist-font-family);
+  /* Match MUI theme's body2.lineHeight (1.5) so single-line text has the same height. */
+  line-height: 1.55;
+}
+
+/* ── Status bar ──────────────────────────────────────────────────────────────── */
+/* Cap status-bar line-height to match MUI's computed height (~32.8px).
+   MUI's body1 cascade (1.55) would give 34.6px, but MUI's dialog structure
+   internally constrains the status bar to ~32.8px. This keeps parity. */
+[data-dialogist-adapter="base-ui"] .Dialogist-statusBar {
+  line-height: 1.4;
+}
+
+/* ── Actions container ───────────────────────────────────────────────────────── */
+[data-dialogist-adapter="base-ui"] .Dialogist-actionsContainer {
+  background-color: var(--dialogist-bg-paper);
+}

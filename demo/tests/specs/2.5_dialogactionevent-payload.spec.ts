@@ -1,11 +1,38 @@
-import { expect } from "@playwright/test";
-import { test } from "../helpers/windowed-fixture";
+import {
+  dismissViaAction,
+  expectDialogStructure,
+  expectResultDisplay,
+  forEachAdapter,
+} from "../helpers/card-test-helpers";
 
-test("actions-and-results/dialogactionevent-payload", async ({ page, demoPage: d }) => {
-  await d.gotoCard("actions-and-results", "dialogactionevent-payload");
-  await d.expectWindowed();
-  await d.expectCardVisible("DialogActionEvent payload");
-  await d.clickButtonInCard("actions-and-results", "dialogactionevent-payload", "Show dialog");
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await d.dismissDialog(/Not now|Cancel|Close/i);
+const SECTION = "actions-and-results";
+const CARD = "dialogactionevent-payload";
+const CARD_TITLE = "DialogActionEvent payload";
+
+forEachAdapter("approve path shows buttonText and action in result", SECTION, CARD, CARD_TITLE, async ({ page, d }) => {
+  const card = d.cardRoot(SECTION, CARD);
+
+  await card.getByRole("button", { name: "Show dialog" }).click();
+  await expectDialogStructure(page, {
+    title: "Action callbacks",
+    message: /Click a button/i,
+    actionLabels: ["Not now", "Approve"],
+  });
+
+  await dismissViaAction(page, "Approve");
+  // action field for the ok button is "okClicked".
+  await expectResultDisplay(card, /Approve \(okClicked\)/i, "success");
+});
+
+forEachAdapter("cancel path shows buttonText and action in result", SECTION, CARD, CARD_TITLE, async ({ page, d }) => {
+  const card = d.cardRoot(SECTION, CARD);
+
+  await card.getByRole("button", { name: "Show dialog" }).click();
+  await expectDialogStructure(page, {
+    actionLabels: ["Not now", "Approve"],
+  });
+
+  await dismissViaAction(page, "Not now");
+  // action field for the cancel button is "cancelClicked".
+  await expectResultDisplay(card, /Not now \(cancelClicked\)/i, "error");
 });

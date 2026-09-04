@@ -172,8 +172,19 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref) {
   var contentId = useMemo(function () {
     return "dialogist-".concat(dialogKey, "-content");
   }, [dialogKey]);
-  var handleDialogSurfaceClose = useCallback(function (_event, muiReason) {
-    var mappedReason = muiReason === "backdropClick" ? "backdrop" : muiReason === "escapeKeyDown" ? "escape" : "action";
+  var handleDialogSurfaceClose = useCallback(
+  // Overloaded call sites:
+  //   MUI:       onClose(event: object, muiReason: "backdropClick" | "escapeKeyDown")
+  //   Non-MUI:   onClose(reason?: "escape" | "backdrop")
+  function (_eventOrReason, muiReason) {
+    var mappedReason;
+    if (typeof _eventOrReason === "string") {
+      // Non-MUI adapter passing close reason directly as first arg.
+      mappedReason = _eventOrReason;
+    } else {
+      // MUI passes the event object as first arg and reason string as second arg.
+      mappedReason = muiReason === "backdropClick" ? "backdrop" : muiReason === "escapeKeyDown" ? "escape" : "action";
+    }
     onClose(dialogKey, {
       cancelled: true,
       reason: mappedReason
@@ -286,7 +297,7 @@ var StableDialogRenderer = /*#__PURE__*/memo(function (_ref) {
           display: "flex",
           flexDirection: "column",
           width: "100%",
-          height: "100%",
+          flex: "1 1 auto",
           minHeight: 0,
           backgroundColor: "var(--dialogist-bg-paper)"
         },
@@ -374,7 +385,9 @@ var DialogScaffolding = /*#__PURE__*/memo(function (_ref6) {
   return /*#__PURE__*/createPortal(/*#__PURE__*/jsx("div", {
     id: "dialogist-portal",
     style: {
-      isolation: "isolate"
+      isolation: "isolate",
+      position: "relative",
+      zIndex: 1300
     },
     children: activeDialog && /*#__PURE__*/jsx(StableDialogRenderer, {
       dialog: activeDialog,

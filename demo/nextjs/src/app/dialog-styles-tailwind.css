@@ -1,0 +1,152 @@
+/*
+ * Demo overrides for the Tailwind adapter.
+ *
+ * The Tailwind adapter ships with utility-class-based defaults:
+ *   - Buttons: rounded-md, px-4 py-2, bg-primary / border-input
+ *   - Title: text-lg, px-6, pt-6, pb-2
+ *   - Content: px-6, py-2
+ *
+ * The rules below adjust each slot to visually match the demo's MUI theme so
+ * that switching adapters doesn't change the look of the dialogs.
+ *
+ * ──────────────────────────────────────────────────────────────────────────────
+ * HOW TO COPY THIS INTO YOUR OWN APP
+ * ──────────────────────────────────────────────────────────────────────────────
+ * In your tailwind app, paste the rules you want into your global stylesheet.
+ * Remove the `[data-dialogist-adapter="tailwind"]` scope (or change it to a
+ * more specific selector if you need multiple themes on the same page).
+ * Adjust token values to match your own design system.
+ * ──────────────────────────────────────────────────────────────────────────────
+ *
+ * NOTE: The title, content, and actionsContainer layout rules are already handled
+ * by Dialogist's built-in CSS (injected by DialogProvider). These overrides focus
+ * on theme variables, the paper padding fix, and button styling.
+ */
+@reference "tailwindcss";
+
+/*
+ * ── Paper / dialog container ─────────────────────────────────────────────────
+ *
+ * For the Tailwind (headless) adapter, .Dialogist-base IS the paper element.
+ * dialogistStyles applies padding: 32px to .Dialogist-base, which was designed
+ * for the MUI overlay — where .Dialogist-base is the backdrop wrapper, not
+ * the paper. Removing it here lets slot components (title: 24px, content: 16px,
+ * actionsContainer: 24px/32px) handle all internal spacing, matching MUI exactly.
+ *
+ * Selectors use (0,2,0) specificity to beat dialogistStyles (0,1,0).
+ */
+[data-dialogist-adapter="tailwind"] .Dialogist-base {
+  /* Demo MUI theme palette */
+  --dialogist-primary-main: #ABDCD8;
+  --dialogist-primary-contrastText: #334241;
+  /* Dark shade computed to match MUI's outlined-button textColor algorithm:
+     iteratively darken+desaturate primary until luminance ≤ 0.3 → rgb(128,144,144) */
+  --dialogist-primary-dark: rgb(128, 144, 144);
+  --dialogist-text-primary: #2A2A2E;
+  --dialogist-text-secondary: #737375;
+  --dialogist-bg-paper: #ffffff;
+  --dialogist-bg-secondary: #f5f5f5;
+  --dialogist-title-text: #2A2A2E;
+  --dialogist-content-text: #737375;
+
+  /* Typography — inherits --dialogist-font-family from :root (ThemeVarsInjector → Lexend)
+     to match MUI's font rendering. Title/content sizes match demoTheme h6 and body2. */
+  --dialogist-title-font-size: 1rem;
+  --dialogist-title-font-weight: 650;
+  --dialogist-content-font-size: 0.875rem;
+
+  /* Geometry */
+  --dialogist-border-radius: 10px;
+
+  /* Remove dialogistStyles' outer paper padding */
+  padding: 0;
+}
+
+/* ── Title ───────────────────────────────────────────────────────────────────── */
+
+/* TailwindTitle uses Tailwind classes (text-lg, px-6, pt-6, pb-2) which
+   dialogistStyles (.Dialogist-base .Dialogist-title, specificity 0,2,0) already
+   overrides for padding. These rules fill the font specifics. */
+[data-dialogist-adapter="tailwind"] .Dialogist-title {
+  font-size: var(--dialogist-title-font-size);
+  font-weight: var(--dialogist-title-font-weight);
+  font-family: var(--dialogist-font-family);
+  color: var(--dialogist-title-text, var(--dialogist-text-primary));
+  background-color: var(--dialogist-bg-paper);
+  line-height: 1.35;
+}
+
+/* ── Content ─────────────────────────────────────────────────────────────────── */
+[data-dialogist-adapter="tailwind"] .Dialogist-content {
+  font-size: var(--dialogist-content-font-size);
+  font-family: var(--dialogist-font-family);
+  /* Match MUI theme's body2.lineHeight (1.5) so single-line text has the same height. */
+  line-height: 1.55;
+  color: var(--dialogist-content-text, var(--dialogist-text-secondary));
+  background-color: var(--dialogist-bg-paper);
+}
+
+/* ── Actions container ───────────────────────────────────────────────────────── */
+[data-dialogist-adapter="tailwind"] .Dialogist-actionsContainer {
+  background-color: var(--dialogist-bg-paper);
+}
+
+/* ── Contained (primary) buttons ───────────────────────────────────────────── */
+/* Match MUI demo theme size="small": height 32px, padding "0 12px", fontSize 0.85rem. */
+[data-dialogist-adapter="tailwind"] .Dialogist-actionsContainer button.bg-primary {
+  background-color: var(--dialogist-primary-main);
+  color: var(--dialogist-primary-contrastText);
+  font-family: var(--dialogist-font-family);
+  font-size: 0.85rem;
+  font-weight: 450;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  height: 32px;
+  padding: 0 12px;
+  min-width: 60px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0px 0.7px 1.4px -0.7px rgba(0,0,0,0.025), 0px 1.4px 1.4px -1.4px rgba(0,0,0,0.04), 0px 0.7px 3.5px 0px rgba(0,0,0,0.03);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+}
+
+[data-dialogist-adapter="tailwind"] .Dialogist-actionsContainer button.bg-primary:hover {
+  background-color: color-mix(in srgb, var(--dialogist-primary-main) 90%, white);
+}
+
+/* ── Outlined buttons ───────────────────────────────────────────────────────── */
+/* Color uses --dialogist-primary-dark (a darker accessible shade) rather than the
+   raw primary which is too light for readable text/borders on a white background. */
+[data-dialogist-adapter="tailwind"] .Dialogist-actionsContainer button.border-input {
+  background-color: color-mix(in srgb, var(--dialogist-primary-main) 3%, transparent);
+  color: var(--dialogist-primary-dark);
+  border: 1px solid var(--dialogist-primary-dark);
+  font-family: var(--dialogist-font-family);
+  font-size: 0.85rem;
+  font-weight: 450;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  height: 32px;
+  padding: 0 12px;
+  min-width: 60px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: 0px 0.7px 1.4px -0.7px rgba(0,0,0,0.025), 0px 1.4px 1.4px -1.4px rgba(0,0,0,0.04), 0px 0.7px 3.5px 0px rgba(0,0,0,0.03);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+[data-dialogist-adapter="tailwind"] .Dialogist-actionsContainer button.border-input:hover {
+  background-color: color-mix(in srgb, var(--dialogist-primary-main) 8%, transparent);
+}

@@ -210,9 +210,19 @@ const StableDialogRenderer = memo(
     const contentId = useMemo(() => `dialogist-${dialogKey}-content`, [dialogKey]);
 
     const handleDialogSurfaceClose = useCallback(
-      (_event?: object, muiReason?: "backdropClick" | "escapeKeyDown") => {
-        const mappedReason: DialogCloseReason =
-          muiReason === "backdropClick" ? "backdrop" : muiReason === "escapeKeyDown" ? "escape" : "action";
+      // Overloaded call sites:
+      //   MUI:       onClose(event: object, muiReason: "backdropClick" | "escapeKeyDown")
+      //   Non-MUI:   onClose(reason?: "escape" | "backdrop")
+      (_eventOrReason?: object | "escape" | "backdrop", muiReason?: "backdropClick" | "escapeKeyDown") => {
+        let mappedReason: DialogCloseReason;
+        if (typeof _eventOrReason === "string") {
+          // Non-MUI adapter passing close reason directly as first arg.
+          mappedReason = _eventOrReason;
+        } else {
+          // MUI passes the event object as first arg and reason string as second arg.
+          mappedReason =
+            muiReason === "backdropClick" ? "backdrop" : muiReason === "escapeKeyDown" ? "escape" : "action";
+        }
         onClose(dialogKey, {
           cancelled: true,
           reason: mappedReason,
@@ -374,7 +384,7 @@ const StableDialogRenderer = memo(
               display: "flex",
               flexDirection: "column",
               width: "100%",
-              height: "100%",
+              flex: "1 1 auto",
               minHeight: 0,
               backgroundColor: "var(--dialogist-bg-paper)",
             }}
@@ -536,7 +546,7 @@ export const DialogScaffolding = memo(
     const activeDialog = dialogs.length > 0 ? dialogs[dialogs.length - 1] : null;
 
     return createPortal(
-      <div id="dialogist-portal" style={{ isolation: "isolate" }}>
+      <div id="dialogist-portal" style={{ isolation: "isolate", position: "relative", zIndex: 1300 }}>
         {activeDialog && (
           <StableDialogRenderer
             key={activeDialog.internalId}

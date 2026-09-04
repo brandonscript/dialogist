@@ -19,11 +19,12 @@ import { classNames } from "../../utils/classNames";
  * the MUI theme adapter instead of the default style injection.)
  */
 export const MuiBase = styled(
-  ({ className, slotProps, hideBackdrop, container, ...props }: BaseDialogProps) => (
+  ({ className, slotProps, hideBackdrop, container, onClose, ...props }: BaseDialogProps) => (
     <Dialog
       className={classNames(dialogistClasses.base, className)}
       {...props}
       container={container as React.ComponentProps<typeof Dialog>["container"]}
+      onClose={(_event, reason) => onClose(reason === "escapeKeyDown" ? "escape" : "backdrop")}
       disableAutoFocus={props.disableAutoFocus}
       disableEnforceFocus={props.disableEnforceFocus}
       disableRestoreFocus={props.disableRestoreFocus}

@@ -17,6 +17,7 @@ const baseDialogistMuiComponents: ThemeOptions["components"] = {
       root: ({ theme }: { theme: import("@mui/material/styles").Theme }) => ({
         [`&.${dialogistClasses.base}`]: {
           "--dialogist-primary-main": theme.palette.primary.main,
+          "--dialogist-primary-dark": theme.palette.primary.dark,
           "--dialogist-primary-contrastText": theme.palette.primary.contrastText,
           "--dialogist-secondary-main": theme.palette.secondary.main,
           "--dialogist-secondary-contrastText": theme.palette.secondary.contrastText,

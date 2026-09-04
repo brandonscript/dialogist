@@ -13,6 +13,10 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? (isGitHubPages ? "/dialogi
 const turbopackAliases = {
   dialogist: "../../src/index.ts",
   "dialogist/classes": "../../src/classes.ts",
+  "dialogist/mui": "../../src/adapters/mui/index.ts",
+  "dialogist/base-ui": "../../src/adapters/base-ui/index.ts",
+  "dialogist/shadcn": "../../src/adapters/shadcn/index.ts",
+  "dialogist/tailwind": "../../src/adapters/tailwind/index.ts",
   "@mui/material": "./node_modules/@mui/material",
   "@mui/system": "./node_modules/@mui/system",
   "@mui/utils": "./node_modules/@mui/utils",

@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Lexend } from "next/font/google";
 
+import "./globals.css";
+
 import { ClientProviders } from "../components/common/ClientProviders";
 import { DemoAppShell } from "../components/common/DemoAppShell";
 
