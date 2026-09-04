@@ -12,7 +12,7 @@ jobs:
     # OIDC trusted‑publisher policy gives this job a short‑lived npm token.
     permissions:
       contents: read
-      id-token: ***      # required for OIDC token exchange
+      id-token: write      # required for OIDC token exchange
       packages: write      # required for npm publish
 
     # Use the environment we created in the repository settings (`npm`).
