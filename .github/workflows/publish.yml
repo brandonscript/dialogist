@@ -20,6 +20,17 @@ jobs:
 
     steps:
       # -----------------------------------------------------------------
+      # 0️⃣ Cache node_modules (speeds up repeated runs)
+      # -----------------------------------------------------------------
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # -----------------------------------------------------------------
       # 1️⃣ Checkout the exact commit (full history needed for tag verification)
       # -----------------------------------------------------------------
       - name: Checkout repository
@@ -37,22 +48,28 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       # -----------------------------------------------------------------
-      # 3️⃣ Authenticate to npm via OIDC (GitHub provides an OIDC token that npm
-      #    can exchange for a temporary publish token because of the trusted
-      #    publisher policy we created).
+      # 3️⃣ Authenticate to npm via OIDC — exchange the GitHub OIDC token for
+      #    a short‑lived npm publish token.
       # -----------------------------------------------------------------
       - name: Authenticate with npm via OIDC
         run: |
-          # The npm CLI will automatically use the OIDC token when publishing
-          # if the registry URL is npmjs.org and the job has the proper
-          # permissions. No manual token writing is required.
-          echo "Authenticated via OIDC"
+          # Create a temporary npm token using OIDC, then store it so `npm publish`
+          # can use it. The OIDC trusted publisher policy must be configured in
+          # GitHub → Org Settings → OIDC for this to work.
+          NPM_TOKEN=$(npm token create \
+            --auth-type oidc \
+            --registry https://registry.npmjs.org \
+            --json \
+            --read-only false) 2>&1 || true
+          echo "::set-output name=NPM_TOKEN::${NPM_TOKEN}"
+          npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+        id: npm-oidc
 
       # -----------------------------------------------------------------
       # 4️⃣ Install dependencies (clean install) and build the package
       # -----------------------------------------------------------------
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --prefer-offline
 
       - name: Build package
         run: npm run build
