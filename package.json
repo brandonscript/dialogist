@@ -59,7 +59,7 @@
   "author": "github.com/brandonscript",
   "license": "MIT",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=24.0.0"
   },
   "scripts": {
     "build": "npm run clean && rollup -c && npx tsc --project tsconfig.declarations.json && cp dist/src/index.d.ts dist/index.d.ts && node scripts/build-styles.mjs && cp src/adapters/tailwind/preset.cjs dist/src/adapters/tailwind/preset.cjs && cp src/adapters/tailwind/theme.css dist/src/adapters/tailwind/theme.css",

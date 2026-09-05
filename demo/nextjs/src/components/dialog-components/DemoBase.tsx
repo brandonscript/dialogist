@@ -6,10 +6,11 @@ import { dialogistClasses } from "dialogist/classes";
 
 import { RenderTracker, RenderTrackerWrapper } from "../common/RenderTracker";
 
-export const DemoBase = ({ children, ...props }: BaseDialogProps) => {
+export const DemoBase = ({ children, onClose, ...props }: BaseDialogProps) => {
   return (
     <Dialog
       {...props}
+      onClose={(_event, reason) => onClose(reason === "escapeKeyDown" ? "escape" : "backdrop")}
       slotProps={{
         paper: {
           sx: {

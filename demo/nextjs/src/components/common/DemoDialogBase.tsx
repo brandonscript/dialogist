@@ -11,7 +11,7 @@ import { useDemoState } from "../../contexts/DemoStateContext";
 const joinClassNames = (...classes: (string | undefined)[]) => classes.filter(Boolean).join(" ").trim();
 
 export const DemoDialogBase = forwardRef<HTMLDivElement, BaseDialogProps>(function DemoDialogBase(
-  { className, slotProps, hideBackdrop, overflow, borderRadius, children, ...dialogProps }: BaseDialogProps,
+  { className, slotProps, hideBackdrop, overflow, borderRadius, children, onClose, ...dialogProps }: BaseDialogProps,
   ref,
 ) {
   const { isFullscreen, sandboxContainer } = useDemoState();
@@ -80,6 +80,7 @@ export const DemoDialogBase = forwardRef<HTMLDivElement, BaseDialogProps>(functi
       className={mergedClassName}
       slotProps={mergedSlotProps}
       sx={{ overflow: overflow ?? "hidden" }}
+      onClose={(_event, reason) => onClose(reason === "escapeKeyDown" ? "escape" : "backdrop")}
     >
       {children}
     </Dialog>

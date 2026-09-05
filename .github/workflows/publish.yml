@@ -23,7 +23,7 @@ jobs:
       # 0️⃣ Cache node_modules (speeds up repeated runs)
       # -----------------------------------------------------------------
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
@@ -34,7 +34,7 @@ jobs:
       # 1️⃣ Checkout the exact commit (full history needed for tag verification)
       # -----------------------------------------------------------------
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -42,7 +42,7 @@ jobs:
       # 2️⃣ Set up Node (registry-url tells npm to use npmjs.org)
       # -----------------------------------------------------------------
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
