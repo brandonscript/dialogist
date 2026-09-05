@@ -241,6 +241,8 @@ AI contributors: see <a href="./AGENTS.md" target="_blank" rel="noopener norefer
 
 If you use AI tools with this codebase or its documentation: do not submit generated changes without **reviewing** them yourself by hand for correctness, security, and fit with project conventions.
 
+For documentation tailored specifically to agents, connect Context7's MCP server and mention [brandonscript/dialogist](https://context7.com/brandonscript/dialogist) in your prompts.
+
 ## License
 
 <a href="./LICENSE" target="_blank" rel="noopener noreferrer">MIT</a>
