@@ -87,7 +87,7 @@ Dialogist is a centralized dialog manager for React applications, similar to Not
 ### `demo/nextjs/` directory (demo application)
 
 - Next.js 15 app showcasing all features
-- Uses additional UI libraries (@mui-flexy/v7, react-icons)
+- Uses additional UI libraries (@mui-flexy/v9, react-icons)
 - Custom theme (`demoTheme.ts`) and components
 - Runs at http://localhost:5607 with HMR
 - Examples organized by complexity in the order they will appear in the demo (1_getting_started, 2_actions_results, 3_closing_dialogs, 4_layout_presentation, 5_updating_dialog_content, 6_dialog_state_data_flow, 7_data_providers, 8_dialog_orchestration)
@@ -233,7 +233,7 @@ Dialog Components - consume variables via var(...)
 
 ### React Components - Demo Code (`demo/`)
 
-- **✅ ALWAYS use `@mui-flexy/v7` library** for React components that require CSS "flex" or "grid" layout
+- **✅ ALWAYS use `@mui-flexy/v9` library** for React components that require CSS "flex" or "grid" layout
 - **✅ Use `FlexBox` instead of `Box`** (more flexible API)
 - **✅ Use `GridBox` instead of `Grid`** (more flexible API)
 - **✅ FlexBox props:**
@@ -278,7 +278,7 @@ Dialog Components - consume variables via var(...)
 1. Create new card component in appropriate section folder
 2. Use `BaseDemoCard` wrapper for consistency
 3. Follow sentence case for all UI text
-4. Use `@mui-flexy/v7` for layouts
+4. Use `@mui-flexy/v9` for layouts
 5. Add to sidebar in `DemoSidebar.tsx`
 6. Add to page in `app/page.tsx`
 

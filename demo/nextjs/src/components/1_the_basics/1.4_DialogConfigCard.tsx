@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Collapse, FormHelperText, Grid, TextField, type Theme } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { type DialogActionEvent, type DialogCloseEvent, useDialog } from "dialogist";
 import { memo, useState } from "react";
 import { PiGearSixDuotone } from "react-icons/pi";

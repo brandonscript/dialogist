@@ -15,7 +15,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { useRef, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 import { LuActivity } from "react-icons/lu";
@@ -175,7 +175,13 @@ export const AppTopBar = () => {
     >
       <Toolbar sx={{ minHeight: 56, display: "flex", alignItems: "center", gap: 2, px: { xs: 1, sm: 2 } }}>
         <MobileNavTrigger />
-        <Typography color="secondary.main" variant="h6" sx={{ fontWeight: 700, textTransform: "lowercase" }}>
+        <Typography
+          variant="h6"
+          sx={{
+            color: "secondary.main",
+            fontWeight: 700,
+            textTransform: "lowercase"
+          }}>
           Dialogist
         </Typography>
         <FlexBox y="center" ml={{ xs: "auto", sm: 2 }} sx={{ display: { xs: "none", md: "flex" } }}>

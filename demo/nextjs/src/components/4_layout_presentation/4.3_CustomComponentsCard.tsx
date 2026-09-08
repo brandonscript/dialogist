@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { dialogistClasses, useDialog } from "dialogist";
 import { memo, useMemo, useState } from "react";
 import { PiPaintBrushDuotone } from "react-icons/pi";
@@ -82,11 +82,20 @@ export const CustomComponentsDialogCard = Object.assign(
                 "& span": { opacity: 0.5 },
               }}
             >
-              <Typography variant="caption" color="secondary.main">
+              <Typography variant="caption" sx={{
+                color: "secondary.main"
+              }}>
                 <RiFootballLine size={16} />
                 Custom footer content
               </Typography>
-              <Typography variant="caption" color="secondary.main" display="flex" alignItems="center" gap={1}>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: "secondary.main",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1
+                }}>
                 Tips appear here <TbTipJar size={16} />
               </Typography>
             </FlexBox>

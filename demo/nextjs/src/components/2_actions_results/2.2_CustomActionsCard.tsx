@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { type DialogCloseEvent, useDialog } from "dialogist";
 import { memo, useState } from "react";
 import { TbClick } from "react-icons/tb";

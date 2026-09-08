@@ -1,6 +1,6 @@
 "use client";
 
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { type DialogCloseEvent, useDialog } from "dialogist";
 import { memo, useState } from "react";
 import { TbBoxAlignTop } from "react-icons/tb";

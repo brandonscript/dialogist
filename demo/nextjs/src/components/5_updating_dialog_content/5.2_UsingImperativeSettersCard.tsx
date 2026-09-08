@@ -1,6 +1,6 @@
 "use client";
 
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { memo } from "react";
 import { PiHammerDuotone } from "react-icons/pi";
 

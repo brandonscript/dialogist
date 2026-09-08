@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import {
   type DialogActionsAlign,
   type DialogCloseEvent,
@@ -228,7 +228,12 @@ const SizeControlsSection = memo(function SizeControlsSection({
   return (
     <>
       <FormControl sx={{ minWidth: 0 }}>
-        <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5 }}>
+        <Typography
+          variant="caption"
+          sx={{
+            color: "text.secondary",
+            mb: 0.5
+          }}>
           Content max width (px)
         </Typography>
         <TextField
@@ -240,11 +245,18 @@ const SizeControlsSection = memo(function SizeControlsSection({
             if (!Number.isFinite(parsed) || parsed <= 0) return;
             onMaxWidthChange(parsed);
           }}
-          inputProps={{ min: 120, step: 10 }}
+          slotProps={{
+            htmlInput: { min: 120, step: 10 }
+          }}
         />
       </FormControl>
       <FormControl sx={{ minWidth: 0 }}>
-        <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5 }}>
+        <Typography
+          variant="caption"
+          sx={{
+            color: "text.secondary",
+            mb: 0.5
+          }}>
           Content min height (px or auto)
         </Typography>
         <TextField
@@ -257,21 +269,23 @@ const SizeControlsSection = memo(function SizeControlsSection({
             }
           }}
           placeholder="auto"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end" sx={{ mr: -0.25 }}>
-                <IconButton
-                  size="small"
-                  edge="end"
-                  aria-label="Clear min height"
-                  onClick={onMinHeightClear}
-                  disabled={bodyMinHeightInput.trim() === ""}
-                  sx={{ p: 0.5 }}
-                >
-                  <LuX size={13} />
-                </IconButton>
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end" sx={{ mr: -0.25 }}>
+                  <IconButton
+                    size="small"
+                    edge="end"
+                    aria-label="Clear min height"
+                    onClick={onMinHeightClear}
+                    disabled={bodyMinHeightInput.trim() === ""}
+                    sx={{ p: 0.5 }}
+                  >
+                    <LuX size={13} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            },
           }}
         />
       </FormControl>
@@ -292,7 +306,12 @@ const ContentAlignSection = memo(function ContentAlignSection({
 }) {
   return (
     <FlexBox column gap={1}>
-      <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5 }}>
+      <Typography
+        variant="caption"
+        sx={{
+          color: "text.secondary",
+          mb: 0.5
+        }}>
         Content flex & text alignment
       </Typography>
       <FlexBox column gap={2.5}>
@@ -454,7 +473,12 @@ const AligningContentInteractive = memo(function AligningContentInteractive({
               onTextAlignChange={handleTextAlignChange}
             />
             <FlexBox column gap={1}>
-              <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5 }}>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: "text.secondary",
+                  mb: 0.5
+                }}>
                 Actions alignment
               </Typography>
               <FormControl sx={{ minWidth: 0 }}>

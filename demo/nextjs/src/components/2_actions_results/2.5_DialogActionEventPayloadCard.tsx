@@ -1,6 +1,6 @@
 "use client";
 
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { type DialogActionEvent, useDialog } from "dialogist";
 import { memo, useState } from "react";
 import { PiBracketsCurlyDuotone } from "react-icons/pi";

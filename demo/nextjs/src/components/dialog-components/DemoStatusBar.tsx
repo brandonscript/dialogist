@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, CircularProgress, type SxProps, styled, type Theme } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { dialogistClasses } from "dialogist/classes";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 

@@ -10,7 +10,7 @@ import {
   Switch,
   Typography,
 } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import {
   type DialogCloseEvent,
   type DialogConflictPolicy,

@@ -1,7 +1,7 @@
 "use client";
 
 import { Collapse, Switch, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import type { ReactNode } from "react";
 
 import { RightArrowIcon } from "@/components/icons/Arrows";
@@ -36,7 +36,13 @@ const WindowedModeToggle = ({ label }: { label: string }) => {
   const { isFullscreen, toggleFullscreen } = useDemoState();
   return (
     <FlexBox component="span" x="center" y="center" gap={1} width="100%" minHeight={WINDOWED_MODE_PROMPT_MIN_HEIGHT}>
-      <Typography variant="caption" color="text.secondary" component="span" sx={{ mr: 0.25 }}>
+      <Typography
+        variant="caption"
+        component="span"
+        sx={{
+          color: "text.secondary",
+          mr: 0.25
+        }}>
         {label}
       </Typography>
       <RightArrowIcon size={18} sx={{ color: "var(--demo-form-control-accent)" }} opacity={0.75} />
@@ -74,7 +80,9 @@ export const RequireWindowedMode = ({
     return (
       <FlexBox column width="100%" sx={{ mt, my, mb }}>
         <DemoCardPaper mt={0} my={0} mb={0} innerMargin={innerMargin}>
-          <Typography variant="caption" color="text.secondary" component="span">
+          <Typography variant="caption" component="span" sx={{
+            color: "text.secondary"
+          }}>
             This demo works best with windowed mode on a larger screen. The buttons below still open dialogs in
             fullscreen.
           </Typography>

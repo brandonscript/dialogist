@@ -29,6 +29,8 @@
       "@mui/system/*": ["./node_modules/@mui/system/*"],
       "@mui/utils": ["./node_modules/@mui/utils"],
       "@mui/utils/*": ["./node_modules/@mui/utils/*"],
+      "@mui-flexy/v9": ["./node_modules/@mui-flexy/v9"],
+      "@mui-flexy/core": ["./node_modules/@mui-flexy/core"],
       "deepmerge-ts": ["./node_modules/deepmerge-ts"],
       "react": ["./node_modules/@types/react"],
       "react-dom": ["./node_modules/@types/react-dom"],

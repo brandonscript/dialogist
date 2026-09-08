@@ -125,7 +125,7 @@ export const expectResultDisplay = async (
   await expect(resultButton).toBeVisible();
   if (color) {
     const colorClass = color[0].toUpperCase() + color.slice(1);
-    await expect(resultButton).toHaveClass(new RegExp(`MuiButton-(text|outlined|contained)${colorClass}`));
+    await expect(resultButton).toHaveClass(new RegExp(`MuiButton-color${colorClass}`));
   }
   return resultButton;
 };

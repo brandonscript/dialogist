@@ -1,7 +1,7 @@
 "use client";
 
 import { TextField, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { memo } from "react";
 
 interface OptionControlProps {
@@ -27,7 +27,9 @@ export const OptionControl = memo(function OptionControl({
 }: OptionControlProps) {
   return (
     <FlexBox column gap={0.5}>
-      <Typography variant="caption" color="text.secondary">
+      <Typography variant="caption" sx={{
+        color: "text.secondary"
+      }}>
         {label}
       </Typography>
       <TextField

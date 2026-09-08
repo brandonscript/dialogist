@@ -15,7 +15,7 @@ import {
 import type { PaperProps } from "@mui/material/Paper";
 import type { CSSProperties } from "@mui/material/styles";
 import { type ResponsiveStyleValue, styled } from "@mui/system";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { type DialogKey, useDialogIsOpen } from "dialogist";
 import React, { type ChangeEvent, type ElementType, type PropsWithChildren, type ReactNode } from "react";
 
@@ -363,13 +363,14 @@ export const DemoCardPaper = React.memo(function DemoCardPaper({
           <Typography
             component="strong"
             variant="caption"
-            fontWeight={600}
-            display="block"
-            position="absolute"
-            top={(t) => t.spacing(0.75)}
-            right={(t) => t.spacing(1)}
-            sx={{ opacity: 0.45 }}
-          >
+            sx={{
+              fontWeight: 600,
+              display: "block",
+              position: "absolute",
+              top: (t) => t.spacing(0.75),
+              right: (t) => t.spacing(1),
+              opacity: 0.45
+            }}>
             {title}
           </Typography>
         ) : null}
@@ -395,7 +396,12 @@ export const DemoCardSwitch = React.memo(function DemoCardSwitch({
       sx={{ m: 0 }}
       control={<Switch size="small" checked={checked} onChange={onChange} />}
       label={
-        <Typography variant="caption" color="text.secondary" mr={labelPlacement === "start" ? 1 : 0}>
+        <Typography
+          variant="caption"
+          sx={{
+            color: "text.secondary",
+            mr: labelPlacement === "start" ? 1 : 0
+          }}>
           {label}
         </Typography>
       }

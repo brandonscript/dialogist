@@ -55,7 +55,7 @@ export const withTooltip = <T extends ElementType>(Component: T) => {
       if (isDisabled) {
         return (
           <Tooltip {...tooltipProps} title={tooltipTitle}>
-            <Box display={props.display || props?.sx?.display || "inline-flex"}>{child}</Box>
+            <Box sx={{ display: props.display || props?.sx?.display || "inline-flex" }}>{child}</Box>
           </Tooltip>
         );
       }

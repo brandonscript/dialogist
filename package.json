@@ -1,6 +1,6 @@
 {
   "name": "dialogist",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A centralized dialog manager system for React applications",
   "keywords": [
     "react",
@@ -88,7 +88,7 @@
     "@emotion/jest": "^11.13.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mui/material": "^7.3.4",
+    "@mui/material": "^9.0.0",
     "@humanwhocodes/module-importer": "^1.0.1",
     "@playwright/test": "^1.53.2",
     "@rollup/plugin-alias": "^5.1.1",
@@ -132,7 +132,7 @@
     "@base-ui-components/react": "^1.0.0-rc.0",
     "@emotion/react": ">=11.0.0",
     "@emotion/styled": ">=11.0.0",
-    "@mui/material": "^7.3.4",
+    "@mui/material": "^7.3.4 || ^9.0.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
     "tailwindcss": ">=3.0.0"

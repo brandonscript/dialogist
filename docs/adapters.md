@@ -9,7 +9,7 @@ This doc covers what ships, how to pick one, and how to migrate between them.
 | Adapter        | Subpath import           | Default `Base` slot                                      | Notes                                              |
 | -------------- | ------------------------ | -------------------------------------------------------- | -------------------------------------------------- |
 | Headless DOM   | _none_ (built-in)        | `HeadlessBase` (`<div role="dialog">` + portal + focus trap) | Zero peer deps beyond React.                       |
-| MUI            | `dialogist/mui`          | MUI `<Dialog>` styled with `dialogistStyles`             | The original / canonical adapter.                  |
+| MUI            | `dialogist/mui`          | MUI `<Dialog>` styled with `dialogistStyles`             | Peer: `@mui/material` ^7 or ^9.                    |
 | Base UI        | `dialogist/base-ui`      | `Dialog.Root` + `Dialog.Portal` + `Dialog.Popup`         | Headless primitives from MUI's Base UI.            |
 | shadcn         | `dialogist/shadcn`       | Base UI primitives + shadcn class conventions            | Drop-in for shadcn-style apps; no Radix needed.    |
 | Tailwind       | `dialogist/tailwind`     | `HeadlessBase` + Tailwind utility classes                | DOM-only; works alongside any Tailwind config.     |
@@ -58,6 +58,7 @@ export const App = () => (
 
 The MUI adapter:
 
+- Peer: `@mui/material` `^7.3.4 || ^9.0.0` (plus `@emotion/react` / `@emotion/styled`)
 - Uses `@mui/material/Dialog`, `DialogTitle`, `DialogContent`, `DialogActions`, `Button`, `Typography`
 - Maps MUI theme tokens (`palette`, `typography`, transitions, `theme.spacing`) onto Dialogist CSS variables via `dialogistExtendMuiTheme`
 - Honors all MUI sx/styled overrides on slot components

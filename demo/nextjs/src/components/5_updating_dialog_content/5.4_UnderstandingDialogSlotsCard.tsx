@@ -1,7 +1,7 @@
 "use client";
 
 import { TextField, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { useDialog, useDialogSlots } from "dialogist";
 import { memo, useEffect, useRef, useState } from "react";
 import { PiStairsDuotone } from "react-icons/pi";
@@ -99,7 +99,9 @@ const DialogBody = memo(function DialogBody() {
         autoFocus
       />
       <FlexBox x="space-between" y="center">
-        <Typography variant="caption" color="text.secondary">
+        <Typography variant="caption" sx={{
+          color: "text.secondary"
+        }}>
           Body re-renders: <strong>{displayRenderCount}</strong>
         </Typography>
       </FlexBox>

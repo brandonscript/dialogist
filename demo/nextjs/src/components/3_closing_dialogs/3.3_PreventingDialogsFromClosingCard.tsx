@@ -1,7 +1,7 @@
 "use client";
 
 import { Chip, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { type DialogCloseEvent, type DialogistEventMap, useDialog } from "dialogist";
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { PiShieldWarningDuotone } from "react-icons/pi";

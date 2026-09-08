@@ -2,7 +2,7 @@
 
 import { Box, Typography } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { memo } from "react";
 import { GrFormCheckmark, GrFormClose } from "react-icons/gr";
 

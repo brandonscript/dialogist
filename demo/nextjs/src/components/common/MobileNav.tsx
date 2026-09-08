@@ -86,17 +86,17 @@ export const MobileNavOverlay = () => {
         display: { xs: "block", md: "none" },
         top: `${APPBAR_HEIGHT}px`,
       }}
-      PaperProps={{
-        sx: {
-          top: `${APPBAR_HEIGHT}px`,
-          width: "100vw",
-          height: `calc(100dvh - ${APPBAR_HEIGHT}px)`,
-          overflowY: "auto",
-          borderRadius: 0,
-          backgroundColor: (t) => t.palette.background.paper,
-        },
-      }}
       slotProps={{
+        paper: {
+          sx: {
+            top: `${APPBAR_HEIGHT}px`,
+            width: "100vw",
+            height: `calc(100dvh - ${APPBAR_HEIGHT}px)`,
+            overflowY: "auto",
+            borderRadius: 0,
+            backgroundColor: (t) => t.palette.background.paper,
+          },
+        },
         backdrop: { sx: { top: `${APPBAR_HEIGHT}px` } },
       }}
     >

@@ -1,7 +1,7 @@
 "use client";
 
 import { Alert, Button, Divider, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { useDialog } from "dialogist";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import { LuListStart } from "react-icons/lu";
@@ -150,13 +150,17 @@ type RowDialogMessageProps = {
 const RowDialogMessage = ({ food, description, isFullscreen }: RowDialogMessageProps) => (
   <FlexBox column gap={1} maxWidth={360}>
     <DemoParagraph>
-      <Typography component="span" variant="subtitle1" fontWeight={600}>
+      <Typography component="span" variant="subtitle1" sx={{
+        fontWeight: 600
+      }}>
         {food}
       </Typography>{" "}
       {description}
     </DemoParagraph>
     <Divider />
-    <Typography variant="caption" color="text.secondary">
+    <Typography variant="caption" sx={{
+      color: "text.secondary"
+    }}>
       {isFullscreen ? FULLSCREEN_HINT : WINDOWED_HINT}
     </Typography>
   </FlexBox>
@@ -183,9 +187,13 @@ const VirtualizedRowBase = ({ row, isActive, style, ariaAttributes, children }: 
       backgroundColor: isActive ? "color-mix(in srgb, var(--mui-palette-primary-main) 10%, transparent)" : undefined,
     }}
   >
-    <Typography variant="body2" fontWeight={600} color={isActive ? "primary.main" : "text.primary"}>
+    <Typography variant="body2" color={isActive ? "primary.main" : "text.primary"} sx={{
+      fontWeight: 600
+    }}>
       {row.food}{" "}
-      <Typography component="span" variant="caption" color="text.secondary">
+      <Typography component="span" variant="caption" sx={{
+        color: "text.secondary"
+      }}>
         Row key <Code>{row.id}</Code>
       </Typography>
     </Typography>
@@ -203,7 +211,9 @@ const VirtualListSection = ({ heading, rowCount, children }: VirtualListSectionP
   <DemoCardPaper title="Try it out" maxWidth={LIST_MAX_WIDTH} mt={0} innerMargin={{ top: 1.5 }}>
     <DemoSectionHeading>{heading}</DemoSectionHeading>
     {children}
-    <Typography variant="caption" color="text.secondary">
+    <Typography variant="caption" sx={{
+      color: "text.secondary"
+    }}>
       Data set size: {rowCount.toLocaleString()} rows
     </Typography>
   </DemoCardPaper>

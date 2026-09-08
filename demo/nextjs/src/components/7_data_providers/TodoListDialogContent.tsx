@@ -10,7 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { useDialog, useDialogExternalSync } from "dialogist";
 import { useCallback, useEffect } from "react";
 import { LuTrash2 } from "react-icons/lu";
@@ -147,7 +147,7 @@ export const TodoListDialogContent = ({
   return (
     <FlexBox column gap={2}>
       <FlexBox x="space-between" y="center" width="100%" px={2}>
-        <DemoParagraph maxWidth={440} textAlign="left">
+        <DemoParagraph sx={{ maxWidth: 440, textAlign: "left" }}>
           {message}
         </DemoParagraph>
         {showExternalUpdate && <SourceIndicator source="external" label="External update" />}
@@ -199,11 +199,13 @@ export const TodoListDialogContent = ({
               </ListItemIcon>
               <ListItemText
                 primary={todo.text}
-                primaryTypographyProps={{ variant: "caption", fontSize: "0.75rem" }}
                 sx={{
                   textDecoration: todo.completed ? "line-through" : "none",
                   color: todo.completed ? "text.secondary" : "text.primary",
                   my: 0,
+                }}
+                slotProps={{
+                  primary: { variant: "caption", sx: { fontSize: "0.75rem" } }
                 }}
               />
             </ListItemButton>

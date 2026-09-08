@@ -63,12 +63,11 @@ export const DemoSectionHeading = ({
       id={id}
       component="h4"
       variant="subtitle2"
-      color="text.secondary"
       sx={{
+        color: "text.secondary",
         ...typographySx,
-        ...(copyPath ? { flex: "0 1 auto", minWidth: 0 } : {}),
-      }}
-    >
+        ...(copyPath ? { flex: "0 1 auto", minWidth: 0 } : {})
+      }}>
       {display}
     </Typography>
   );

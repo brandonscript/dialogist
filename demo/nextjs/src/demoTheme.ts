@@ -355,6 +355,45 @@ const baseTheme: ThemeOptions = {
           props: { size: "large" },
           style: { fontSize: "0.925rem", padding: "0 16px", minWidth: "72px", height: "40px", borderRadius: 9 },
         },
+        {
+          props: { variant: "contained", color: "primary" },
+          style: {
+            ...makeContainedButtonStyle(lightPrimaryColor, lightPrimaryContrastTextColor),
+            "&:focus-visible": { boxShadow: "none" },
+          },
+        },
+        {
+          props: { variant: "contained", color: "secondary" },
+          style: makeContainedButtonStyle(lightSecondaryColor, lightSecondaryContrastTextColor),
+        },
+        {
+          props: { variant: "contained", color: "success" },
+          style: makeContainedButtonStyle(lightSuccessColor, lightSuccessContrastTextColor),
+        },
+        {
+          props: { variant: "contained", color: "error" },
+          style: makeContainedButtonStyle(lightErrorColor, lightErrorContrastTextColor),
+        },
+        {
+          props: { variant: "contained", color: "warning" },
+          style: makeContainedButtonStyle(lightWarningColor, lightWarningContrastTextColor),
+        },
+        {
+          props: { variant: "contained", color: "info" },
+          style: makeContainedButtonStyle(lightInfoColor, lightInfoContrastTextColor),
+        },
+        { props: { variant: "outlined", color: "primary" }, style: makeOutlinedButtonStyle("primary") },
+        { props: { variant: "outlined", color: "secondary" }, style: makeOutlinedButtonStyle("secondary") },
+        { props: { variant: "outlined", color: "success" }, style: makeOutlinedButtonStyle("success") },
+        { props: { variant: "outlined", color: "error" }, style: makeOutlinedButtonStyle("error") },
+        { props: { variant: "outlined", color: "warning" }, style: makeOutlinedButtonStyle("warning") },
+        { props: { variant: "outlined", color: "info" }, style: makeOutlinedButtonStyle("info") },
+        {
+          props: { variant: "text", color: "primary" },
+          style: {
+            color: darken(saturate(lightPrimaryColor, 0.3), 0.3),
+          },
+        },
       ],
       styleOverrides: {
         root: {
@@ -373,27 +412,8 @@ const baseTheme: ThemeOptions = {
           "&:hover": { boxShadow: "none" },
           "&:active": { boxShadow: "none" },
         },
-        containedPrimary: {
-          ...makeContainedButtonStyle(lightPrimaryColor, lightPrimaryContrastTextColor),
-          "&:focus-visible": { boxShadow: "none" },
-        },
-        containedSecondary: makeContainedButtonStyle(lightSecondaryColor, lightSecondaryContrastTextColor),
-        containedSuccess: makeContainedButtonStyle(lightSuccessColor, lightSuccessContrastTextColor),
-        containedError: makeContainedButtonStyle(lightErrorColor, lightErrorContrastTextColor),
-        containedWarning: makeContainedButtonStyle(lightWarningColor, lightWarningContrastTextColor),
-        containedInfo: makeContainedButtonStyle(lightInfoColor, lightInfoContrastTextColor),
-        outlinedPrimary: makeOutlinedButtonStyle("primary"),
-        outlinedSecondary: makeOutlinedButtonStyle("secondary"),
-        outlinedSuccess: makeOutlinedButtonStyle("success"),
-        outlinedError: makeOutlinedButtonStyle("error"),
-        outlinedWarning: makeOutlinedButtonStyle("warning"),
-        outlinedInfo: makeOutlinedButtonStyle("info"),
-        textPrimary: {
-          color: darken(saturate(lightPrimaryColor, 0.3), 0.3),
-        },
         startIcon: { marginRight: 8, "& > *:nth-of-type(1)": { fontSize: 18 } },
         endIcon: { marginLeft: 8, "& > *:nth-of-type(1)": { fontSize: 18 } },
-        sizeSmall: { height: 36, padding: "0 16px", borderRadius: 8 },
       },
     },
     MuiButtonBase: { defaultProps: { disableRipple: true } },
@@ -623,6 +643,10 @@ const baseTheme: ThemeOptions = {
           props: { variant: "outlined", color: "warning" },
           style: chipOutlinedWarningImportantStyle,
         },
+        {
+          props: { size: "small" },
+          style: { height: 22, fontSize: "0.75rem" },
+        },
       ],
       styleOverrides: {
         root: {
@@ -632,7 +656,6 @@ const baseTheme: ThemeOptions = {
           border: "1px solid rgba(0,0,0,0.12)",
           backgroundColor: "#fff",
         },
-        sizeSmall: { height: 22, fontSize: "0.75rem" },
         outlined: ({ theme }) => ({
           fontWeight: 450,
           padding: `${theme.spacing(1.5)} ${theme.spacing(0.5)}`,

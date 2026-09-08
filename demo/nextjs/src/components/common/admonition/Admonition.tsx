@@ -2,7 +2,7 @@
 
 import { alpha, Box, Typography } from "@mui/material";
 import { type SxProps, type Theme, useTheme } from "@mui/material/styles";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import type { ReactNode } from "react";
 import { MdInfoOutline } from "react-icons/md";
 import { RiErrorWarningLine, RiLightbulbFlashLine } from "react-icons/ri";
@@ -123,7 +123,12 @@ export const Admonition = ({ variant = "plain", title, children, sx }: Admonitio
             nestedCodeBlockShowsAdmonitionBackdrop: true,
           }}
         >
-          <Typography component="div" variant="caption" color="text.secondary" sx={PLAIN_BODY_TYPOGRAPHY_SX}>
+          <Typography
+            component="div"
+            variant="caption"
+            sx={[{
+              color: "text.secondary"
+            }, ...(Array.isArray(PLAIN_BODY_TYPOGRAPHY_SX) ? PLAIN_BODY_TYPOGRAPHY_SX : [PLAIN_BODY_TYPOGRAPHY_SX])]}>
             {showPlainLabel ? (
               <Box component="span" sx={{ fontWeight: 600, color: "text.primary" }}>
                 {title}.{" "}

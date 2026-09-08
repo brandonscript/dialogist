@@ -28,7 +28,7 @@ The same dialog logic can render through whichever UI library you're already usi
 | Adapter        | Import                                               | Peer dependencies                                              |
 | -------------- | ---------------------------------------------------- | -------------------------------------------------------------- |
 | Headless DOM   | _(default — no import needed)_                       | None beyond `react`/`react-dom`                                |
-| MUI            | `import { muiSlots } from "dialogist/mui"`           | `@mui/material` ^7, `@emotion/react`, `@emotion/styled`        |
+| MUI            | `import { muiSlots } from "dialogist/mui"`           | `@mui/material` ^7 or ^9, `@emotion/react`, `@emotion/styled`  |
 | Base UI        | `import { baseUiSlots } from "dialogist/base-ui"`    | `@base-ui-components/react` ^1.0.0-rc.0                        |
 | shadcn         | `import { shadcnSlots } from "dialogist/shadcn"`     | `@base-ui-components/react`, `tailwindcss` + `tailwindcss-animate` |
 | Tailwind       | `import { tailwindSlots } from "dialogist/tailwind"` | `tailwindcss` (with the included preset)                       |

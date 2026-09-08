@@ -1,7 +1,7 @@
 "use client";
 
 import { FormControl, IconButton, MenuItem, Select, type SelectChangeEvent, Tooltip, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { LuChevronDown, LuInfo } from "react-icons/lu";
 
 import {

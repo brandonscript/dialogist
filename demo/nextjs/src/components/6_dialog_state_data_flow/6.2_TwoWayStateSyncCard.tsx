@@ -1,7 +1,7 @@
 "use client";
 
 import { InputAdornment, Switch, TextField, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { useDialog, useDialogExternalSync, useDialogSlots } from "dialogist";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PiSwapDuotone } from "react-icons/pi";
@@ -186,7 +186,7 @@ const NoteSyncDialogContent = ({ note, setNote, throttleMs }: NoteSyncDialogCont
 
   return (
     <FlexBox column gap={2} width="100%">
-      <DemoParagraph maxWidth={440}>
+      <DemoParagraph sx={{ maxWidth: 440 }}>
         The text field is driven only by <Code>useDialogExternalSync</Code>: typing updates local state right away;
         writes to the caller are throttled, then the dialog idles and any pending external value can apply.
       </DemoParagraph>

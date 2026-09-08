@@ -106,7 +106,12 @@ export const Key = ({ children, ...props }: { children: React.ReactNode } & Typo
 );
 
 export const DemoParagraph = ({ children, ...props }: TypographyProps) => (
-  <Typography variant="body2" color="text.secondary" {...props}>
+  <Typography
+    variant="body2"
+    {...props}
+    sx={[{
+      color: "text.secondary"
+    }, ...(Array.isArray(props.sx) ? props.sx : [props.sx])]}>
     {children}
   </Typography>
 );

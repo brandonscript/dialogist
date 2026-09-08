@@ -87,7 +87,13 @@ export const ExternalStateLogPortal = ({ dialogId, title, index = 0, badgeCount 
       >
         <MdClose size={16} />
       </IconButton>
-      <Typography variant="body2" fontWeight={600} pr={3} gutterBottom>
+      <Typography
+        variant="body2"
+        gutterBottom
+        sx={{
+          fontWeight: 600,
+          pr: 3
+        }}>
         {title} logs
       </Typography>
       <div
@@ -99,7 +105,9 @@ export const ExternalStateLogPortal = ({ dialogId, title, index = 0, badgeCount 
         }}
       >
         {logs.length === 0 ? (
-          <Typography variant="caption" color="text.secondary">
+          <Typography variant="caption" sx={{
+            color: "text.secondary"
+          }}>
             No sync events logged for this session yet.
           </Typography>
         ) : (
@@ -110,9 +118,13 @@ export const ExternalStateLogPortal = ({ dialogId, title, index = 0, badgeCount 
               <Typography
                 key={entry.id}
                 variant="caption"
-                color="text.secondary"
-                sx={{ display: "block", fontFamily: "monospace", fontSize: "0.7rem", py: 0.25 }}
-              >
+                sx={{
+                  color: "text.secondary",
+                  display: "block",
+                  fontFamily: "monospace",
+                  fontSize: "0.7rem",
+                  py: 0.25
+                }}>
                 {`[SoR: ${entry.sor}] ${new Date(entry.timestamp).toLocaleTimeString()}${
                   entry.change ? ` - ${entry.change}` : ""
                 }`}

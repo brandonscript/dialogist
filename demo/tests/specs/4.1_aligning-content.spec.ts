@@ -22,7 +22,7 @@ forEachAdapter("opens dialog with default alignment and dismisses via Cancel", S
   });
 
   await dismissViaAction(page, "Cancel");
-  // Cancel uses "text.secondary" color which maps to MuiButton-colorText, not a named theme color.
+  // Cancel uses "text.secondary" color which maps to MuiButton-colorInherit / no named color class.
   await expectResultDisplay(card, "Cancel");
 });
 

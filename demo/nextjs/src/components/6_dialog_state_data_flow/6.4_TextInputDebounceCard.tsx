@@ -1,7 +1,7 @@
 "use client";
 
 import { Chip, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { useDeepCallback, useDialog, useDialogImperativeHandle, useDialogImperativeValue } from "dialogist";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { MdClear } from "react-icons/md";
@@ -316,7 +316,15 @@ export const TextInputDebounceCard = Object.assign(
         </FlexBox>
 
         <FlexBox row mt={2} x="space-between" y="center">
-          <Typography variant="caption" display="block" gutterBottom sx={{ flex: 1, minWidth: 0, mr: 2 }}>
+          <Typography
+            variant="caption"
+            gutterBottom
+            sx={{
+              display: "block",
+              flex: 1,
+              minWidth: 0,
+              mr: 2
+            }}>
             Current value: "{textFieldValue || "Empty"}" ({textFieldValue.length} chars)
           </Typography>
           <Chip size="small" label={label} color={color} variant="outlined" sx={{ flexShrink: 0 }} />

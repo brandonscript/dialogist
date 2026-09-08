@@ -12,7 +12,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { deepEqual, useDialog, useDialogSlots } from "dialogist";
 import React, {
   type Dispatch,
@@ -435,11 +435,13 @@ export const BaseExternalStateCard = ({
                   </ListItemIcon>
                   <ListItemText
                     primary={todo.text}
-                    primaryTypographyProps={{ variant: "caption", fontSize: "0.75rem" }}
                     sx={{
                       textDecoration: todo.completed ? "line-through" : "none",
                       color: todo.completed ? "text.secondary" : "text.primary",
                       my: 0,
+                    }}
+                    slotProps={{
+                      primary: { variant: "caption", sx: { fontSize: "0.75rem" } }
                     }}
                   />
                 </ListItemButton>
@@ -466,7 +468,9 @@ export const BaseExternalStateCard = ({
               </Button>
             </FlexBox>
             <FlexBox gap={1} y="center">
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{
+                color: "text.secondary"
+              }}>
                 System of record
               </Typography>
               <ButtonGroup size="small">

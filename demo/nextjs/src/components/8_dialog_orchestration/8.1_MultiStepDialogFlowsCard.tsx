@@ -1,6 +1,6 @@
 "use client";
 
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { useDialogFlow } from "dialogist";
 import { memo, useState } from "react";
 import { TbBrandCitymapper } from "react-icons/tb";

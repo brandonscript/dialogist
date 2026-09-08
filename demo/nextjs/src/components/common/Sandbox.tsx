@@ -1,7 +1,7 @@
 "use client";
 
 import { FormControlLabel, Link, Paper, Switch, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { type KeyboardEvent, memo, useCallback, useEffect, useRef, useState } from "react";
 import { LuMonitor, LuMonitorStop } from "react-icons/lu";
 import { useDemoState } from "../../contexts/DemoStateContext";
@@ -107,26 +107,28 @@ const SandboxMain = memo(function SandboxMain({ isFullscreen, onToggle, onKeyDow
             }}
           />
         </FlexBox>
-        <Typography variant="body1" color="text.secondary">
+        <Typography variant="body1" sx={{
+          color: "text.secondary"
+        }}>
           In a real app, dialogs are rendered in fullscreen, but you can switch to windowed mode to explore and learn
           how Dialogist works.
         </Typography>
         <Typography
           variant="caption"
-          color="text.secondary"
+          aria-label={`Current mode: ${isFullscreen ? "fullscreen" : "windowed"}`}
           sx={{
+            color: "text.secondary",
             mt: 2,
             display: "inline-flex",
             alignItems: "center",
             gap: 1,
+
             ...(isFullscreen
               ? { "& rect": { fill: `color-mix(in srgb, currentColor 25%, transparent)` } }
               : {
                   "& rect:last-of-type": { fill: `color-mix(in srgb, currentColor 25%, transparent)` },
-                }),
-          }}
-          aria-label={`Current mode: ${isFullscreen ? "fullscreen" : "windowed"}`}
-        >
+                })
+          }}>
           {isFullscreen ? <LuMonitor aria-hidden size={24} /> : <LuMonitorStop aria-hidden size={24} />}
         </Typography>
       </Paper>

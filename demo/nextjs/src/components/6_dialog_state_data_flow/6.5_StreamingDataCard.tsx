@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Card, CardContent, Chip, FormControlLabel, LinearProgress, Switch, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { useDeepEffect, useDeepMemo, useDialog } from "dialogist";
 import { memo, useEffect, useRef, useState } from "react";
 import { PiWifiMediumDuotone } from "react-icons/pi";
@@ -213,7 +213,13 @@ const PollingStatusBar = ({ isPolling }: { isPolling: boolean }) => (
       value={isPolling ? undefined : 100}
       sx={{ height: 6, borderRadius: 3 }}
     />
-    <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: "block" }}>
+    <Typography
+      variant="caption"
+      sx={{
+        color: "text.secondary",
+        mt: 0.5,
+        display: "block"
+      }}>
       Polling every 2000ms • {isPolling ? "Active" : "Stopped"}
     </Typography>
   </FlexBox>
@@ -357,7 +363,9 @@ const DataPollingDialog = ({ onClose, pollingController, seedData, seedPollCount
       </FlexBox>
 
       <FlexBox y="center" x="right" gap={1}>
-        <Typography variant="caption" color="text.secondary">
+        <Typography variant="caption" sx={{
+          color: "text.secondary"
+        }}>
           {isPolling ? "Stop polling" : "Start polling"}
         </Typography>
         <Switch size="small" checked={isPolling} onChange={handleTogglePolling} />
@@ -444,7 +452,9 @@ export const StreamingDataCard = Object.assign(
             sx={{ m: 0 }}
             control={<Switch size="small" checked={isPolling} onChange={(_, c) => setIsPolling(c)} />}
             label={
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" sx={{
+                color: "text.secondary"
+              }}>
                 {`Polling every 2000ms • ${isPolling ? "Active" : "Stopped"}`}
               </Typography>
             }

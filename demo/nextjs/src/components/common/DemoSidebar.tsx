@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { memo } from "react";
 
 import { DemoNavScopeProvider } from "../../contexts/DemoNavScope";

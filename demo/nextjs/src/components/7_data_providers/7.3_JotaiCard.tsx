@@ -15,11 +15,15 @@ const CARD_TITLE = "Using Jotai";
 const Icon = (props: IconBaseProps) => (
   <Typography
     component="span"
-    display="flex"
-    alignItems="center"
-    justifyContent="center"
-    sx={{ fontSize: "1.125rem", lineHeight: 1, height: props?.size ?? 22, width: props?.size ?? 22 }}
-  >
+    sx={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "1.125rem",
+      lineHeight: 1,
+      height: props?.size ?? 22,
+      width: props?.size ?? 22
+    }}>
     ō
   </Typography>
 );

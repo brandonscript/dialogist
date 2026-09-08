@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, InputAdornment, Slider, Switch, TextField, Typography } from "@mui/material";
-import { FlexBox, FlexColumnBox } from "@mui-flexy/v7";
+import { FlexBox, FlexColumnBox } from "@mui-flexy/v9";
 import {
   setDialogStateValue,
   useDialog,
@@ -323,21 +323,28 @@ const BorderRadiusDemo = ({ borderRadius, setBorderRadius, onClose: _onClose }: 
 
   return (
     <FlexBox column gap={2}>
-      <DemoParagraph maxWidth={440} mx="auto" textAlign="left">
+      <DemoParagraph sx={{ maxWidth: 440, mx: "auto", textAlign: "left" }}>
         Drag the slider to adjust this dialog&apos;s border radius. The sandbox title tracks committed external state;
         the dialog shell updates in real time. Use <Code>dialog.emit</Code> for high-frequency signals alongside{" "}
         <Code>useDialogExternalSync</Code>.
       </DemoParagraph>
-      <DemoParagraph maxWidth={440} textAlign="left" fontSize={12}>
+      <DemoParagraph sx={{ maxWidth: 440, textAlign: "left", fontSize: 12 }}>
         Hold Shift to snap to the nearest mark.
       </DemoParagraph>
 
       <Card variant="outlined">
         <CardContent component={FlexColumnBox} x="center" y="center" sx={{ p: 0 }}>
-          <Typography variant="h3" fontWeight={700} color="primary.main">
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 700,
+              color: "primary.main"
+            }}>
             {displayRadius}px
           </Typography>
-          <Typography variant="caption" color="text.secondary">
+          <Typography variant="caption" sx={{
+            color: "text.secondary"
+          }}>
             Current border radius
           </Typography>
         </CardContent>
@@ -534,13 +541,17 @@ export const HighFrequencyStateSyncCard = Object.assign(
             <FlexBox column gap={0.5}>
               <Typography variant="body2">
                 External: <strong>{borderRadius}px</strong>{" "}
-                <Typography component="span" variant="caption" color="text.secondary">
+                <Typography component="span" variant="caption" sx={{
+                  color: "text.secondary"
+                }}>
                   (managed externally)
                 </Typography>
               </Typography>
               <Typography variant="body2">
                 Local: <strong>{localValue}px</strong>{" "}
-                <Typography component="span" variant="caption" color="text.secondary">
+                <Typography component="span" variant="caption" sx={{
+                  color: "text.secondary"
+                }}>
                   (inside the dialog)
                 </Typography>
               </Typography>

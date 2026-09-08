@@ -1,7 +1,7 @@
 "use client";
 
 import type { SxProps, Theme } from "@mui/material/styles";
-import { FlexBox } from "@mui-flexy/v7";
+import { FlexBox } from "@mui-flexy/v9";
 import { LuSquare } from "react-icons/lu";
 
 type ActionSquaresIconProps = {
