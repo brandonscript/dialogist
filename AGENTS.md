@@ -162,9 +162,9 @@ Dialog Components - consume variables via var(...)
 
 - Primary API for opening/closing dialogs
 - Takes dialog ID and optional initial config
-- Returns: `{ open, openAsync, toggle, close, closeAll, on, off, emit }`
+- Returns: `{ open, isOpen, toggle, close, closeAll, replace, next, back, on, off, emit, setTitle, setContent, … }`
+- `open()` always returns a Promise
 - Initial config merged with each open() call
-- Promise-based for async workflows
 
 ### Dialog Slots (Live Updates)
 
@@ -173,14 +173,14 @@ Dialog Components - consume variables via var(...)
 - Enables live updates when state changes (e.g., polling data, user interactions)
 - Dependency tracking: either deps-based (like useEffect) or props-based (deep comparison)
 - Registered slots merged with config when dialog opens
-- Follows MUI's slot pattern: components can be replaced via `components` prop, and reactive content registered via hooks
+- Follows MUI's slot pattern: components can be replaced via `slots`, and reactive content registered via hooks
 
 ### Dialog Types (unified actions model)
 
 - Primary model: `actions` array drives all buttons; each action can have `id`, `resolveValue`, `preserveBackdrop`
 - **Default type**: When `type` is omitted, defaults to `"custom"`; custom without `component` uses `message` as content via pass-through
 - **alert**: Single OK button; explicit `actions` restricted to `[id=ok]` only
-- **confirm**: Cancel + Confirm buttons; explicit `actions` restricted to `[id=cancel, id=confirm]` only
+- **confirm**: Cancel + Confirm buttons; explicit `actions` restricted to `[id=cancel, id=ok]` only
 - **custom**: Full flexibility; any `actions` allowed; single Close button default when no `actions` provided
 - Provide explicit `actions` to add/replace buttons; `deriveEffectiveActions` in `src/utils/dialogActions.ts` handles legacy translation and action restrictions
 
@@ -289,6 +289,33 @@ Dialog Components - consume variables via var(...)
 3. For demo only: Modify `demo/nextjs/src/demoTheme.ts`
 4. CSS variable naming: `--dialogist-{category}-{property}`
 5. Test in both demo and hypothetical consuming apps
+
+### Releasing (npm + GitHub)
+
+A **git tag is not a GitHub Release**. Pushing `v*` publishes npm via [`.github/workflows/publish.yml`](./.github/workflows/publish.yml). The repo sidebar **Releases** list only updates if you also run `gh release create`. Do both.
+
+1. **Bump** `package.json` / lockfile to match the new semver (`npm version <x.y.z> --no-git-tag-version`). Tag name must be `v` + that version or CI will fail the “tag matches package.json” check.
+2. **Commit** the bump (and release changes) on `main`. Only commit when the user asked.
+3. **Annotated git tag** on that commit, then **push the branch and the tag**:
+
+   ```bash
+   git tag -a vX.Y.Z -m "Release vX.Y.Z"
+   git push origin main
+   git push origin vX.Y.Z
+   ```
+
+4. **GitHub Release** (this is what shows in the sidebar and as **Latest**):
+
+   ```bash
+   gh release create vX.Y.Z --title "vX.Y.Z" --generate-notes --latest
+   ```
+
+   If backfilling an older tag, use `--latest=false`.
+
+5. **Confirm CI:** “Publish to npm” on the tag; “Deploy Next.js demo to GitHub Pages” on `main`. A Pages **deploy** 500 after a green **build** job is usually GitHub’s API — re-run the failed job; do not treat it as an npm publish failure.
+
+- **❌ NEVER** `npm publish` locally unless explicitly asked — OIDC on the tag workflow is the publish path (`npm run release` is for local/tag-gated publishing only).
+- **❌ NEVER** assume `git tag` / `git push --tags` created a GitHub Release.
 
 ### Working with dialog state
 

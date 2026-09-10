@@ -11,7 +11,7 @@ export const OpenButton = ({ adapterLabel }: { adapterLabel: string }) => {
     });
 
   const handleConfirm = async () => {
-    const result = await dialog.openAsync({
+    const result = await dialog.open({
       type: "confirm",
       title: `${adapterLabel} confirm`,
       message: "Are you sure? This is a confirm dialog driven by Dialogist's promise-based API.",

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "Dialogist",
+  "description": "Centralized, promise-based dialog manager for React with slot-based updates and adapters for MUI, Base UI, shadcn, and Tailwind.",
+  "folders": ["docs"],
+  "excludeFiles": ["AGENTS.md", "CONTRIBUTING.md"],
+  "excludeFolders": ["demo"],
+  "rules": [
+    "Open dialogs with dialog.open({ type: \"alert\" | \"confirm\" | \"custom\" }).",
+    "open() always returns a Promise<DialogCloseEvent>.",
+    "Import adapters from subpaths: dialogist/mui, dialogist/base-ui, dialogist/shadcn, dialogist/tailwind.",
+    "Import dialogist/styles.css and set DialogProvider cssMode to \"external\" when you control CSS.",
+    "Use sentence case for user-facing dialog titles and button labels."
+  ]
+}

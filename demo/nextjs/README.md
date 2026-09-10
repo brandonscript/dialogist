@@ -1,15 +1,10 @@
-# Dialogist Next.js Demo
+# Dialogist Next.js demo
 
-This is a Next.js demo application showcasing the Dialogist dialog management system. It targets **dialogist@1.0.0** from the repository root (`file:../../`).
+This is a Next.js demo application showcasing Dialogist. It aliases the `dialogist` package to the library **`src/`** tree (see `next.config.mjs`) so hot reload matches the code you are editing.
 
-## Features
+Interactive docs: [https://brandonscript.github.io/dialogist/](https://brandonscript.github.io/dialogist/). Markdown API guide: [`docs/`](../../docs/README.md).
 
-- 🗣️ **Centralized Dialog Management** - All dialogs managed through a single provider
-- 📱 **Material-UI Integration** - Beautiful, accessible dialogs using MUI components
-- ⚡ **Promise-based API** - Use async/await for dialog interactions
-- 🎯 **TypeScript Support** - Full type safety for dialog configurations
-
-## Getting Started
+## Getting started
 
 1. **Install dependencies:**
 
@@ -24,55 +19,49 @@ This is a Next.js demo application showcasing the Dialogist dialog management sy
    ```
 
 3. **Open your browser:**
-   Navigate to `http://localhost:5607` (port spells "LOGS" upside down on a calculator! 📱)
+   Navigate to `http://localhost:5607`.
 
-The demo aliases the `dialogist` package to the library **`src/`** tree (see `next.config.mjs`) so hot reload always matches the code you're editing. Restart the dev server after changing that alias.
+Restart the dev server after changing the `dialogist` alias in `next.config.mjs`.
 
-## Demo Features
+## Demo features
 
 The demo includes examples of:
 
-- **Confirmation Dialogs** - With confirm/cancel actions
-- **Alert Dialogs** - Simple information dialogs
-- **Custom Dialogs** - Custom components (coming soon)
-- **Sequential Dialogs** - Multiple dialogs in sequence
+- Alert, confirm, and custom dialogs
+- Promise-based `open()` for async flows
+- Custom actions, slot hooks, conflict policies, and multi-step flows
+- Adapters for MUI, Base UI, shadcn, and Tailwind (use the "Rendered with" picker)
 
-## Usage Example
+## Usage example
 
 ```tsx
 import { useDialog } from "dialogist";
 
 function MyComponent() {
-  const dialog = useDialog();
+  const dialog = useDialog("delete-item");
 
   const handleDelete = async () => {
-    const confirmed = await dialog.confirm({
-      title: "Delete Item",
+    const event = await dialog.open({
+      type: "confirm",
+      title: "Delete item",
       message: "Are you sure? This cannot be undone.",
       okLabel: "Delete",
       cancelLabel: "Cancel",
     });
 
-    if (confirmed) {
-      // Delete the item
-      await dialog.alert({
+    if (event.ok) {
+      await dialog.open({
+        type: "alert",
         title: "Success",
-        message: "Item deleted successfully!",
+        message: "Item deleted successfully.",
       });
     }
   };
 
-  return <button onClick={handleDelete}>Delete Item</button>;
+  return <button onClick={handleDelete}>Delete item</button>;
 }
 ```
 
 ## Development
 
-This demo uses the local `dialogist` package via `file:../../` dependency, so any changes to the main library will be reflected here after rebuilding.
-
-To build the main library:
-
-```bash
-cd ../..
-npm run build
-```
+From the repository root you can also run `npm run demo:nextjs`. Changes to the library `src/` are picked up via the Next.js alias; you do not need to rebuild the package for the demo.

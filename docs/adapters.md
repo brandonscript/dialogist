@@ -1,5 +1,7 @@
 # Dialogist adapters
 
+See the [docs index](./README.md) for getting started, actions, slots, and orchestration.
+
 Dialogist's core (state machine, slot registry, hooks, conflict policies, FLIP animations, CSS variables) is **UI-library agnostic**. Each supported UI library is a thin "adapter" that maps Dialogist's slot interface onto that library's components.
 
 This doc covers what ships, how to pick one, and how to migrate between them.

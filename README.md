@@ -56,7 +56,7 @@ All peer dependencies are **optional** — you only install the libraries for th
 npm install dialogist
 ```
 
-**Package version:** 1.0.1
+**Package version:** 1.1.0
 
 Required peer dependencies: `react` `>=18.0.0` and `react-dom` `>=18.0.0`.
 
@@ -98,7 +98,9 @@ function MyComponent() {
 
 ## Demo and documentation
 
-**Documentation** and a comprehensive set of examples for Dialogist is at <a href="https://brandonscript.github.io/dialogist/" target="_blank" rel="noopener noreferrer">https://brandonscript.github.io/dialogist/</a> — it is the best place to explore Dialogist interactively.
+**Interactive documentation** (33 examples you can run in the browser) is at <a href="https://brandonscript.github.io/dialogist/" target="_blank" rel="noopener noreferrer">https://brandonscript.github.io/dialogist/</a>.
+
+The markdown API guide — install, adapters, actions, slots, conflicts, flows — is in <a href="./docs/README.md" target="_blank" rel="noopener noreferrer"><code>docs/</code></a>. That is what Context7 indexes for coding agents.
 
 ### Run the demo locally
 
@@ -114,126 +116,9 @@ Open <a href="http://localhost:5607" target="_blank" rel="noopener noreferrer">h
 
 ## Contributing
 
-Human contributors: see <a href="./AGENTS.md" target="_blank" rel="noopener noreferrer"><code>AGENTS.md</code></a> for project conventions, testing, and layout rules. While primarily written with LLMs in mind, it's good for humans too.
+See <a href="./CONTRIBUTING.md" target="_blank" rel="noopener noreferrer"><code>CONTRIBUTING.md</code></a> (including maintainer publishing) and <a href="./AGENTS.md" target="_blank" rel="noopener noreferrer"><code>AGENTS.md</code></a> for project conventions, testing, and layout rules.
 
 Issues and pull requests are welcome. For larger changes, open an issue first so we can align on direction. Please run all tests (add/update tests to ensure coverage of your changes) and update the demo app if applicable. All code accepted to main must be reviewed by you, the human.
-
-If you contribute to this project, you agree to adhere to the
-
-## Publishing (maintainers)
-
-1. **Bump the version** (updates root `package.json`, `package-lock.json`, and the **Package version** line in this readme):
-
-   ```bash
-   ./scripts/version.sh X.Y.Z
-   ```
-
-2. **Sanity-check** tests, types, and what would be published:
-
-   ```bash
-   npm test
-   npm run typecheck
-   npm run release:dry-run
-   ```
-
-   Extra `npm publish` flags go after `--`, for example `npm run release -- --dry-run --tag beta`.
-
-   Avoid naming an npm script `publish`: `npm publish` runs the package **publish** lifecycle and would recurse into that script.
-
-3. **Publish** when logged into npm with permission to publish `dialogist`:
-
-   ```bash
-   npm run release
-   ```
-
-4. **Tag and release on GitHub** (after the version bump is on `main`):
-
-   ```bash
-   git tag -a vX.Y.Z -m "vX.Y.Z"
-   git push origin main --follow-tags
-   gh release create vX.Y.Z --title "vX.Y.Z" --generate-notes
-   ```
-
-### Automated publishing with GitHub Actions
-
-The repository includes a CI workflow that automatically builds and publishes a new npm release whenever a tag that matches the pattern `v*` is pushed. The workflow performs the same safety checks that you would run locally:
-
-* Ensures the tag version matches the `package.json` version.
-* Runs the full build (`npm run build`).
-* Publishes the package to npm using a secret `NPM_TOKEN`.
-
-**How it works**
-
-1. Create a new version locally (e.g. `npm version patch`).
-2. Push the commit **and** the generated tag to GitHub:
-
-   ```bash
-   git push && git push --tags
-   ```
-
-3. GitHub Actions picks up the tag, runs the `publish.yml` workflow, and publishes the package.
-
-**Required secret**
-
-* `NPM_TOKEN` – an automation token with publish rights for the `dialogist` npm package. Add it in **Repository Settings → Secrets and variables → Actions → New repository secret**.
-
-The workflow file lives at `.github/workflows/publish.yml` and looks like this:
-
-```yaml
-name: Publish to npm
-
-on:
-  push:
-    tags:
-      - 'v*'          # any tag starting with "v"
-
-jobs:
-  npm-publish:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node
-        uses: actions/setup-node@v5
-        with:
-          node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build package
-        run: npm run build
-
-      - name: Verify tag matches package version
-        env:
-          GIT_TAG: ${{ github.ref_name }}
-        run: |
-          TAG_VERSION="${GIT_TAG#v}"
-          PKG_VERSION="$(node -p "require('./package.json').version")"
-          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
-            echo "❌ Tag $GIT_TAG does not match package.json version $PKG_VERSION"
-            exit 1
-          fi
-          echo "✅ Tag matches package version $PKG_VERSION"
-
-      - name: Publish to npm
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-```
-
-With this in place, you no longer need to run `npm run release` manually – pushing a correctly‑named tag is enough.
 
 ## Fair AI and LLM usage
 
@@ -241,7 +126,7 @@ AI contributors: see <a href="./AGENTS.md" target="_blank" rel="noopener norefer
 
 If you use AI tools with this codebase or its documentation: do not submit generated changes without **reviewing** them yourself by hand for correctness, security, and fit with project conventions.
 
-For documentation tailored specifically to agents, connect Context7's MCP server and mention [brandonscript/dialogist](https://context7.com/brandonscript/dialogist) in your prompts.
+For documentation tailored specifically to agents, connect Context7's MCP server and mention [brandonscript/dialogist](https://context7.com/brandonscript/dialogist) in your prompts. Parsing is configured in <a href="./context7.json" target="_blank" rel="noopener noreferrer"><code>context7.json</code></a> (the <a href="./docs/README.md" target="_blank" rel="noopener noreferrer"><code>docs/</code></a> markdown guide).
 
 ## License
 
