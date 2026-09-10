@@ -1,6 +1,6 @@
 # Dialogist documentation
 
-Interactive examples live at [https://brandonscript.github.io/dialogist/](https://brandonscript.github.io/dialogist/). This folder is the markdown API guide — the source Context7 and other agents should index.
+Interactive examples: [https://brandonscript.github.io/dialogist/](https://brandonscript.github.io/dialogist/).
 
 ## Guides
 

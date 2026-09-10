@@ -2,6 +2,18 @@
 
 Project conventions, testing, and layout rules: [AGENTS.md](./AGENTS.md).
 
+## Run the demo locally
+
+The interactive docs app is in [`demo/nextjs`](./demo/nextjs). From the repository root:
+
+```bash
+npm install
+cd demo/nextjs && npm install && cd ../..
+npm run demo:nextjs
+```
+
+Open http://localhost:5607. A smaller adapter-only Vite app lives in [`demo/minimal-adapters`](./demo/minimal-adapters).
+
 Issues and pull requests are welcome. For larger changes, open an issue first so we can align on direction. Please run all tests (add or update tests to cover your changes) and update the demo app if applicable. All code accepted to `main` must be reviewed by a human.
 
 If you contribute to this project, you agree to adhere to the [ethical use](./README.md#ethical-use) terms.

@@ -2,7 +2,7 @@
 
 This is a Next.js demo application showcasing Dialogist. It aliases the `dialogist` package to the library **`src/`** tree (see `next.config.mjs`) so hot reload matches the code you are editing.
 
-Interactive docs: [https://brandonscript.github.io/dialogist/](https://brandonscript.github.io/dialogist/). Markdown API guide: [`docs/`](../../docs/README.md).
+Interactive docs: [https://brandonscript.github.io/dialogist/](https://brandonscript.github.io/dialogist/). Markdown API guide: [`docs/`](../../docs/index.md).
 
 ## Getting started
 
