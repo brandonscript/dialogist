@@ -179,4 +179,4 @@ const dialog = useDialog(key?, initialConfig?, deps?);
 | `setTitle` / `setContent` / `setStatusBar` / `setFooter` / `setProps` | Imperative slot writes |
 | `setImperativeHandle` | Attach a parent ref to child-exposed state |
 
-`key` may be a string or an array (`["checkout", userId]`), which normalizes to a `::`-joined string. See [Orchestration](./orchestration.md).
+`key` may be a string or an array (`["checkout", userId]`), which normalizes to a `::`-joined string. See [Orchestration](./orchestration.md). Full field lists: [API cheat sheet](./api.md).

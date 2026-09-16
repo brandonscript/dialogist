@@ -99,7 +99,7 @@ function MyComponent() {
 ## Documentation
 
 - Interactive examples: <a href="https://brandonscript.github.io/dialogist/" target="_blank" rel="noopener noreferrer">https://brandonscript.github.io/dialogist/</a>
-- API guide: <a href="./docs/index.md" target="_blank" rel="noopener noreferrer"><code>docs/</code></a> (getting started, adapters, actions, slots, conflicts, flows)
+- API guide: <a href="./docs/index.md" target="_blank" rel="noopener noreferrer"><code>docs/</code></a> (getting started, [API cheat sheet](./docs/api.md), adapters, actions, slots, conflicts, flows)
 
 ## License
 

@@ -7,6 +7,7 @@ Interactive examples: [https://brandonscript.github.io/dialogist/](https://brand
 | Guide | Covers |
 | ----- | ------ |
 | [Getting started](./getting-started.md) | `DialogProvider`, `useDialog`, `open()`, alert / confirm / custom |
+| [API cheat sheet](./api.md) | `DialogConfig`, `DialogCloseEvent`, `useDialog` return, events |
 | [Adapters](./adapters.md) | Headless, MUI, Base UI, shadcn, Tailwind, `cssMode` |
 | [Actions and results](./actions-and-results.md) | Built-in labels, custom `actions`, groups, `DialogActionEvent` |
 | [Closing dialogs](./closing-dialogs.md) | Close reasons, `close` / `replace`, `canClose` |
@@ -21,3 +22,4 @@ Interactive examples: [https://brandonscript.github.io/dialogist/](https://brand
 - Open with `dialog.open({ type: "alert" | "confirm" | "custom", ... })`.
 - `open()` returns `Promise<DialogCloseEvent>`.
 - Import UI adapters from subpaths: `dialogist/mui`, `dialogist/base-ui`, `dialogist/shadcn`, `dialogist/tailwind`.
+- Field lists: [API cheat sheet](./api.md).

@@ -1,6 +1,6 @@
 # Closing dialogs
 
-A dialog can close from an action click, Escape, backdrop click, `dialog.close()`, or `dialog.replace()`. Every path produces a `DialogCloseEvent`.
+A dialog can close from an action click, Escape, backdrop click, `dialog.close()`, or `dialog.replace()`. Every path produces a `DialogCloseEvent`. Field list: [API cheat sheet](./api.md#dialogcloseevent).
 
 Interactive walkthrough: [Closing dialogs](https://brandonscript.github.io/dialogist/closing-dialogs).
 
